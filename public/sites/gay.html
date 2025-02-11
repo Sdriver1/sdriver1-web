@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Congratulations! You Are Now Gay 🎉</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="description" content="Welcome to the LGBTQ+! 🌈" />
+    <meta name="og:title" content="Congratulations! You Are Now Gay 🎉" />
+    <meta name="og:description" content="Welcome to the LGBTQ+! 🌈" />
+    <meta name="theme-color" content="#ff69b4" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://images.sdriver1.me/gay.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Poppins:400,700"
+    />
+    <style>
+      body {
+        background: linear-gradient(
+          135deg,
+          #ff0080,
+          #ff8c00,
+          #ffff00,
+          #008000,
+          #0000ff,
+          #4b0082,
+          #9400d3
+        );
+        background-size: 400% 400%;
+        animation: rainbowBG 10s ease infinite;
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        color: white;
+        margin: 0; /* Remove default margin */
+        padding: 0; /* Remove padding to fix spacing */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden; /* Prevents scrolling issues */
+      }
+
+      @keyframes rainbowBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Confetti now covers the full screen */
+      .confetti {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 3s ease-in-out;
+        top: 0;
+        left: 0;
+      }
+
+      /* Main Content */
+      .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+      }
+
+      /* Text Styling */
+      p {
+        font-size: clamp(1rem, 4vw, 1.5rem);
+        margin: 10px 10%;
+        line-height: 1.5;
+        max-width: 80%;
+        word-break: break-word;
+      }
+
+      /* Responsive Adjustments */
+      @media screen and (max-width: 768px) {
+        p {
+          font-size: 1.2rem;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        p {
+          font-size: 1rem;
+        }
+        .button {
+          padding: 10px 20px;
+          font-size: 1rem;
+        }
+      }
+
+      /* Button */
+      .button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white;
+        background-color: #ff0080;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .button:hover {
+        background-color: #ff69b4;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas class="confetti"></canvas>
+    <h1>🎉 CONGRATULATIONS! 🎉</h1>
+    <p>You have officially GAYYYYYY WOOOOOOOOOOOOOOW. 🌈</p>
+    <p id="visitor-message">
+      Don't worry, you join the other
+      <strong><span id="visitor-count">...</span></strong> people who now have
+      gay. You can use the button below though to ungay.
+    </p>
+
+    <button class="button" onclick="trackClick()">Ungay here</button>
+    <p id="click-message"></p>
+
+    <script>
+      function partyMode() {
+        window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+      }
+
+      const confettiCanvas = document.querySelector(".confetti");
+      const confettiCtx = confettiCanvas.getContext("2d");
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+
+      const confettiParticles = [];
+      class Confetti {
+        constructor() {
+          this.x = Math.random() * window.innerWidth;
+          this.y = Math.random() * window.innerHeight;
+          this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+          this.size = Math.random() * 10 + 5;
+          this.speedY = Math.random() * 3 + 2;
+        }
+        update() {
+          this.y += this.speedY;
+          if (this.y > window.innerHeight) this.y = 0;
+        }
+        draw() {
+          confettiCtx.fillStyle = this.color;
+          confettiCtx.beginPath();
+          confettiCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          confettiCtx.fill();
+        }
+      }
+
+      for (let i = 0; i < 100; i++) {
+        confettiParticles.push(new Confetti());
+      }
+
+      function animateConfetti() {
+        confettiCtx.clearRect(
+          0,
+          0,
+          confettiCanvas.width,
+          confettiCanvas.height
+        );
+        confettiParticles.forEach((confetti) => {
+          confetti.update();
+          confetti.draw();
+        });
+        requestAnimationFrame(animateConfetti);
+      }
+
+      animateConfetti();
+
+      setTimeout(() => {
+        confettiCanvas.style.opacity = "0.3"; // Reduce visibility after 3 seconds
+      }, 3000);
+    </script>
+    <script>
+      async function updateVisitorCount() {
+        try {
+          const response = await fetch("https://youarenow.gay/api/visits");
+          const data = await response.json();
+          document.getElementById("visitor-count").textContent = data.visits;
+        } catch (error) {
+          console.error("Error fetching visitor count:", error);
+          document.getElementById("visitor-count").textContent = "many";
+        }
+      }
+
+      async function addVisitor() {
+        if (!localStorage.getItem("visited")) {
+          try {
+            await fetch("https://youarenow.gay/api/addvisits", {
+              method: "POST",
+            });
+            localStorage.setItem("visited", "true"); 
+          } catch (error) {
+            console.error("Error adding visit:", error);
+          }
+        }
+      }
+      async function updateClickCount() {
+        try {
+          const response = await fetch("https://youarenow.gay/api/clicks");
+          const data = await response.json();
+          document.getElementById("click-count").textContent = data.clicks;
+        } catch (error) {
+          console.error("Error fetching click count:", error);
+          document.getElementById("click-count").textContent = "many";
+        }
+      }
+
+      async function trackClick() {
+        let clickMessage = document.getElementById("click-message");
+        if (!clickMessage) {
+          clickMessage = document.createElement("p");
+          clickMessage.id = "click-message";
+          clickMessage.style.fontSize = "1.1rem";
+          clickMessage.style.marginTop = "20px";
+          clickMessage.style.color = "white";
+          document.body.appendChild(clickMessage);
+        }
+        function formatClicks(clicks) {
+          if (clicks < 1000) {
+            const ordinalSuffix = ["st", "nd", "rd"][(clicks % 10) - 1] || "th";
+            return `${clicks}${ordinalSuffix}`;
+          }
+
+          const suffixes = ["", "k", "m", "b", "t"];
+          const suffixIndex = Math.floor(Math.log10(clicks) / 3);
+
+          const formattedNumber = (
+            clicks / Math.pow(1000, suffixIndex)
+          ).toFixed(1);
+          return `${formattedNumber.replace(/\.0$/, "")}${
+            suffixes[suffixIndex]
+          }`;
+        }
+
+        if (!localStorage.getItem("clicked")) {
+          try {
+            const response = await fetch(
+              "https://youarenow.gay/api/addclicks",
+              {
+                method: "POST",
+              }
+            );
+            const data = await response.json();
+            clickMessage.innerHTML = `You were the <strong>${formatClicks(
+              data.clicks
+            )}</strong> person to fall for it, you still gay. 🌈`;
+            localStorage.setItem("clicked", "true");
+          } catch (error) {
+            console.error("Error tracking click:", error);
+            clickMessage.innerHTML =
+              "Something went wrong, but you still gay. 🌈";
+          }
+        } else {
+          clickMessage.innerHTML =
+            "You already fell for it once, you still gay. 🌈";
+        }
+
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+          window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        } else {
+          window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+        }
+      }
+
+      updateVisitorCount();
+      addVisitor();
+      updateClickCount();
+    </script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-G7M50DW6WM"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-G7M50DW6WM");
+    </script>
+  </body>
+</html>
