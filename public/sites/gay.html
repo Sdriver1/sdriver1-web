@@ -22,6 +22,13 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Poppins:400,700"
     />
+    <link
+      rel="preload"
+      as="video"
+      href="/assets/videos/video.mp4"
+      type="video/mp4"
+    />
+
     <style>
       body {
         background: linear-gradient(
@@ -127,6 +134,46 @@
       .button:hover {
         background-color: #ff69b4;
       }
+      #video-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #video-container {
+        position: relative;
+        width: 80%;
+        max-width: 800px;
+      }
+
+      #video-container video {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      #close-video {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        background: #ff0080;
+        color: white;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: 50%;
+      }
+      #close-video:hover {
+        background: #ff69b4;
+      }
     </style>
   </head>
   <body>
@@ -141,6 +188,16 @@
 
     <button class="button" onclick="trackClick()">Ungay here</button>
     <p id="click-message"></p>
+    <div id="video-modal" style="display: none">
+      <div id="video-container">
+        <button id="close-video">&times;</button>
+        <video
+          id="ungayed-video"
+          src="/assets/videos/video.mp4"
+          controls
+        ></video>
+      </div>
+    </div>
 
     <script>
       function partyMode() {
@@ -215,7 +272,7 @@
             await fetch("https://youarenow.gay/api/addvisits", {
               method: "POST",
             });
-            localStorage.setItem("visited", "true"); 
+            localStorage.setItem("visited", "true");
           } catch (error) {
             console.error("Error adding visit:", error);
           }
@@ -242,15 +299,14 @@
           clickMessage.style.color = "white";
           document.body.appendChild(clickMessage);
         }
+
         function formatClicks(clicks) {
           if (clicks < 1000) {
             const ordinalSuffix = ["st", "nd", "rd"][(clicks % 10) - 1] || "th";
             return `${clicks}${ordinalSuffix}`;
           }
-
           const suffixes = ["", "k", "m", "b", "t"];
           const suffixIndex = Math.floor(Math.log10(clicks) / 3);
-
           const formattedNumber = (
             clicks / Math.pow(1000, suffixIndex)
           ).toFixed(1);
@@ -282,11 +338,18 @@
             "You already fell for it once, you still gay. 🌈";
         }
 
-        if (/Mobi|Android/i.test(navigator.userAgent)) {
-          window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-        } else {
-          window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
-        }
+        const modal = document.getElementById("video-modal");
+        const video = document.getElementById("ungayed-video");
+
+        modal.style.display = "flex";
+        video.load();
+        video.play();
+
+        document.getElementById("close-video").onclick = function () {
+          modal.style.display = "none";
+          video.pause();
+          video.currentTime = 0;
+        };
       }
 
       updateVisitorCount();
