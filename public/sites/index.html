@@ -1,43 +1,745 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Home | Steven Driver</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-    />
-    <meta http-equiv="Content-Language" content="en" />
-    <meta name="description" content="Work in progress" />
-    <meta name="og:description" content="Work in progress" />
-    <meta name="og:title" content="Home | Steven Driver" />
-    <meta
-      name="og:image"
-      content="https://images.sdriver1.me/profile.png"
-    />
-    <meta name="theme-color" content="#cf0000" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Steven Driver | Portfolio</title>
+
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="300x250"
-      href="https://images.sdriver1.me/profile.png"
-    />
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
-    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Alfa+Slab+One"
     />
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css" />
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
-    />
+
+    <style>
+      :root {
+        --primary: #4f46e5;
+        --secondary: #6b7280;
+        --bg: #f9fafb;
+        --text: #111827;
+        --card-bg: #ffffff;
+      }
+      [data-theme="dark"] {
+        --primary: #4f46e5;
+        --secondary: #9ca3af;
+        --bg: #18191f;
+        --text: #d1d5db;
+        --card-bg: #242731;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-padding-top: 80px;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        transition: background 0.3s, color 0.3s;
+      }
+      header {
+        background: var(--bg);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: auto;
+        padding: 1rem;
+        position: relative;
+      }
+      .logo img {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      /* Mobile toggle */
+      .mobile-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text);
+      }
+
+      /* Smooth slide-down menu */
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        flex-direction: row;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: var(--bg);
+          overflow: hidden;
+          max-height: 0;
+          transform: translateY(-15px);
+          opacity: 0;
+          transition: max-height 0.4s ease, transform 0.3s ease-out,
+            opacity 0.3s ease-out;
+          padding: 0;
+        }
+        .nav-links.open {
+          max-height: 500px;
+          transform: translateY(0);
+          opacity: 1;
+          padding: 0.5rem 0;
+        }
+        .nav-links a {
+          padding: 0.75rem 1.5rem;
+        }
+        .mobile-toggle {
+          display: block;
+        }
+      }
+      .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.25rem;
+        margin-left: 1rem;
+      }
+
+      .hero {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 25vh;
+        text-align: center;
+        padding: 0 1rem;
+      }
+      .hero h1 {
+        font-size: 3rem;
+        color: var(--primary);
+      }
+      .hero p {
+        margin-top: 1rem;
+        color: var(--secondary);
+        font-size: 1.125rem;
+      }
+
+      section {
+        scroll-margin-top: 80px;
+        max-width: 1200px;
+        margin: 4rem auto;
+        padding: 0 1rem;
+      }
+      .section-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      /* Info Cards */
+      .info-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .info-card {
+        flex: 1 1 200px;
+        background: var(--card-bg);
+        border: 1px solid var(--secondary);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .info-card h3 {
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      /* Projects Grid */
+      .projects {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      @media (min-width: 768px) {
+        .projects {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .project-card {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        list-style: none;
+        margin-top: 1rem;
+      }
+      .tech-stack li {
+        background: var(--secondary);
+        color: var(--card-bg);
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+      }
+      .project-links {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      .project-links a + a:before {
+        content: "|";
+        margin: 0 0.5rem;
+        color: var(--secondary);
+      }
+      .project-links a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      /* Resume & Achievements */
+      .resume-section {
+        padding: 2rem 1rem;
+        margin-bottom: 4rem;
+      }
+      /* Button container flex */
+      .resume-section .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .resume-section .buttons a {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition: background 0.3s;
+      }
+      .resume-section .buttons a:hover {
+        background: rgba(79, 70, 229, 0.8);
+      }
+      .cert-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      @media (min-width: 600px) {
+        .cert-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .cert-group.full-width {
+        grid-column: 1 / -1;
+      }
+      .cert-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+      .cert-item {
+        background: var(--bg);
+        border: 1px solid var(--secondary);
+        border-radius: 0.5rem;
+        padding: 1rem;
+      }
+      .cert-item h4 {
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+      .cert-group {
+        margin-bottom: 2rem;
+      }
+      .cert-group h3 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .contact {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      .contact a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        color: var(--text);
+        border: 1px solid var(--secondary);
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        transition: background 0.3s;
+      }
+      .contact a:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      @media (max-width: 768px) {
+        .contact {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+        }
+      }
+      @media (max-width: 850px) {
+        .contact {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.75rem;
+        }
+      }
+
+      .email-section {
+        text-align: left;
+        margin-bottom: 4rem;
+      }
+      .email-section a {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition: background 0.3s;
+      }
+      .email-section a:hover {
+        background: rgba(79, 70, 229, 0.8);
+      }
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+        margin: 0 auto;
+        gap: 1rem;
+      }
+      .contact-form input,
+      .contact-form textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--secondary);
+        border-radius: 0.5rem;
+        background: var(--card-bg);
+        color: var(--text);
+      }
+      .contact-form button {
+        align-self: center;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .contact-form button:hover {
+        background: rgba(79, 70, 229, 0.8);
+      }
+      footer {
+        text-align: center;
+        margin: 2rem 0;
+        color: var(--secondary);
+      }
+    </style>
   </head>
+
   <body>
-    <h1>404 Not Found</h1>
-    <p>
-      The page you are looking for does not exist at this current moment as this one is under construction.
-    </p>
+    <header>
+      <nav>
+        <div class="logo">
+          <a href="#"><img src="../assets/images/profile.png" alt="Logo" /></a>
+        </div>
+        <button
+          id="mobile-toggle"
+          class="mobile-toggle"
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
+        <div class="nav-links" id="nav-links">
+          <a href="#about">About</a>
+          <a href="#resume">Resume</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Toggle theme"
+          >
+            🌓
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section id="hero" class="hero">
+        <h1>
+          <span id="typewriter"></span
+          ><span class="cursor" id="cursor-primary"></span>
+        </h1>
+        <p>
+          <span id="subtitle"></span
+          ><span class="cursor" id="cursor-sub"></span>
+        </p>
+      </section>
+
+      <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <p>
+          Hello! My name is Steven Driver, also known as Sdriver1. I'm a senior
+          in high school and will be attending RIT in the fall of 2025 for
+          computer science. I have been programming for abit over 3 years now
+          and have a passion for discord bots and web developemt. In my free
+          time I like to listen to music, play video games, or code. I primarily
+          work with JavaScript and HTML/CSS, but I also have experience with
+          Python and Java. I love swimming and have been a Lifeguard for about 3
+          years and been teaching swimming for about 2 year now. I currently am
+          employed as a swim instructor at a local school district. I am also an
+          intern for theDevEco consulting, where I work on various projects and
+          help with development of the portalBot. My main project is Pridebot, a
+          multi-functon LGBTQIA themed discord bot that serves
+          <span id="server-count">4k+</span> servers and over
+          <span id="user-count">380k+</span> users.
+        </p>
+        <div class="info-cards">
+          <div class="info-card">
+            <h3>Age</h3>
+            <p id="age">--</p>
+          </div>
+          <div class="info-card">
+            <h3>Pronouns</h3>
+            <p>He/Him</p>
+          </div>
+          <div class="info-card">
+            <h3>Location</h3>
+            <p>NY, USA</p>
+          </div>
+          <div class="info-card">
+            <h3>Language</h3>
+            <p>English</p>
+          </div>
+          <div class="info-card">
+            <h3>Interests</h3>
+            <p>Programming, Gaming, Music</p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 class="section-title">Resume, Certifications, & Achievements</h2>
+        <div id="resume" class="resume-section">
+          <div class="buttons">
+            <a href="https://sdriver1.me/resume" target="_blank"
+              >Download Resume (PDF)</a
+            >
+            <a href="https://sdriver1.me/resumepng" target="_blank"
+              >Download Resume (PNG)</a
+            >
+          </div>
+          <div class="cert-group">
+            <h3>Coding Certifications</h3>
+            <div class="cert-list">
+              <div class="cert-item">
+                <h4>Website Development & Design</h4>
+                <p>RIT Certified Pro Advantage</p>
+              </div>
+            </div>
+          </div>
+          <div class="cert-group">
+            <h3>Lifeguard Certifications</h3>
+            <div class="cert-list">
+              <div class="cert-item">
+                <h4>Water Safety Instructor (WSI)</h4>
+                <p>American Red Cross</p>
+              </div>
+              <div class="cert-item">
+                <h4>CPR/AED for Professional Rescuers</h4>
+                <p>American Red Cross</p>
+              </div>
+              <div class="cert-item">
+                <h4>
+                  Lifeguarding (Including Deep Water) with CPR/AED for
+                  Professional Rescuers and First Aid and Waterfront Skills
+                </h4>
+                <p>American Red Cross</p>
+              </div>
+            </div>
+          </div>
+          <div class="cert-group">
+            <h3>Other Certifications</h3>
+            <div class="cert-list">
+              <div class="cert-item">
+                <h4>National Youth Leadership Training</h4>
+                <p>Boy Scouts of America</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects">
+          <div class="project-card">
+            <h3>Pridebot</h3>
+            <p>
+              Your Discord bot to LGBTQ Identities! Explore terms, definitions,
+              resources, and more to be yourself.
+            </p>
+            <ul class="tech-stack">
+              <li>Discord.js</li>
+              <li>Node.js</li>
+              <li>Express.js</li>
+              <li>MongoDB</li>
+            </ul>
+            <div class="project-links">
+              <a href="https://pridebot.xyz" target="_blank">Website</a>
+              <a href="https://pridebot.xyz/github" target="_blank">Github</a>
+            </div>
+          </div>
+          <div class="project-card">
+            <h3>Pridebot Manager</h3>
+            <p>Utility bot for Pridebot support server</p>
+            <ul class="tech-stack">
+              <li>Discord.js</li>
+              <li>JavaScript/Python</li>
+              <li>Node.js</li>
+              <li>Prisma (sqlite)</li>
+            </ul>
+            <div class="project-links">
+              <a
+                href="https://github.com/Pridebot-Systems/Manager"
+                target="_blank"
+                >Github</a
+              >
+            </div>
+          </div>
+          <div class="project-card">
+            <h3>portalBot</h3>
+            <p>Connecting communities through the portal.</p>
+            <ul class="tech-stack">
+              <li>Discord.js</li>
+              <li>Node.js</li>
+              <li>MongoDB</li>
+            </ul>
+            <div class="project-links">
+              <a href="https://portalnet.work" target="_blank">Website</a>
+            </div>
+          </div>
+          <div class="project-card">
+            <h3>youarenow.gay</h3>
+            <p>Fun website to mess with your friends and prank them</p>
+            <ul class="tech-stack">
+              <li>HTML/CSS</li>
+              <li>Express.js</li>
+            </ul>
+            <div class="project-links">
+              <a href="https://youarenow.gay" target="_blank">Website</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="contact">
+        <h2 class="section-title">Connect with Me</h2>
+        <div class="contact">
+          <a href="https://bsky.app/profile/sdriver1.me" target="_blank"
+            >Bluesky</a
+          >
+          <a href="https://discord.com/users/691506668781174824" target="_blank"
+            >Discord</a
+          >
+          <a href="mailto:sdriver@sdriver1.me" target="_blank">Email</a>
+          <a href="https://sdriver1.me/github" target="_blank">GitHub</a>
+          <a href="https://www.instagram.com/sdriver_1/" target="_blank"
+            >Instagram</a
+          >
+          <a href="https://sdriver1.me/linkedin" target="_blank">LinkedIn</a>
+        </div>
+      </section>
+      <section class="email-section">
+        <form
+          class="contact-form"
+          action="/api/contact"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea
+            name="message"
+            placeholder="Your Message"
+            rows="5"
+            required
+          ></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
+    </main>
+    <footer>&copy; 2025 Steven Driver. All rights reserved.</footer>
+    <script>
+      const primaryText = "Welcome, I'm Steven Driver";
+      const subtitleText = "Better known as Sdriver1";
+      const speed = 120;
+      let idx = 0;
+
+      function typePrimary() {
+        if (idx < primaryText.length) {
+          document.getElementById("typewriter").textContent +=
+            primaryText[idx++];
+          setTimeout(typePrimary, speed);
+        } else {
+          document.getElementById("cursor-primary").style.display = "none";
+          idx = 0;
+          setTimeout(typeSubtitle, 500);
+        }
+      }
+
+      function typeSubtitle() {
+        if (idx < subtitleText.length) {
+          document.getElementById("subtitle").textContent +=
+            subtitleText[idx++];
+          setTimeout(typeSubtitle, speed);
+        } else {
+          document.getElementById("cursor-sub").style.display = "none";
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        typePrimary();
+      });
+
+      document.getElementById("mobile-toggle").addEventListener("click", () => {
+        document.getElementById("nav-links").classList.toggle("open");
+      });
+      // Theme toggle and smooth scroll unchanged
+      (function () {
+        const toggle = document.getElementById("theme-toggle");
+        const stored = localStorage.getItem("theme");
+        const mq = window.matchMedia("(prefers-color-scheme: dark)");
+        let theme = stored || (mq.matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+        toggle.textContent = theme === "dark" ? "☀️" : "🌙";
+        toggle.addEventListener("click", () => {
+          theme =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", theme);
+          localStorage.setItem("theme", theme);
+          toggle.textContent = theme === "dark" ? "☀️" : "🌙";
+        });
+      })();
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+          }
+          // close mobile menu on click
+          const nav = document.getElementById("nav-links");
+          if (nav.classList.contains("open")) {
+            nav.classList.remove("open");
+          }
+        });
+      });
+      function calculateAge(birth) {
+        const now = new Date();
+        let age = now.getFullYear() - birth.getFullYear();
+        const m = now.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) age--;
+        return age;
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const birthDate = new Date("2007-08-04");
+        document.getElementById("age").textContent = calculateAge(birthDate);
+      });
+
+      fetch("https://api.pridebot.xyz/stats")
+        .then((res) => res.json())
+        .then((data) => {
+          const count = data.currentGuildCount;
+          document.getElementById("server-count").textContent =
+            count >= 1000 ? (count / 1000).toFixed(1) + "k+" : count;
+          const userCount = data.totalUserCount;
+          document.getElementById("user-count").textContent =
+            userCount >= 1000
+              ? (userCount / 1000).toFixed(1) + "k+"
+              : userCount;
+        })
+        .catch((err) => console.error("Stats fetch error:", err));
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector(".contact-form");
+        form.addEventListener("submit", async (e) => {
+          console.log("Contact form submit event triggered");
+          e.preventDefault();
+          const data = {
+            name: form.name.value,
+            email: form.email.value,
+            message: form.message.value,
+          };
+          const url = form.getAttribute("action") || "/api/contact";
+          try {
+            const res = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+            if (res.ok) {
+              console.log("Server responded OK");
+              alert("Message sent successfully!");
+              form.reset();
+            } else {
+              console.error("Server responded with error status:", res.status);
+              throw new Error("Server responded with " + res.status);
+            }
+          } catch (err) {
+            console.error("Error caught in submission:", err);
+            alert("Error sending message. Please check console and try again.");
+          }
+        });
+      });
+    </script>
   </body>
 </html>
