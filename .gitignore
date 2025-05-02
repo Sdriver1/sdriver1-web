@@ -1,4 +1,12 @@
 node_modules
 package-lock.json
-assets
+
 .env
+
+bootstrap
+jquery.min.js
+data
+fonts
+images
+resume
+videos
