@@ -159,14 +159,24 @@
         text-align: left;
       }
 
-      /* Info Cards */
-      .info-cards {
+      /* About */
+      .about-cards-container {
         display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
+        width: 100%;
+        gap: 0.75rem;
         margin-top: 1rem;
       }
-      .info-card {
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 0.75rem;
+        width: 60%;
+      }
+
+      .about-card,
+      .about-side-card {
         flex: 1 1 200px;
         background: var(--card-bg);
         border: 1px solid var(--secondary);
@@ -174,10 +184,101 @@
         padding: 1rem;
         text-align: center;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
-      .info-card h3 {
+
+      .about-side-card {
+        width: 40%;
+        min-width: 210px;
+        max-width: 340px;
+        justify-content: flex-start;
+      }
+
+      .about-card-title {
         margin-bottom: 0.5rem;
         color: var(--primary);
+      }
+
+      @media (max-width: 900px) {
+        .about-cards-container {
+          flex-direction: column !important;
+          align-items: center !important;
+          gap: 1rem !important;
+        }
+        .about-grid {
+          width: 100% !important;
+        }
+        .about-side-card {
+          width: 100% !important;
+          max-width: 400px;
+          margin: 0 auto;
+          display: block !important;
+        }
+      }
+
+      #discord-activity {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        align-items: center;
+        justify-items: start;
+        padding-top: 8px;
+      }
+
+      .activity-item {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        align-items: center;
+        gap: 0.7rem;
+        min-height: 32px;
+        width: 100%;
+      }
+
+      .activity-item svg {
+        display: block;
+        margin: 0 auto;
+        width: 30px;
+        height: 30px;
+      }
+
+      @media (max-width: 600px) {
+        .about-side-card {
+          padding: 0.7rem 0.3rem !important;
+          min-width: 0 !important;
+          max-width: 97vw !important;
+        }
+        .about-side-card .about-card-title {
+          text-align: center;
+          font-size: 1.08rem !important;
+        }
+        #discord-activity {
+          justify-items: start;
+          padding-top: 2px;
+          padding-bottom: 4px;
+          margin: 0 auto;
+          width: 100%;
+        }
+        #doing-card:empty,
+        #doing-card:not(:has(.activity-item)) {
+          display: none !important;
+        }
+        .activity-item {
+          grid-template-columns: 26px 1fr !important;
+          gap: 0.5rem !important;
+          width: 100% !important;
+          min-height: 0 !important;
+        }
+        .activity-item svg {
+          width: 21px !important;
+          height: 21px !important;
+        }
+        .activity-item span {
+          font-size: 0.95rem !important;
+          line-height: 1.8;
+          word-break: break-word;
+        }
       }
 
       /* Projects Grid */
@@ -562,26 +663,32 @@
           <span id="server-count">5k+</span> servers and over
           <span id="user-count">524k+</span> users.
         </p>
-        <div class="info-cards">
-          <div class="info-card">
-            <h3>Age</h3>
-            <p id="age">--</p>
+        <div class="about-cards-container">
+          <div class="about-grid">
+            <div class="about-card">
+              <!-- Age -->
+              <div class="about-card-title">Age</div>
+              <div class="about-card-value">17</div>
+            </div>
+            <div class="about-card">
+              <!-- Pronouns -->
+              <div class="about-card-title">Pronouns</div>
+              <div class="about-card-value">He/Him</div>
+            </div>
+            <div class="about-card">
+              <!-- Location -->
+              <div class="about-card-title">Location</div>
+              <div class="about-card-value">NY, USA</div>
+            </div>
+            <div class="about-card">
+              <!-- Discord Presence -->
+              <div class="about-card-title">Discord Presence</div>
+              <div class="about-card-value" id="discord-status">Loading...</div>
+            </div>
           </div>
-          <div class="info-card">
-            <h3>Pronouns</h3>
-            <p>He/Him</p>
-          </div>
-          <div class="info-card">
-            <h3>Location</h3>
-            <p>NY, USA</p>
-          </div>
-          <div class="info-card">
-            <h3>Discord Presence</h3>
-            <p><span id="discord-status">Loading...</span></p>
-          </div>
-          <div class="info-card">
-            <h3>Discord Status</h3>
-            <p><span id="discord-status">Loading...</span></p>
+          <div class="about-side-card" id="doing-card" style="display: none">
+            <div class="about-card-title">What am I doing?</div>
+            <div id="discord-activity"></div>
           </div>
         </div>
       </section>
@@ -1105,6 +1212,64 @@
         })
         .catch(() => {
           document.getElementById("discord-status").textContent = "Unavailable";
+        });
+
+      const activityIcons = {
+        coding: `<svg width="25" height="25" viewBox="0 0 32 32" fill="none" style="vertical-align:middle;"><path d="M20.6875 5.20021C20.3749 4.88428 19.8647 4.88372 19.5514 5.19895L18.5194 6.23728C18.2098 6.54885 18.2093 7.05183 18.5183 7.36402L26.5096 15.4373C26.8183 15.749 26.8183 16.2511 26.5096 16.5628L18.5183 24.6361C18.2093 24.9484 18.2098 25.4513 18.5194 25.7628L19.5514 26.8012C19.8647 27.1164 20.3749 27.1159 20.6875 26.7999L30.8167 16.5628C31.1251 16.251 31.1251 15.7491 30.8167 15.4374L20.6875 5.20021Z" fill="#C7C8CE"/><path d="M13.4819 7.36402C13.7909 7.05183 13.7904 6.54885 13.4807 6.23728L12.4488 5.19895C12.1355 4.88372 11.6252 4.88428 11.3127 5.20021L1.18347 15.4374C0.87504 15.7491 0.875042 16.251 1.18347 16.5628L11.3127 26.7999C11.6252 27.1159 12.1354 27.1164 12.4488 26.8012L13.4807 25.7628C13.7904 25.4513 13.7909 24.9484 13.4819 24.6361L5.49048 16.5628C5.1819 16.2511 5.1819 15.749 5.49048 15.4373L13.4819 7.36402Z" fill="#C7C8CE"/></svg>`,
+        "listening to music": `<svg width="25" height="25" viewBox="0 0 32 32" fill="none" style="vertical-align:middle;"><path d="M16 2.66663C8.63622 2.66663 2.66669 8.63616 2.66669 16C2.66669 23.3637 8.63622 29.3333 16 29.3333C23.3638 29.3333 29.3334 23.3637 29.3334 16C29.3334 12.4637 27.9286 9.07236 25.4282 6.57187C22.9276 4.07139 19.5363 2.66663 16 2.66663ZM22.0834 21.9166C21.8388 22.2881 21.3527 22.4142 20.9584 22.2082C17.8334 20.2917 13.875 19.8749 9.25002 20.9166C8.95974 20.9836 8.65578 20.8906 8.45262 20.6728C8.24947 20.4549 8.17799 20.1452 8.26513 19.8602C8.35225 19.5754 8.58474 19.3586 8.87502 19.2917C13.9584 18.125 18.2918 18.625 21.8334 20.7917C22.0199 20.9041 22.1522 21.088 22.1994 21.3006C22.2467 21.5132 22.2047 21.7358 22.0834 21.9166ZM23.75 18.25C23.6071 18.4829 23.3771 18.6492 23.1111 18.7117C22.8451 18.7742 22.5651 18.7281 22.3334 18.5833C18.75 16.3749 13.2917 15.75 9.04169 17.0416C8.68442 17.1458 8.2987 17.0516 8.02983 16.7942C7.76095 16.5369 7.64977 16.1557 7.73817 15.7942C7.82655 15.4328 8.10109 15.1458 8.45835 15.0416C13.2917 13.5833 19.3334 14.2917 23.4167 16.8333C23.8846 17.1433 24.0306 17.7638 23.75 18.25ZM23.875 14.5C19.5834 11.9583 12.5 11.7083 8.37502 12.9583C7.7559 13.0571 7.15938 12.682 6.98019 12.0812C6.80101 11.4804 7.09459 10.8398 7.66669 10.5833C12.375 9.16663 20.2083 9.41663 25.1667 12.375C25.4524 12.5427 25.6579 12.8191 25.7364 13.141C25.815 13.4629 25.7598 13.8028 25.5834 14.0833C25.2072 14.6429 24.4666 14.8236 23.875 14.5Z" fill="#1ED760"/></svg>`,
+        playing: `<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2" stroke="#f59e42" stroke-width="2"/><circle cx="8" cy="12" r="2" stroke="#f59e42" stroke-width="2"/><circle cx="16" cy="12" r="2" stroke="#f59e42" stroke-width="2"/></svg>`,
+      };
+      const doingCard = document.getElementById("doing-card");
+      const activityEl = document.getElementById("discord-activity");
+
+      // Hide card by default until we know there's content
+      doingCard.style.display = "none";
+      activityEl.innerHTML = "";
+      fetch("https://sbot1.api.sdriver1.me/rich-current")
+        .then((res) => res.json())
+        .then((data) => {
+          const doingCard = document.getElementById("doing-card");
+          const activityEl = document.getElementById("discord-activity");
+          const acts = data.activities
+            .map((a) => {
+              if (a.name === "Spotify" && a.details && a.state) {
+                return `<div class="activity-item">${activityIcons["listening to music"]}<span>Listening to: ${a.details} by ${a.state}</span></div>`;
+              }
+              if (a.name === "Visual Studio Code" && a.details) {
+                // Example: "Editing index.html" → "index.html"
+                let file = a.details.replace(/^Editing\s+/, "");
+                let workspace = "";
+                if (a.state && a.state.startsWith("Workspace: ")) {
+                  workspace = a.state.replace("Workspace: ", "");
+                }
+                return `<div class="activity-item">${
+                  activityIcons.coding
+                }<span>Coding: ${file}${
+                  workspace ? " in " + workspace : ""
+                }</span></div>`;
+              }
+              if (a.type === 0 && a.name && a.name !== "Visual Studio Code") {
+                return `<div class="activity-item">${activityIcons.playing}<span>Playing: ${a.name}</span></div>`;
+              }
+              return null;
+            })
+            .filter(Boolean);
+
+          if (acts.length > 0) {
+            doingCard.style.display = "block";
+            activityEl.innerHTML = acts.join("");
+            document.querySelector(".about-grid").style.width = "67%";
+            doingCard.style.width = "33%";
+          } else {
+            activityEl.innerHTML = "";
+            doingCard.style.display = "none";
+            document.querySelector(".about-grid").style.width = "100%";
+          }
+        })
+        .catch(() => {
+          activityEl.innerHTML = "";
+          document.getElementById("doing-card").style.display = "none";
+          document.querySelector(".about-grid").style.width = "100%";
         });
 
       document.addEventListener("DOMContentLoaded", () => {
