@@ -156,6 +156,7 @@
         font-size: 2rem;
         margin-bottom: 1rem;
         color: var(--primary);
+        text-align: left;
       }
 
       /* Info Cards */
@@ -190,6 +191,7 @@
           grid-template-columns: repeat(2, 1fr);
         }
       }
+
       .project-card {
         background: var(--card-bg);
         padding: 1.5rem;
@@ -199,21 +201,78 @@
         flex-direction: column;
         justify-content: space-between;
       }
-      .tech-stack {
+
+      .project-details {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
         flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-        list-style: none;
+        gap: 1rem;
         margin-top: 1rem;
       }
-      .tech-stack li {
-        background: var(--secondary);
-        color: var(--card-bg);
-        padding: 0.25rem 0.75rem;
-        border-radius: 0.25rem;
-        font-size: 0.875rem;
+      @media (max-width: 600px) {
+        .project-details {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.75rem;
+        }
+        .project-links {
+          justify-content: flex-start;
+        }
       }
+
+      .tech-icons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+      .tech-icons .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+      .tech-icons img {
+        width: 32px;
+        height: 32px;
+        background: white;
+        border-radius: 0.22rem;
+        padding: 2px;
+        box-shadow: 0 1px 3px #0001;
+        transition: transform 0.12s;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+      .tech-icons img:hover,
+      .tech-icons img:focus {
+        transform: scale(1.13) rotate(-2deg);
+      }
+
+      .tooltip-text {
+        visibility: hidden;
+        opacity: 0;
+        width: max-content;
+        background: #333;
+        color: #fff;
+        border-radius: 4px;
+        padding: 2px 8px;
+        position: absolute;
+        left: 115%; /* to the right */
+        top: 50%;
+        transform: translateY(-50%);
+        white-space: nowrap;
+        font-size: 0.92em;
+        pointer-events: none;
+        transition: opacity 0.15s, visibility 0.15s;
+        z-index: 10;
+        box-shadow: 0 2px 8px #0003;
+      }
+      .tooltip:hover .tooltip-text,
+      .tooltip:focus .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+
       .project-links {
         display: flex;
         justify-content: center;
@@ -381,6 +440,65 @@
         margin: 2rem 0;
         color: var(--secondary);
       }
+
+      .testimonials {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        justify-items: start;
+      }
+
+      @media (min-width: 700px) {
+        .testimonials {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .testimonial-card {
+        background: var(--card-bg);
+        border: 1px solid var(--secondary);
+        border-radius: 0.75rem;
+        padding: 2rem 1.5rem 1.2rem 1.5rem;
+        box-shadow: 0 4px 12px #0001;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .testimonial-text {
+        font-style: italic;
+        color: var(--text);
+        font-size: 1.1rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .testimonial-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: 0.96rem;
+        color: var(--secondary);
+      }
+
+      .testimonial-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--primary);
+        box-shadow: 0 2px 6px #0002;
+      }
+
+      .testimonial-author {
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .testimonial-role {
+        font-style: normal;
+        font-size: 0.92rem;
+        color: var(--secondary);
+      }
     </style>
   </head>
 
@@ -401,6 +519,7 @@
           <a href="#about">About</a>
           <a href="#resume">Resume</a>
           <a href="#projects">Projects</a>
+          <a href="#testimonials">Testimonials</a>
           <a href="#contact">Contact</a>
           <button
             class="theme-toggle"
@@ -428,20 +547,20 @@
       <section id="about">
         <h2 class="section-title">About Me</h2>
         <p>
-          Hello! My name is Steven Driver, also known as Sdriver1. I'm a senior
-          in high school and will be attending RIT in the fall of 2025 for
-          computer science. I have been programming for abit over 3 years now
-          and have a passion for discord bots and web developemt. In my free
-          time I like to listen to music, play video games, or code. I primarily
-          work with JavaScript and HTML/CSS, but I also have experience with
-          Python and Java. I love swimming and have been a Lifeguard for about 3
-          years and been teaching swimming for about 2 year now. I currently am
-          employed as a swim instructor at a local school district. I am also an
+          Hello! My name is Steven Driver, also known as Sdriver1. I'm an
+          incoming freshman at RIT studying computer science. I have been
+          programming for abit over 3 years now and have a passion for discord
+          bots and web development. In my free time I like to listen to music,
+          play video games, or code. I primarily work with JavaScript and
+          HTML/CSS, but I also have experience with Python and Java. I love
+          swimming and have been a Lifeguard for about 3 years and been teaching
+          swimming for about 2 year now. I currently am employed as a swim
+          instructor and a lifeguard at a local country club. I am also an
           intern for theDevEco consulting, where I work on various projects and
           help with development of the portalBot. My main project is Pridebot, a
           multi-functon LGBTQIA themed discord bot that serves
-          <span id="server-count">4k+</span> servers and over
-          <span id="user-count">380k+</span> users.
+          <span id="server-count">5k+</span> servers and over
+          <span id="user-count">524k+</span> users.
         </p>
         <div class="info-cards">
           <div class="info-card">
@@ -457,12 +576,12 @@
             <p>NY, USA</p>
           </div>
           <div class="info-card">
-            <h3>Language</h3>
-            <p>English</p>
-          </div>
-          <div class="info-card">
             <h3>Interests</h3>
             <p>Programming, Gaming, Music</p>
+          </div>
+          <div class="info-card">
+            <h3>Discord Status</h3>
+            <p><span id="discord-status">Loading...</span></p>
           </div>
         </div>
       </section>
@@ -519,64 +638,310 @@
       </section>
       <section id="projects">
         <h2 class="section-title">Projects</h2>
-        <div class="projects">
-          <div class="project-card">
-            <h3>Pridebot</h3>
-            <p>
-              Your Discord bot to LGBTQ Identities! Explore terms, definitions,
-              resources, and more to be yourself.
-            </p>
-            <ul class="tech-stack">
-              <li>Discord.js</li>
-              <li>Node.js</li>
-              <li>Express.js</li>
-              <li>MongoDB</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://pridebot.xyz" target="_blank">Website</a>
-              <a href="https://pridebot.xyz/github" target="_blank">Github</a>
+
+        <!-- Discord Bots -->
+        <div class="cert-group">
+          <h3>Discord Bots</h3>
+          <div class="projects">
+            <!-- Pridebot -->
+            <div class="project-card">
+              <h3>Pridebot</h3>
+              <p>
+                Your Discord bot to LGBTQ Identities! Explore terms,
+                definitions, resources, and more to be yourself.
+              </p>
+              <div class="project-details">
+                <div class="tech-icons">
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                      alt="JavaScript"
+                    />
+                    <span class="tooltip-text">JavaScript</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
+                      alt="Discord.js"
+                    />
+                    <span class="tooltip-text">Discord.js</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                      alt="Express.js"
+                    />
+                    <span class="tooltip-text">Express.js</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                      alt="Node.js"
+                    />
+                    <span class="tooltip-text">Node.js</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                      alt="MongoDB"
+                    />
+                    <span class="tooltip-text">MongoDB</span>
+                  </span>
+                </div>
+                <div class="project-links">
+                  <a href="https://pridebot.xyz" target="_blank">Website</a>
+                  <a href="https://pridebot.xyz/github" target="_blank"
+                    >Github</a
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- Pridebot Manager -->
+            <div class="project-card">
+              <h3>Pridebot Manager</h3>
+              <p>Utility bot for Pridebot support server.</p>
+              <div class="project-details">
+                <div class="tech-icons">
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                      alt="JavaScript"
+                    />
+                    <span class="tooltip-text">JavaScript</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                      alt="Python"
+                    />
+                    <span class="tooltip-text">Python</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
+                      alt="Discord.js"
+                    />
+                    <span class="tooltip-text">Discord.js</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                      alt="Node.js"
+                    />
+                    <span class="tooltip-text">Node.js</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg"
+                      alt="Prisma (SQLite)"
+                    />
+                    <span class="tooltip-text">Prisma (SQLite)</span>
+                  </span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://github.com/Pridebot-Systems/Manager"
+                    target="_blank"
+                    >Github</a
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- portalBot -->
+            <div class="project-card">
+              <h3>portalBot</h3>
+              <p>Connecting communities through the portal.</p>
+              <div class="project-details">
+                <div class="tech-icons">
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                      alt="JavaScript"
+                    />
+                    <span class="tooltip-text">JavaScript</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
+                      alt="Discord.js"
+                    />
+                    <span class="tooltip-text">Discord.js</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                      alt="Node.js"
+                    />
+                    <span class="tooltip-text">Node.js</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                      alt="MongoDB"
+                    />
+                    <span class="tooltip-text">MongoDB</span>
+                  </span>
+                </div>
+                <div class="project-links">
+                  <a href="https://portalnet.work" target="_blank">Website</a>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="project-card">
-            <h3>Pridebot Manager</h3>
-            <p>Utility bot for Pridebot support server</p>
-            <ul class="tech-stack">
-              <li>Discord.js</li>
-              <li>JavaScript/Python</li>
-              <li>Node.js</li>
-              <li>Prisma (sqlite)</li>
-            </ul>
-            <div class="project-links">
-              <a
-                href="https://github.com/Pridebot-Systems/Manager"
-                target="_blank"
-                >Github</a
+        </div>
+
+        <!-- Websites -->
+        <div class="cert-group">
+          <h3>Websites</h3>
+          <div class="projects">
+            <!-- pridebot.xyz -->
+            <div class="project-card">
+              <h3>pridebot.xyz</h3>
+              <p>Website for Pridebot Discord bot.</p>
+              <div class="project-details">
+                <div class="tech-icons">
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                      alt="HTML5"
+                    />
+                    <span class="tooltip-text">HTML5</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                      alt="CSS3"
+                    />
+                    <span class="tooltip-text">CSS3</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                      alt="JavaScript"
+                    />
+                    <span class="tooltip-text">JavaScript</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                      alt="Express.js"
+                    />
+                    <span class="tooltip-text">Express.js</span>
+                  </span>
+                </div>
+                <div class="project-links">
+                  <a href="https://pridebot.xyz" target="_blank">Website</a>
+                  <a
+                    href="https://github.com/Pridebot-Systems/Website"
+                    target="_blank"
+                    >Github</a
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- youarenow.gay -->
+            <div class="project-card">
+              <h3>youarenow.gay</h3>
+              <p>Fun website to mess with your friends and prank them.</p>
+              <div class="project-details">
+                <div class="tech-icons">
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                      alt="HTML5"
+                    />
+                    <span class="tooltip-text">HTML5</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                      alt="CSS3"
+                    />
+                    <span class="tooltip-text">CSS3</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                      alt="JavaScript"
+                    />
+                    <span class="tooltip-text">JavaScript</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                      alt="Express.js"
+                    />
+                    <span class="tooltip-text">Express.js</span>
+                  </span>
+                </div>
+                <div class="project-links">
+                  <a href="https://youarenow.gay" target="_blank">Website</a>
+                </div>
+              </div>
+            </div>
+            <div class="project-card">
+              <h3>sdriver1.me / Stevendriver.com</h3>
+              <p>This portfolio site.</p>
+              <div class="project-details">
+                <div class="tech-icons">
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                      alt="HTML5"
+                    />
+                    <span class="tooltip-text">HTML5</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                      alt="CSS3"
+                    />
+                    <span class="tooltip-text">CSS3</span>
+                  </span>
+                  <span class="tooltip">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                      alt="JavaScript"
+                    />
+                    <span class="tooltip-text">JavaScript</span>
+                  </span>
+                </div>
+                <div class="project-links">
+                  <a href="#" target="_blank">Website</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="testimonials">
+        <h2 class="section-title">Testimonials</h2>
+        <div class="testimonials">
+          <div class="testimonial-card">
+            <p class="testimonial-text">
+              "I have known Sdriver1 for a couple of years now, and he has been
+              a huge help with improving a few of my projects. Usually in
+              regards to directing the marketability of upcoming announcements
+              within my projects. He has an entrepreneurial mindset that has
+              been a great asset to my startups. Well as he has been easy to
+              communicate with, and has never given any sign of negligence.
+              Overall a well rounded guy. I look forward to seeing what pathway
+              he takes in life, i'm sure he'll become a great business man like
+              myself one day."
+            </p>
+            <div class="testimonial-meta">
+              <img
+                src="https://images.sdriver1.me/billy.png"
+                alt="thybilly"
+                class="testimonial-avatar"
+              />
+              <span class="testimonial-author">ThyBilly</span>
+              <span class="testimonial-role"
+                >CEO & Founder of Bumpy.gg and Interly</span
               >
             </div>
           </div>
-          <div class="project-card">
-            <h3>portalBot</h3>
-            <p>Connecting communities through the portal.</p>
-            <ul class="tech-stack">
-              <li>Discord.js</li>
-              <li>Node.js</li>
-              <li>MongoDB</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://portalnet.work" target="_blank">Website</a>
-            </div>
-          </div>
-          <div class="project-card">
-            <h3>youarenow.gay</h3>
-            <p>Fun website to mess with your friends and prank them</p>
-            <ul class="tech-stack">
-              <li>HTML/CSS</li>
-              <li>Express.js</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://youarenow.gay" target="_blank">Website</a>
-            </div>
-          </div>
+          <!-- Add more testimonials as you get them! -->
         </div>
       </section>
       <section id="contact">
@@ -708,6 +1073,23 @@
               : userCount;
         })
         .catch((err) => console.error("Stats fetch error:", err));
+
+      fetch("https://sbot1.api.sdriver1.me/status")
+        .then((res) => res.json())
+        .then((data) => {
+          const statusEl = document.getElementById("discord-status");
+          const statusMap = {
+            online: "🟢 Online",
+            idle: "🟡 Idle",
+            dnd: "🔴 Do Not Disturb",
+            offline: "⚫ Offline",
+          };
+
+          statusEl.textContent = `${statusMap[data.status] || data.status}`;
+        })
+        .catch(() => {
+          document.getElementById("discord-status").textContent = "Unavailable";
+        });
 
       document.addEventListener("DOMContentLoaded", () => {
         const form = document.querySelector(".contact-form");
