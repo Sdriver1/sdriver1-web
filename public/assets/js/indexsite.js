@@ -177,20 +177,17 @@ function updateActivities() {
       if (!doingCard || !activityEl || !aboutGrid) return;
 
       const html = renderActivities(data);
-
-      if (html !== lastActivityHtml) {
-        if (html) {
-          doingCard.style.display = "block";
-          activityEl.innerHTML = html;
-          aboutGrid.style.width = "67%";
-          doingCard.style.width = "33%";
-        } else {
-          activityEl.innerHTML = "";
-          doingCard.style.display = "none";
-          aboutGrid.style.width = "100%";
-        }
-        lastActivityHtml = html;
+      if (html && html.trim() !== "") {
+        activityEl.innerHTML = html;
+        doingCard.style.display = "block";
+        aboutGrid.style.width = "67%";
+        doingCard.style.width = "33%";
+      } else {
+        activityEl.innerHTML = "";
+        doingCard.style.display = "none";
+        aboutGrid.style.width = "100%";
       }
+      lastActivityHtml = html;
     })
     .catch(() => {
       const doingCard = document.getElementById("doing-card");
