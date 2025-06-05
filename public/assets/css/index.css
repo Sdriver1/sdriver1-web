@@ -315,7 +315,6 @@ section {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 .tech-icons .tooltip {
@@ -366,7 +365,6 @@ section {
 .project-links {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
 }
 .project-links a + a:before {
   content: "|";
