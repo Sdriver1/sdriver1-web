@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Change Counting Practice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --pink: #ff69b4;
+        --pink-dark: #e04897;
+        --purple: #a259f7;
+        --bg: #fff0f8;
+        --card-bg: #fff6fb;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, var(--bg), #f3e6fc 100%);
+        color: #3a234a;
+        padding: 2em;
+        margin: 0;
+      }
+      .container {
+        max-width: 420px;
+        background: var(--card-bg);
+        padding: 2.2em 2em 2.5em 2em;
+        margin: 2.5em auto;
+        border-radius: 1.5em;
+        box-shadow: 0 4px 24px #e895f4cc;
+        border: 2px solid var(--pink);
+        position: relative;
+      }
+      h2 {
+        color: var(--pink-dark);
+        margin-bottom: 1em;
+        text-align: center;
+        letter-spacing: 1px;
+      }
+      label {
+        font-weight: 500;
+        color: var(--purple);
+      }
+      input[type="number"],
+      input[type="text"] {
+        width: 5em;
+        font-size: 1em;
+        padding: 0.3em 0.5em;
+        border-radius: 0.5em;
+        border: 1.5px solid var(--pink);
+        background: #fff;
+        margin-left: 0.4em;
+        margin-right: 1em;
+        color: #b30a69;
+      }
+      button {
+        background: var(--pink);
+        color: #fff;
+        border: none;
+        padding: 0.7em 1.5em;
+        font-size: 1.1em;
+        border-radius: 0.8em;
+        cursor: pointer;
+        transition: background 0.18s;
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+      button:hover {
+        background: var(--pink-dark);
+      }
+      #newProblem {
+        background: var(--purple);
+        float: right;
+        margin-left: 1em;
+        margin-top: 1em;
+      }
+      .result,
+      .breakdown-result {
+        margin-top: 1em;
+        font-size: 1.13em;
+        min-height: 2em;
+        font-weight: 500;
+      }
+      .correct {
+        color: #d200a4;
+      }
+      .wrong {
+        color: #960036;
+      }
+      .flex {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+        margin-top: 0.4em;
+      }
+      .breakdown-form {
+        margin-top: 1.7em;
+        padding: 1.1em 0.5em 0.1em 0.5em;
+        border-radius: 1em;
+        border: 1.5px dashed var(--purple);
+        background: #fbe1f3;
+        box-shadow: 0 2px 12px #ffd0ef44;
+      }
+      ul {
+        margin: 0.7em 0 0 0.7em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Change Counting Practice</h2>
+      <div id="problem"></div>
+      <!-- Step 1: Guess the total change -->
+      <form id="totalForm" autocomplete="off">
+        <label for="changeGuess"
+          >How much change should you give back? ($)</label
+        >
+        <input
+          type="text"
+          id="changeGuess"
+          required
+          pattern="^\d+(\.\d{2})$"
+          placeholder="e.g. 3.27"
+          maxlength="6"
+          autocomplete="off"
+        />
+        <button type="submit">Check</button>
+        <button type="button" id="newProblem" style="float: right">
+          New Item
+        </button>
+      </form>
+      <div class="result" id="result"></div>
+
+      <!-- Step 2: Breakdown fields, shown only if step 1 is correct -->
+      <form
+        id="breakdownForm"
+        class="breakdown-form"
+        style="display: none"
+        autocomplete="off"
+      >
+        <div
+          style="
+            font-weight: 600;
+            color: var(--pink-dark);
+            margin-bottom: 0.3em;
+          "
+        >
+          Enter coins & bills to make correct change:
+        </div>
+        <div class="flex">
+          <label>Quarters</label>
+          <input type="number" min="0" id="quarters" value="0" />
+        </div>
+        <div class="flex">
+          <label>Dimes</label>
+          <input type="number" min="0" id="dimes" value="0" />
+        </div>
+        <div class="flex">
+          <label>Nickels</label>
+          <input type="number" min="0" id="nickels" value="0" />
+        </div>
+        <div class="flex">
+          <label>Pennies</label>
+          <input type="number" min="0" id="pennies" value="0" />
+        </div>
+        <div class="flex">
+          <label>$1 Bills</label>
+          <input type="number" min="0" id="ones" value="0" />
+        </div>
+        <div class="flex">
+          <label>$5 Bills</label>
+          <input type="number" min="0" id="fives" value="0" />
+        </div>
+        <div class="flex">
+          <label>$10 Bills</label>
+          <input type="number" min="0" id="tens" value="0" />
+        </div>
+        <div class="flex">
+          <label>$20 Bills</label>
+          <input type="number" min="0" id="twenties" value="0" />
+        </div>
+        <button type="submit">Check Breakdown</button>
+      </form>
+      <div class="breakdown-result" id="breakdownResult"></div>
+    </div>
+    <script>
+      // Coin/bill values in cents
+      const VALUES = {
+        quarters: 25,
+        dimes: 10,
+        nickels: 5,
+        pennies: 1,
+        ones: 100,
+        fives: 500,
+        tens: 1000,
+        twenties: 2000,
+      };
+
+      let itemPrice = 0,
+        paid = 0,
+        change = 0;
+
+      function randomPrice() {
+        return +(Math.random() * (49.99 - 0.05) + 0.05).toFixed(2);
+      }
+      function smartPaid(price) {
+        let options = [1, 5, 10, 20, 50]
+          .map((x) => Math.ceil(price / x) * x)
+          .filter((x) => x > price);
+        return options[Math.floor(Math.random() * options.length)];
+      }
+      function updateProblem() {
+        itemPrice = randomPrice();
+        paid = smartPaid(itemPrice);
+        change = Math.round((paid - itemPrice) * 100);
+
+        document.getElementById(
+          "problem"
+        ).innerHTML = `<strong style="color:var(--purple)">Item price:</strong> <b>$${itemPrice.toFixed(
+          2
+        )}</b><br>
+         <strong style="color:var(--pink)">Customer gives you:</strong> <b>$${paid.toFixed(
+           2
+         )}</b>`;
+        document.getElementById("result").textContent = "";
+        document.getElementById("breakdownResult").textContent = "";
+        document.getElementById("totalForm").reset();
+        document.getElementById("breakdownForm").reset();
+        document.getElementById("breakdownForm").style.display = "none";
+        document.getElementById("changeGuess").focus();
+      }
+      function makeChange(change) {
+        let left = change;
+        const out = {};
+        for (const [key, val] of Object.entries({
+          twenties: 2000,
+          tens: 1000,
+          fives: 500,
+          ones: 100,
+          quarters: 25,
+          dimes: 10,
+          nickels: 5,
+          pennies: 1,
+        })) {
+          out[key] = Math.floor(left / val);
+          left = left % val;
+        }
+        return out;
+      }
+      // Step 1: Enter total change
+      document.getElementById("totalForm").onsubmit = function (e) {
+        e.preventDefault();
+        let guess = document.getElementById("changeGuess").value.trim();
+        if (!/^\d+(\.\d{2})$/.test(guess)) {
+          document.getElementById(
+            "result"
+          ).innerHTML = `<span class="wrong">Please enter in format e.g. 3.27</span>`;
+          return;
+        }
+        let guessCents = Math.round(Number(guess) * 100);
+        if (guessCents === change) {
+          document.getElementById(
+            "result"
+          ).innerHTML = `<span class="correct">✅ Yes! Now enter how to make this change:</span>`;
+          document.getElementById("breakdownForm").style.display = "";
+          document.getElementById("breakdownResult").textContent = "";
+          setTimeout(() => document.getElementById("quarters").focus(), 150);
+        } else {
+          document.getElementById(
+            "result"
+          ).innerHTML = `<span class="wrong">❌ Not quite! Try again.</span>`;
+          document.getElementById("breakdownForm").style.display = "none";
+          document.getElementById("breakdownResult").textContent = "";
+        }
+      };
+      // Step 2: Enter breakdown
+      document.getElementById("breakdownForm").onsubmit = function (e) {
+        e.preventDefault();
+        let sum = 0;
+        for (const key in VALUES) {
+          const val = Number(document.getElementById(key).value) || 0;
+          sum += val * VALUES[key];
+        }
+        if (sum === change) {
+          document.getElementById(
+            "breakdownResult"
+          ).innerHTML = `<span class="correct">🎉 Perfect! That's the correct change!</span>`;
+        } else {
+          const actual = makeChange(change);
+          let s = `<span class="wrong">❌ That's not right.<br>The correct way is:</span><ul>`;
+          for (const key of [
+            "twenties",
+            "tens",
+            "fives",
+            "ones",
+            "quarters",
+            "dimes",
+            "nickels",
+            "pennies",
+          ]) {
+            if (actual[key] > 0)
+              s += `<li>${actual[key]} × ${
+                key[0] === "$"
+                  ? key
+                  : key.charAt(0).toUpperCase() + key.slice(1)
+              }</li>`;
+          }
+          s += `</ul>`;
+          document.getElementById("breakdownResult").innerHTML = s;
+        }
+      };
+      document.getElementById("newProblem").onclick = updateProblem;
+      updateProblem();
+    </script>
+  </body>
+</html>

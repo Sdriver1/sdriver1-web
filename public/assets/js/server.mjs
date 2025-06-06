@@ -54,6 +54,10 @@ app1.get("/resume", (req, res) =>
 app1.get("/resumepng", (req, res) =>
   res.sendFile(join(__dirname, "../../../public/assets/resume/resume.png"))
 );
+app1.get("/change", (req, res) =>
+  res.sendFile(join(__dirname, "../../../public/sites/changehelp.html"))
+);
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
