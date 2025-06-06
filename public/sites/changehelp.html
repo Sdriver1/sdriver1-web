@@ -28,6 +28,7 @@
         box-shadow: 0 4px 24px #e895f4cc;
         border: 2px solid var(--pink);
         position: relative;
+        overflow: visible;
       }
       h2 {
         color: var(--pink-dark);
@@ -62,6 +63,8 @@
         transition: background 0.18s;
         margin-top: 1em;
         margin-bottom: 1em;
+        position: relative;
+        overflow: visible;
       }
       button:hover {
         background: var(--pink-dark);
@@ -102,6 +105,25 @@
       ul {
         margin: 0.7em 0 0 0.7em;
       }
+      .confetti {
+        pointer-events: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+        overflow: visible;
+        pointer-events: none;
+      }
+      .confetti-piece {
+        position: absolute;
+        width: 10px;
+        height: 18px;
+        border-radius: 3px;
+        opacity: 0.88;
+        will-change: transform, opacity;
+      }
     </style>
   </head>
   <body>
@@ -122,7 +144,7 @@
           maxlength="6"
           autocomplete="off"
         />
-        <button type="submit">Check</button>
+        <button type="submit" id="checkTotalBtn">Check</button>
         <button type="button" id="newProblem" style="float: right">
           New Item
         </button>
@@ -177,9 +199,10 @@
           <label>$20 Bills</label>
           <input type="number" min="0" id="twenties" value="0" />
         </div>
-        <button type="submit">Check Breakdown</button>
+        <button type="submit" id="breakdownBtn">Check Breakdown</button>
       </form>
       <div class="breakdown-result" id="breakdownResult"></div>
+      <div class="confetti" id="confetti"></div>
     </div>
     <script>
       // Coin/bill values in cents
@@ -245,6 +268,50 @@
         }
         return out;
       }
+      // ---- Confetti ----
+      function randomColor() {
+        const colors = [
+          "var(--pink)",
+          "var(--purple)",
+          "#ffb1e6",
+          "#fff",
+          "#fad0fc",
+          "#e04897",
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+      function confettiBurstFromButton(btn) {
+        const rect = btn.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        confettiBurst(x, y);
+      }
+      function confettiBurst(x, y) {
+        const confetti = document.getElementById("confetti");
+        const count = 22;
+        for (let i = 0; i < count; i++) {
+          const div = document.createElement("div");
+          div.className = "confetti-piece";
+          div.style.background = randomColor();
+          div.style.left = x - 5 + (Math.random() - 0.5) * 20 + "px";
+          div.style.top = y - 9 + "px";
+          div.style.transform = `rotate(${Math.random() * 180}deg)`;
+          confetti.appendChild(div);
+
+          // Animate
+          setTimeout(() => {
+            const angle = Math.PI * 2 * Math.random();
+            const distance = 80 + Math.random() * 55;
+            div.style.transition = "all 2.2s cubic-bezier(0.19,1,0.22,1)";
+            div.style.transform = `translate(${Math.cos(angle) * distance}px, ${
+              Math.sin(angle) * distance
+            }px) rotate(${Math.random() * 900 - 450}deg)`;
+            div.style.opacity = 0;
+          }, 10);
+          // Remove after animation
+          setTimeout(() => confetti.removeChild(div), 2600);
+        }
+      }
       // Step 1: Enter total change
       document.getElementById("totalForm").onsubmit = function (e) {
         e.preventDefault();
@@ -263,6 +330,7 @@
           document.getElementById("breakdownForm").style.display = "";
           document.getElementById("breakdownResult").textContent = "";
           setTimeout(() => document.getElementById("quarters").focus(), 150);
+          confettiBurstFromButton(document.getElementById("checkTotalBtn"));
         } else {
           document.getElementById(
             "result"
@@ -283,6 +351,8 @@
           document.getElementById(
             "breakdownResult"
           ).innerHTML = `<span class="correct">🎉 Perfect! That's the correct change!</span>`;
+          // Confetti from breakdown button!
+          confettiBurstFromButton(document.getElementById("breakdownBtn"));
         } else {
           const actual = makeChange(change);
           let s = `<span class="wrong">❌ That's not right.<br>The correct way is:</span><ul>`;
