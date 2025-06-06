@@ -7,7 +7,7 @@
   --card-bg: #ffffff;
 }
 [data-theme="dark"] {
-  --primary: #4f46e5;
+  --primary: #9eb3ff;
   --secondary: #9ca3af;
   --bg: #18191f;
   --text: #d1d5db;
@@ -267,6 +267,150 @@ section {
     font-size: 0.95rem !important;
     line-height: 1.8;
     word-break: break-word;
+  }
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  margin: 2.5rem 0 4rem 0;
+  padding-left: 45px;
+  width: 100% - 68px;
+}
+.timeline-line {
+  position: absolute;
+  top: 0;
+  left: 32px; /* Adjust this value until it matches the content cards/text */
+  width: 4px;
+  height: 100%;
+  background: var(--primary);
+  z-index: 0;
+  border-radius: 2px;
+}
+.timeline-group {
+  position: relative;
+  margin-bottom: 3.5rem;
+}
+.timeline-date-bubble {
+  position: static;
+  display: block;
+  margin-left: 10px; /* aligns with timeline line and content */
+  margin-bottom: 0.7rem;
+  margin-top: 0.3rem;
+  font-size: 1.07rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--bg);
+  padding: 4px 18px;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px #0002;
+  letter-spacing: 0.03em;
+  width: max-content;
+}
+.timeline-group .timeline-item {
+  margin-bottom: 1.1rem;
+  margin-left: 0;
+  margin-right: 0;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+.timeline-group .timeline-item:last-child {
+  margin-bottom: 0;
+}
+.timeline-group .timeline-item.active {
+  opacity: 1;
+  transform: translateY(0);
+  width: 95%;
+}
+.timeline-content {
+  background: var(--card-bg);
+  padding: 1.3rem 1.7rem;
+  border-radius: 1rem;
+  border: 2px solid var(--secondary);
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 16px #0001;
+  transition: border 0.2s, box-shadow 0.2s;
+  left: 10px;
+}
+.timeline-date {
+  font-size: 0.95rem;
+  color: var(--secondary);
+  display: block;
+  margin-bottom: 0.7rem;
+}
+.timeline-item.irl .timeline-content {
+  border-color: #58c990;
+  box-shadow: 0 4px 16px #58c99026;
+}
+.timeline-item.discord .timeline-content {
+  border-color: #6b7bfa;
+  box-shadow: 0 4px 16px #6b7bfa26;
+}
+.timeline-item.hide {
+  display: none !important;
+}
+.timeline-toggle {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.7rem;
+}
+.toggle-btn {
+  background: var(--card-bg);
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.toggle-btn.active,
+.toggle-btn:focus {
+  background: var(--primary);
+  color: #fff;
+  outline: none;
+}
+
+.job-title {
+  font-size: 1.17em;
+  font-weight: 700;
+  margin-bottom: 2px;
+  color: var(--text);
+}
+.job-company {
+  font-size: 1.05em;
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+.job-dates {
+  font-size: 1em;
+  color: var(--secondary);
+  margin-bottom: 0px;
+}
+.job-duration {
+  font-size: 0.95em;
+  color: var(--primary);
+  margin-left: 8px;
+}
+@media (max-width: 700px) {
+  .timeline {
+    padding-left: 20px;
+  }
+  .timeline-line {
+    left: 10px;
+  }
+  .timeline-date-bubble {
+    left: -35px;
+    font-size: 0.98rem;
+    padding: 2px 8px;
+  }
+  .timeline-content {
+    padding: 1rem;
   }
 }
 

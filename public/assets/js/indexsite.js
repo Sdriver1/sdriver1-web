@@ -230,6 +230,121 @@ function setupContactForm() {
   });
 }
 
+function setupTimelineToggle() {
+  const btns = document.querySelectorAll(".toggle-btn");
+  const groups = document.querySelectorAll(".timeline-group");
+  btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const type = btn.getAttribute("data-type");
+      groups.forEach((group) => {
+        let showGroup = false;
+        const items = group.querySelectorAll(".timeline-item");
+        items.forEach((item) => {
+          item.classList.remove("hide");
+          if (type === "all") {
+            // Color by type
+            if (item.classList.contains("irl")) {
+              item.querySelector(".timeline-content").style.borderColor =
+                "#58c990";
+              item.querySelector(".timeline-content").style.boxShadow =
+                "0 4px 16px #58c99026";
+            } else if (item.classList.contains("discord")) {
+              item.querySelector(".timeline-content").style.borderColor =
+                "#6b7bfa";
+              item.querySelector(".timeline-content").style.boxShadow =
+                "0 4px 16px #6b7bfa26";
+            }
+            showGroup = true;
+          } else if (type === "irl") {
+            if (item.classList.contains("discord")) {
+              item.classList.add("hide");
+            } else {
+              item.querySelector(".timeline-content").style.borderColor =
+                "var(--primary)";
+              item.querySelector(".timeline-content").style.boxShadow =
+                "0 4px 16px #4f46e526";
+              showGroup = true;
+            }
+          } else if (type === "discord") {
+            if (item.classList.contains("irl")) {
+              item.classList.add("hide");
+            } else {
+              item.querySelector(".timeline-content").style.borderColor =
+                "var(--primary)";
+              item.querySelector(".timeline-content").style.boxShadow =
+                "0 4px 16px #4f46e526";
+              showGroup = true;
+            }
+          }
+        });
+        // Hide the group if all its items are hidden
+        if (!showGroup) group.style.display = "none";
+        else group.style.display = "";
+      });
+    });
+  });
+}
+
+function handleTimelineScroll() {
+  const items = document.querySelectorAll(".timeline-item");
+  const windowHeight = window.innerHeight;
+  items.forEach((item) => {
+    const rect = item.getBoundingClientRect();
+    if (rect.top < windowHeight - 60) {
+      item.classList.add("active");
+    }
+  });
+}
+
+function pluralize(n, word) {
+  return n + " " + word + (n === 1 ? "" : "s");
+}
+
+function getMonthsBetween(start, end) {
+  // start and end: JS Date objects
+  let years = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+  let totalMonths = years * 12 + months;
+  // If end day is before start day, subtract one month
+  if (end.getDate() < start.getDate()) totalMonths--;
+  return totalMonths;
+}
+
+function formatDuration(months) {
+  if (months < 1) return "";
+  if (months < 12) return `(${pluralize(months, "mo")})`;
+  const years = Math.floor(months / 12);
+  const mos = months % 12;
+  if (mos === 0) return `(${pluralize(years, "yr")})`;
+  return `(${pluralize(years, "yr")}, ${pluralize(mos, "mo")})`;
+}
+
+function updateJobDurations() {
+  const jobs = document.querySelectorAll(".job-dates[data-start]");
+  jobs.forEach((el) => {
+    const startStr = el.getAttribute("data-start");
+    const endStr = el.getAttribute("data-end");
+    if (!startStr) return;
+    const start = new Date(startStr);
+    const end = endStr && endStr !== "" ? new Date(endStr) : new Date();
+    const months = getMonthsBetween(start, end) + 1; // include current month
+    const span = el.querySelector(".job-duration");
+    if (span) span.textContent = formatDuration(months);
+  });
+}
+
+// Run when DOM loads (after timeline code)
+window.addEventListener("DOMContentLoaded", () => {
+  updateJobDurations();
+});
+window.addEventListener("scroll", handleTimelineScroll);
+window.addEventListener("DOMContentLoaded", () => {
+  setupTimelineToggle();
+  handleTimelineScroll();
+});
+
 window.addEventListener("DOMContentLoaded", () => {
   typePrimary();
   setupThemeToggle();
