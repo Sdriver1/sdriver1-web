@@ -244,7 +244,6 @@ function setupTimelineToggle() {
         items.forEach((item) => {
           item.classList.remove("hide");
           if (type === "all") {
-            // Color by type
             if (item.classList.contains("irl")) {
               item.querySelector(".timeline-content").style.borderColor =
                 "#58c990";
@@ -262,9 +261,9 @@ function setupTimelineToggle() {
               item.classList.add("hide");
             } else {
               item.querySelector(".timeline-content").style.borderColor =
-                "var(--primary)";
+                "#58c990";
               item.querySelector(".timeline-content").style.boxShadow =
-                "0 4px 16px #4f46e526";
+                "0 4px 16px #58c99026";
               showGroup = true;
             }
           } else if (type === "discord") {
