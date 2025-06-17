@@ -25,13 +25,22 @@ function typeSubtitle() {
 }
 
 // --- Theme Toggle ---
+const svgSun = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" fill="currentColor"/><g stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>`;
+const svgMoon = `<svg viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" fill="currentColor"/></svg>`;
+function setThemeIcon(theme) {
+  const iconSpan = document.getElementById("theme-icon");
+  if (iconSpan) {
+    iconSpan.innerHTML = theme === "dark" ? svgSun : svgMoon;
+  }
+}
+
 function setupThemeToggle() {
   const toggle = document.getElementById("theme-toggle");
   const stored = localStorage.getItem("theme");
   const mq = window.matchMedia("(prefers-color-scheme: dark)");
   let theme = stored || (mq.matches ? "dark" : "light");
   document.documentElement.setAttribute("data-theme", theme);
-  toggle.textContent = theme === "dark" ? "☀️" : "🌙";
+  setThemeIcon(theme);
   toggle.addEventListener("click", () => {
     theme =
       document.documentElement.getAttribute("data-theme") === "dark"
@@ -39,7 +48,7 @@ function setupThemeToggle() {
         : "dark";
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-    toggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    setThemeIcon(theme);
   });
 }
 

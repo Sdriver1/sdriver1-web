@@ -56,6 +56,19 @@ nav {
   border-radius: 50%;
   object-fit: cover;
 }
+.theme-toggle svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  transition: fill 0.2s;
+  color: var(--primary);
+}
+[data-theme="dark"] .theme-toggle svg {
+  color: #ffe066;
+}
+[data-theme="light"] .theme-toggle svg {
+  color: #333;
+}
 
 /* Mobile toggle */
 .mobile-toggle {
