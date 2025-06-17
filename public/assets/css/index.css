@@ -551,15 +551,19 @@ section {
 }
 .resume-section .buttons a {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: var(--primary);
-  color: white;
+  padding: 0.75rem 1.8rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  font-weight: 600;
   text-decoration: none;
-  border-radius: 0.5rem;
-  transition: background 0.3s;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px #0003;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .resume-section .buttons a:hover {
-  background: rgba(79, 70, 229, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px #0004;
 }
 .cert-grid {
   display: grid;
