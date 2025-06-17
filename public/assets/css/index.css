@@ -3,6 +3,7 @@
   --primary: #4f46e5;
   --secondary: #6b7280;
   --bg: #f9fafb;
+  --header-bg: #ffffff;
   --text: #111827;
   --card-bg: #ffffff;
 }
@@ -10,6 +11,7 @@
   --primary: #9eb3ff;
   --secondary: #9ca3af;
   --bg: #18191f;
+  --header-bg: #242731;
   --text: #d1d5db;
   --card-bg: #242731;
 }
@@ -33,7 +35,7 @@ body {
 
 /* === Header & Navigation === */
 header {
-  background: var(--bg);
+  background: var(--header-bg);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
