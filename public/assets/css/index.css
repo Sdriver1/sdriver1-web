@@ -674,6 +674,49 @@ footer {
   margin: 2rem 0;
   color: var(--secondary);
 }
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  color: var(--secondary);
+  font-size: 1rem;
+}
+
+.footer-right {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.footer-icon {
+  width: 28px;
+  height: 28px;
+  filter: grayscale(60%);
+  transition: filter 0.2s, transform 0.2s;
+  vertical-align: middle;
+}
+
+.footer-icon:hover {
+  filter: none;
+  transform: scale(1.12);
+}
+
+@media (max-width: 600px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+  .footer-right {
+    gap: 0.9rem;
+  }
+}
 
 .testimonials {
   display: grid;
