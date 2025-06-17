@@ -191,10 +191,12 @@ function updateActivities() {
         doingCard.style.display = "block";
         aboutGrid.style.width = "67%";
         doingCard.style.width = "33%";
+        aboutGrid.classList.remove("no-activity");
       } else {
         activityEl.innerHTML = "";
         doingCard.style.display = "none";
         aboutGrid.style.width = "100%";
+        aboutGrid.classList.add("no-activity");
       }
       lastActivityHtml = html;
     })
