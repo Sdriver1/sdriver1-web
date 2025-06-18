@@ -723,13 +723,30 @@ footer {
 .footer-icon {
   width: 28px;
   height: 28px;
-  filter: grayscale(60%);
-  transition: filter 0.2s, transform 0.2s;
   vertical-align: middle;
 }
 
+/* Brand colors (non-dark/light dependent) */
+.footer-icon[src*="bluesky"] {
+  filter: invert(31%) sepia(98%) saturate(1200%) hue-rotate(180deg); /* #0085FF */
+}
+.footer-icon[src*="discord"] {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(74%) saturate(6335%)
+    hue-rotate(224deg) brightness(96%) contrast(97%); /* #5865F2 */
+}
+
+.footer-icon[src*="linkedin"] {
+  filter: invert(34%) sepia(91%) saturate(745%) hue-rotate(173deg); /* #0077B5 */
+}
+.footer-icon[src*="twitch"] {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(58%) saturate(4143%)
+    hue-rotate(239deg) brightness(98%) contrast(101%); /* #8956FB */
+}
+.footer-icon[src*="youtube"] {
+  filter: invert(16%) sepia(94%) saturate(7491%) hue-rotate(353deg); /* #FF0000 */
+}
+
 .footer-icon:hover {
-  filter: none;
   transform: scale(1.12);
 }
 
