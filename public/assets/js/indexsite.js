@@ -372,6 +372,51 @@ function updateJobDurations() {
   });
 }
 
+// --- Scroll to Top Button ---
+function setupScrollToTop() {
+  const scrollBtn = document.getElementById("scroll-to-top");
+  if (!scrollBtn) return;
+
+  // Show/hide button based on scroll position
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 300) {
+      scrollBtn.classList.add("visible");
+    } else {
+      scrollBtn.classList.remove("visible");
+    }
+  });
+
+  // Scroll to top when clicked
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+}
+
+// --- Scroll Animations ---
+function setupScrollAnimations() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    }
+  );
+
+  // Observe all sections
+  document.querySelectorAll("section").forEach((section) => {
+    observer.observe(section);
+  });
+}
+
 // Run when DOM loads (after timeline code)
 window.addEventListener("DOMContentLoaded", () => {
   updateJobDurations();
@@ -391,5 +436,7 @@ window.addEventListener("DOMContentLoaded", () => {
   fetchDiscordStatus();
   setupContactForm();
   updateActivities();
+  setupScrollToTop();
+  setupScrollAnimations();
   setInterval(updateActivities, 10 * 1000);
 });

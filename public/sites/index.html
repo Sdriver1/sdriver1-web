@@ -4,7 +4,52 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Steven Driver | Portfolio</title>
+    <title>
+      Steven Driver | Portfolio - Software Developer & Computer Science Student
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Steven Driver (Sdriver1) - Computer Science student at RIT, Discord bot developer, and software engineer. Creator of Pridebot serving 5k+ servers."
+    />
+    <meta
+      name="keywords"
+      content="Steven Driver, Sdriver1, software developer, computer science, Discord bots, Pridebot, RIT, portfolio"
+    />
+    <meta name="author" content="Steven Driver" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sdriver1.me/" />
+    <meta
+      property="og:title"
+      content="Steven Driver | Portfolio - Software Developer"
+    />
+    <meta
+      property="og:description"
+      content="Computer Science student at RIT, Discord bot developer, and software engineer. Creator of Pridebot serving 5k+ servers."
+    />
+    <meta
+      property="og:image"
+      content="https://sdriver1.me/assets/images/profile.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://sdriver1.me/" />
+    <meta
+      property="twitter:title"
+      content="Steven Driver | Portfolio - Software Developer"
+    />
+    <meta
+      property="twitter:description"
+      content="Computer Science student at RIT, Discord bot developer, and software engineer."
+    />
+    <meta
+      property="twitter:image"
+      content="https://sdriver1.me/assets/images/profile.png"
+    />
 
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,16 +77,26 @@
         >
           ☰
         </button>
-        <div class="nav-links" id="nav-links">
-          <a href="#about">About</a>
-          <a href="#resume">Resume</a>
-          <a href="#work">Work Experience</a>
-          <a href="#projects">Projects</a>
-          <a href="#testimonials">Testimonials</a>
+        <div
+          class="nav-links"
+          id="nav-links"
+          role="navigation"
+          aria-label="Main navigation"
+        >
+          <a href="#about" aria-label="About section">About</a>
+          <a href="#skills" aria-label="Skills section">Skills</a>
+          <a href="#resume" aria-label="Resume section">Resume</a>
+          <a href="#work" aria-label="Work Experience section"
+            >Work Experience</a
+          >
+          <a href="#projects" aria-label="Projects section">Projects</a>
+          <a href="#testimonials" aria-label="Testimonials section"
+            >Testimonials</a
+          >
           <button
             class="theme-toggle"
             id="theme-toggle"
-            aria-label="Toggle theme"
+            aria-label="Toggle between light and dark theme"
           >
             <span id="theme-icon"> </span>
           </button>
@@ -66,25 +121,24 @@
         <p>
           Hello! My name is Steven Driver, also known as Sdriver1. I'm an
           incoming freshman at RIT studying computer science. I have been
-          programming for abit over 3 years now and have a passion for discord
+          programming for a bit over 3 years now and have a passion for Discord
           bots and web development. In my free time I like to listen to music,
           play video games, or code. I primarily work with JavaScript and
           HTML/CSS, but I also have experience with Python and Java. I love
-          swimming and have been a Lifeguard for about 3 years and been teaching
-          swimming for about 2 year now. I currently am employed as a swim
-          instructor and a lifeguard at a local country club. I am also an
-          intern for theDevEco consulting, where I work on various projects and
+          swimming and have been a lifeguard for about 3 years and have been
+          teaching swimming for about 2 years now. I am currently employed as an
+          intern for devEco Consulting, where I work on various projects and
           help with development of the portalBot. My main project is Pridebot, a
-          multi-functon LGBTQIA themed discord bot that serves
-          <span id="server-count">5k+</span> servers and over
-          <span id="user-count">524k+</span> users.
+          multi-function LGBTQIA+ themed Discord bot that serves
+          <span id="server-count">7.5k+</span> servers and over
+          <span id="user-count">666k+</span> users.
         </p>
         <div class="about-cards-container">
           <div class="about-grid">
             <div class="about-card">
               <!-- Age -->
               <div class="about-card-title">Age</div>
-              <div class="about-card-value">17</div>
+              <div class="about-card-value" id="age">18</div>
             </div>
             <div class="about-card">
               <!-- Pronouns -->
@@ -108,6 +162,51 @@
           </div>
         </div>
       </section>
+
+      <section id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>Programming Languages</h3>
+            <div class="skill-items">
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Frameworks & Libraries</h3>
+            <div class="skill-items">
+              <span class="skill-tag">Discord.js</span>
+              <span class="skill-tag">Express.js</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">React</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Databases & Tools</h3>
+            <div class="skill-items">
+              <span class="skill-tag">MongoDB</span>
+              <span class="skill-tag">SQLite</span>
+              <span class="skill-tag">Prisma</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">Maven</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Platforms & Services</h3>
+            <div class="skill-items">
+              <span class="skill-tag">Discord Bots</span>
+              <span class="skill-tag">Web Development</span>
+              <span class="skill-tag">API Development</span>
+              <span class="skill-tag">Minecraft Plugins</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section>
         <h2 class="section-title">Resume, Certifications, & Achievements</h2>
         <div id="resume" class="resume-section">
@@ -869,41 +968,27 @@
           <!-- Add more testimonials as you get them! -->
         </div>
       </section>
-      <!-- <section id="contact">
-        <h2 class="section-title">Connect with Me</h2>
-        <div class="contact">
-          <a href="https://bsky.app/profile/sdriver1.me" target="_blank"
-            >Bluesky</a
+
+      <section id="contact" class="cta-section">
+        <h2 class="section-title">Let's Connect!</h2>
+        <p class="cta-text">
+          I'm always interested in new opportunities, collaborations, and
+          connecting with fellow developers. Whether you want to discuss a
+          project, ask about my work, or just say hello, feel free to reach out!
+        </p>
+        <div class="contact-buttons">
+          <a href="mailto:sdriver@sdriver1.me" class="cta-button primary">
+            Get In Touch
+          </a>
+          <a
+            href="https://sdriver1.me/linkedin"
+            target="_blank"
+            class="cta-button secondary"
           >
-          <a href="https://discord.com/users/691506668781174824" target="_blank"
-            >Discord</a
-          >
-          <a href="mailto:sdriver@sdriver1.me" target="_blank">Email</a>
-          <a href="https://sdriver1.me/github" target="_blank">GitHub</a>
-          <a href="https://www.instagram.com/sdriver_1/" target="_blank"
-            >Instagram</a
-          >
-          <a href="https://sdriver1.me/linkedin" target="_blank">LinkedIn</a>
+            Connect on LinkedIn
+          </a>
         </div>
       </section>
-      <section class="email-section">
-        <form
-          class="contact-form"
-          action="/api/contact"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <input type="text" name="name" placeholder="Your Name" required />
-          <input type="email" name="email" placeholder="Your Email" required />
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            rows="5"
-            required
-          ></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-      </section> -->
     </main>
     <footer>
       <div class="footer-content">
