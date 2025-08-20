@@ -140,6 +140,21 @@ let clickCount = fs.existsSync(clickCountFile)
 
 app4.use(express.json());
 
+// ======================== Server 6 (nightwing7974is.gay - Port 6969) ========================
+
+const app6 = express();
+const port6 = 6969;
+
+app6.use("/assets", express.static(join(__dirname, "../../../public/assets")));
+
+app6.get("/", (req, res) => {
+  res.sendFile(join(__dirname, "../../../public/sites/nightwing7974is.html"));
+});
+
+app6.listen(port6, () =>
+  console.log(`Server running on http://nightwing7974is.gay:${port6}`)
+);
+
 // ======================== Server 5 ( ========================
 
 const authMiddleware = (req, res, next) => {
