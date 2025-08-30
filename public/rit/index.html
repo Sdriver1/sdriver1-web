@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Steven Driver | RIT Student - Computer Science Academic Portfolio
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Steven Driver's academic portfolio at Rochester Institute of Technology. Computer Science student showcasing coursework, grades, projects, and academic achievements."
+    />
+    <meta
+      name="keywords"
+      content="Steven Driver, RIT, Rochester Institute of Technology, Computer Science, academic portfolio, coursework, grades, student"
+    />
+    <meta name="author" content="Steven Driver" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rit.sdriver1.me" />
+    <meta
+      property="og:title"
+      content="Steven Driver | RIT Academic Portfolio"
+    />
+    <meta
+      property="og:description"
+      content="Computer Science student at RIT showcasing academic achievements, coursework, and projects."
+    />
+    <meta
+      property="og:image"
+      content="https://sdriver1.me/assets/images/profile.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://rit.sdriver1.me/" />
+    <meta
+      property="twitter:title"
+      content="Steven Driver | RIT Academic Portfolio"
+    />
+    <meta
+      property="twitter:description"
+      content="Computer Science student at RIT showcasing academic achievements and coursework."
+    />
+    <meta
+      property="twitter:image"
+      content="https://sdriver1.me/assets/images/profile.png"
+    />
+
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../assets/css/index.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <a href="https://sdriver1.me"
+            ><img src="../assets/images/profile.png" alt="Logo" loading="lazy"
+          /></a>
+        </div>
+        <button
+          id="mobile-toggle"
+          class="mobile-toggle"
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
+        <div
+          class="nav-links"
+          id="nav-links"
+          role="navigation"
+          aria-label="Main navigation"
+        >
+          <a href="#academic-overview" aria-label="Academic Overview section"
+            >Academic Overview</a
+          >
+          <a href="#coursework" aria-label="Coursework section">Coursework</a>
+          <!-- <a href="#grades" aria-label="Grades section">Grades</a> -->
+          <a href="#resume" aria-label="Resume section">Resume</a>
+          <a href="#projects" aria-label="Academic Projects section"
+            >Academic Projects</a
+          >
+          <a href="#extracurriculars" aria-label="Extracurriculars section"
+            >Extracurriculars</a
+          >
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Toggle between light and dark theme"
+          >
+            <span id="theme-icon"> </span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section id="hero" class="hero">
+        <h1>
+          <span id="typewriter"></span
+          ><span class="cursor" id="cursor-primary"></span>
+        </h1>
+        <p>
+          <span id="subtitle"></span
+          ><span class="cursor" id="cursor-sub"></span>
+        </p>
+      </section>
+
+      <section id="academic-overview">
+        <h2 class="section-title">Academic Overview</h2>
+        <p>
+          I'm Steven Driver, a Computer Science student at Rochester Institute
+          of Technology (RIT). I'm passionate about software development,
+          algorithms, and building innovative solutions to complex problems. My
+          academic journey focuses on developing strong foundations in computer
+          science principles while gaining practical experience through hands-on
+          projects and coursework.
+        </p>
+        <div class="about-cards-container">
+          <div class="about-grid">
+            <div class="about-card">
+              <div class="about-card-title">Major</div>
+              <div class="about-card-value">Computer Science</div>
+            </div>
+            <div class="about-card">
+              <div class="about-card-title">Year</div>
+              <div class="about-card-value">Freshman</div>
+            </div>
+            <div class="about-card">
+              <div class="about-card-title">Expected Graduation</div>
+              <div class="about-card-value">May 2029</div>
+            </div>
+            <div class="about-card">
+              <div class="about-card-title">Current Class</div>
+              <div class="about-card-value" id="current-class">
+                Not in class
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="coursework">
+        <h2 class="section-title">Coursework</h2>
+        <div class="timeline-toggle">
+          <button class="toggle-btn active" data-type="fall2025">
+            Fall 2025
+          </button>
+        </div>
+        <div class="timeline">
+          <div class="timeline-line"></div>
+
+          <!-- Fall 2025 -->
+          <div
+            class="timeline-group fall2025"
+            data-year="2025"
+            data-month="Fall"
+          >
+            <div class="timeline-date-bubble">Fall 2025</div>
+            <div class="timeline-item fall2025">
+              <div class="timeline-content">
+                <div class="job-title">Principles of Microeconomics</div>
+                <div class="job-company">ECON-101 • 3 Credits</div>
+                <div class="job-dates"></div>
+              </div>
+            </div>
+            <div class="timeline-item fall2025">
+              <div class="timeline-content">
+                <div class="job-title">Calculus I</div>
+                <div class="job-company">MATH-181 • 4 Credits</div>
+                <div class="job-dates">
+                  Limits, derivatives, and applications of differentiation
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item fall2025">
+              <div class="timeline-content">
+                <div class="job-title">Computer Science for AP Students</div>
+                <div class="job-company">CSCI-140 • 4 Credits</div>
+                <div class="job-dates"></div>
+              </div>
+            </div>
+            <div class="timeline-item fall2025">
+              <div class="timeline-content">
+                <div class="job-title">Intro to Visual Culture</div>
+                <div class="job-company">VISL-140 • 3 Credits</div>
+                <div class="job-dates"></div>
+              </div>
+            </div>
+            <div class="timeline-item fall2025">
+              <div class="timeline-content">
+                <div class="job-title">Information Revolution</div>
+                <div class="job-company">HIST-180 • 3 Credits</div>
+                <div class="job-dates"></div>
+              </div>
+            </div>
+            <div class="timeline-item fall2025">
+              <div class="timeline-content">
+                <div class="job-title">RIT 365: RIT Connections</div>
+                <div class="job-company">YOPS-10 • 0 Credit</div>
+                <div class="job-dates">
+                  Career planning, networking, and professional development
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- <section id="grades">
+        <h2 class="section-title">Academic Performance</h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>Fall 2024 Grades</h3>
+            <div class="skill-items">
+              <span class="skill-tag grade-a">CSCI-141: A</span>
+              <span class="skill-tag grade-a">MATH-181: A-</span>
+              <span class="skill-tag grade-b">UWRT-150: B+</span>
+              <span class="skill-tag grade-a">UNIV-365: A</span>
+            </div>
+            <p class="semester-gpa">Semester GPA: 3.75</p>
+          </div>
+          <div class="skill-category">
+            <h3>Spring 2025 Goals</h3>
+            <div class="skill-items">
+              <span class="skill-tag goal">Target: 3.8+ GPA</span>
+              <span class="skill-tag goal">Dean's List</span>
+              <span class="skill-tag goal">Strong CS Foundation</span>
+              <span class="skill-tag goal">Physics Understanding</span>
+            </div>
+            <p class="semester-gpa">Target GPA: 3.8+</p>
+          </div>
+          <div class="skill-category">
+            <h3>Academic Achievements</h3>
+            <div class="skill-items">
+              <span class="skill-tag achievement">Dean's List Fall 2024</span>
+              <span class="skill-tag achievement">Computing Excellence Scholarship</span>
+              <span class="skill-tag achievement">RIT Merit Scholarship</span>
+              <span class="skill-tag achievement">High School Valedictorian</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Technical Proficiencies</h3>
+            <div class="skill-items">
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">HTML/CSS</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">Linux Basics</span>
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <section>
+        <h2 class="section-title">Academic Resume & Documents</h2>
+        <div id="resume" class="resume-section">
+          <div class="buttons">
+            <a href="../assets/resume/resume.pdf" target="_blank"
+              >Download Resume (PDF)</a
+            >
+            <a href="../assets/resume/resume.png" target="_blank"
+              >Download Resume (PNG)</a
+            >
+          </div>
+          <!-- <div class="cert-group">
+            <h3>Academic Honors & Awards</h3>
+            <div class="cert-list">
+              <div class="cert-item">
+                <h4>Dean's List Recognition</h4>
+                <p>In progress - Fall 2025 semester</p>
+              </div>
+              <div class="cert-item">
+                <h4>Academic Achievement Awards</h4>
+                <p>Not yet - Working towards academic excellence</p>
+              </div>
+              <div class="cert-item">
+                <h4>Scholarship Opportunities</h4>
+                <p>Applying for merit-based scholarships</p>
+              </div>
+            </div>
+          </div> -->
+          <div class="cert-group">
+            <h3>Programming Certifications</h3>
+            <div class="cert-list">
+              <div class="cert-item">
+                <h4>Website Development & Design</h4>
+                <p>RIT Certified Pro Advantage</p>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="cert-group">
+            <h3>Course Completion Certificates</h3>
+            <div class="cert-list">
+              <div class="cert-item">
+                <h4>CSCI-140 Certificate</h4>
+                <p>In progress - Fall 2025 semester</p>
+              </div>
+              <div class="cert-item">
+                <h4>MATH-181 Certificate</h4>
+                <p>In progress - Fall 2025 semester</p>
+              </div>
+              <div class="cert-item">
+                <h4>Advanced CS Courses</h4>
+                <p>Not yet - Will complete in future semesters</p>
+              </div>
+            </div>
+          </div>-->
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2 class="section-title">Academic Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <h3>This website</h3>
+            <p>
+              Developed this personal academic portfolio website using HTML,
+              CSS, and JavaScript to showcase my coursework, projects, and
+              achievements at RIT.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">HTML/CSS/JS</span>
+            </div>
+            <div class="project-course">Personal Project</div>
+          </div>
+          <div class="project-card">
+            <h3>Lindenmayer-System Lab</h3>
+            <p>
+              Developed a program that combines a string rewriting L-system and
+              an interpreter to generate 2D drawings using the 2D turtle
+              graphics library.
+            </p>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+              </div>
+              <div class="project-links" style="margin-left: auto;">
+                <a href="https://github.com/Sdriver1/CSAPX-Lab1-Lindenmayer-System" target="_blank" class="project-link">
+                  <span class="link-icon"></span>
+                  Github
+                </a>
+              </div>
+            </div>
+            <div class="project-course">CSCI-140</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="extracurriculars">
+        <h2 class="section-title">Extracurricular Activities</h2>
+        <div class="timeline">
+          <div class="timeline-line"></div>
+
+          <div class="timeline-group" data-year="2025" data-month="Present">
+            <div class="timeline-date-bubble">2025 - Present</div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <div class="job-title">Looking for Clubs</div>
+                <div class="job-company"></div>
+                <div class="job-dates"></div>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- <section id="goals">
+        <h2 class="section-title">Academic & Career Goals</h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>Short-term Goals (2025-2026)</h3>
+            <div class="skill-items">
+              <span class="skill-tag goal"
+                >Complete Data Structures & Algorithms II</span
+              >
+              <span class="skill-tag goal">Learn System Programming in C</span>
+              <span class="skill-tag goal">Maintain 3.8+ GPA</span>
+              <span class="skill-tag goal">Secure Summer 2026 Internship</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Medium-term Goals (2026-2028)</h3>
+            <div class="skill-items">
+              <span class="skill-tag goal"
+                >Complete Software Engineering Concentration</span
+              >
+              <span class="skill-tag goal">Participate in Co-op Program</span>
+              <span class="skill-tag goal">Lead Student Organization</span>
+              <span class="skill-tag goal">Publish Research Paper</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Long-term Goals (Post-Graduation)</h3>
+            <div class="skill-items">
+              <span class="skill-tag goal"
+                >Software Engineer at Top Tech Company</span
+              >
+              <span class="skill-tag goal">Pursue Graduate Studies</span>
+              <span class="skill-tag goal">Contribute to Open Source</span>
+              <span class="skill-tag goal">Mentor Future Students</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Areas of Interest</h3>
+            <div class="skill-items">
+              <span class="skill-tag interest">Machine Learning</span>
+              <span class="skill-tag interest">Web Development</span>
+              <span class="skill-tag interest">Systems Programming</span>
+              <span class="skill-tag interest">Software Architecture</span>
+            </div>
+          </div>
+        </div>
+      </section> -->
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-left">
+          &copy; 2025 Steven Driver. All Rights Reserved.
+        </div>
+        <div class="footer-right">
+          <!-- Bluesky -->
+          <a
+            href="https://bsky.app/profile/sdriver1.me"
+            target="_blank"
+            title="Bluesky"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/bluesky.svg"
+              alt="Bluesky"
+              class="footer-icon"
+            />
+          </a>
+          <!-- Discord -->
+          <a
+            href="https://discord.com/users/691506668781174824"
+            target="_blank"
+            title="Discord"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
+              alt="Discord"
+              class="footer-icon"
+            />
+          </a>
+          <!-- Email -->
+          <a href="mailto:sdriver@sdriver1.me" title="Email">
+            <img id="icon-email" alt="Email" class="footer-icon" />
+          </a>
+          <a href="https://github.com/Sdriver1" target="_blank" title="GitHub">
+            <img id="icon-github" alt="GitHub" class="footer-icon" />
+          </a>
+
+          <!-- Instagram -->
+          <a
+            href="https://www.instagram.com/sdriver_1/"
+            target="_blank"
+            title="Instagram"
+          >
+            <img
+              src="../assets/svg/instagram.svg"
+              alt="Instagram"
+              class="footer-icon"
+            />
+          </a>
+          <!-- LinkedIn -->
+          <a
+            href="https://sdriver1.me/linkedin"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
+              alt="LinkedIn"
+              class="footer-icon"
+            />
+          </a>
+          <!-- Twitch -->
+          <a href="https://twitch.tv/sdriver1" target="_blank" title="Twitch">
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg"
+              alt="Twitch"
+              class="footer-icon"
+            />
+          </a>
+          <!-- X -->
+          <a href="https://x.com/sdriver_1" target="_blank" title="Twitter / X">
+            <img id="icon-x" alt="X" class="footer-icon" />
+          </a>
+          <!-- YouTube -->
+          <a
+            href="https://www.youtube.com/@sdriver_1"
+            target="_blank"
+            title="YouTube"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg"
+              alt="YouTube"
+              class="footer-icon"
+            />
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/js/indexsite.js"></script>
+    <script>
+      // Academic-specific typewriter text
+      const academicSubtitles = [
+        "Studying computer science here at RIT",
+        "Exploring my way around campus",
+        "Check out my main page: https://sdriver1.me"
+      ];
+
+      // Animate/cycle subtitles only, keep title static
+      let currentSubtitleIndex = 0;
+
+      function showStaticTitle() {
+        const typewriterElement = document.getElementById("typewriter");
+        if (typewriterElement) {
+          typewriterElement.textContent = "Welcome, I'm Steven Driver";
+          document.getElementById("cursor-primary").style.display = "none";
+        }
+      }
+
+      function typeAcademicSubtitle() {
+        const text = academicSubtitles[currentSubtitleIndex];
+        const subtitleElement = document.getElementById("subtitle");
+        if (!subtitleElement) return;
+        subtitleElement.textContent = "";
+        document.getElementById("cursor-sub").style.display = "inline";
+        let charIndex = 0;
+        function typeNextChar() {
+          if (charIndex < text.length) {
+            subtitleElement.textContent += text.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeNextChar, 80);
+          } else {
+            document.getElementById("cursor-sub").style.display = "none";
+            setTimeout(() => {
+              currentSubtitleIndex = (currentSubtitleIndex + 1) % academicSubtitles.length;
+              setTimeout(typeAcademicSubtitle, 300);
+            }, 4000);
+          }
+        }
+        typeNextChar();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.typePrimary) {
+          window.typePrimary = function () {};
+        }
+        setTimeout(() => {
+          showStaticTitle();
+          typeAcademicSubtitle();
+        }, 500);
+      });
+
+      const classSchedule = {
+        fall2025: {
+          monday: [
+            { name: "ECON-101", time: "09:00-09:50", location: "LOW-3235" },
+            { name: "CSCI-140", time: "12:00-13:50", location: "GOL-1445" },
+            { name: "MATH-181", time: "14:00-15:50", location: "WAL-3560" },
+          ],
+          tuesday: [
+            { name: "VISL-140", time: "09:30-10:45", location: "LOW-3235" },
+            { name: "HIST-180", time: "11:00-12:15", location: "SHD-4350" },
+          ],
+          wednesday: [
+            { name: "ECON-101", time: "09:00-09:50", location: "LOW-3235" },
+            { name: "YOPS-10", time: "11:00-11:50", location: "HAC-1325" },
+            { name: "CSCI-140", time: "12:00-13:50", location: "GOL-1445" },
+            { name: "MATH-181", time: "14:00-15:50", location: "WAL-3560" },
+          ],
+          thursday: [
+            { name: "VISL-140", time: "09:30-10:45", location: "LOW-3235" },
+            { name: "HIST-180", time: "11:00-12:15", location: "SHD-4350" },
+          ],
+          friday: [
+            { name: "ECON-101", time: "09:00-09:50", location: "LOW-3235" },
+            { name: "CSCI-140 Lab", time: "12:00-13:50", location: "GOL-3520" },
+          ],
+          saturday: [],
+          sunday: [],
+        },
+      };
+
+      function getCurrentSemester() {
+        const now = new Date();
+        const month = now.getMonth() + 1; // 1-12
+
+        // Fall semester: August - December
+        if (month >= 8 && month <= 12) {
+          return "fall2025";
+        }
+        // Spring semester: January - May
+        else if (month >= 1 && month <= 5) {
+          return "spring2026";
+        }
+        // Summer break
+        else {
+          return null;
+        }
+      }
+
+      function getCurrentClass() {
+        const semester = getCurrentSemester();
+        if (!semester || !classSchedule[semester]) {
+          return { current: null, next: null };
+        }
+
+        const now = new Date();
+        const dayOfWeek = now.toLocaleLowerCase().split(" ")[0]; // 'monday', 'tuesday', etc.
+        const dayName = [
+          "sunday",
+          "monday",
+          "tuesday",
+          "wednesday",
+          "thursday",
+          "friday",
+          "saturday",
+        ][now.getDay()];
+        const currentTime = now.getHours() * 100 + now.getMinutes(); // HHMM format
+
+        const todayClasses = classSchedule[semester][dayName] || [];
+        let currentClass = null;
+        let nextClass = null;
+
+        // Check if currently in a class
+        for (const classInfo of todayClasses) {
+          const [startTime, endTime] = classInfo.time.split("-");
+          const start = parseInt(startTime.replace(":", ""));
+          const end = parseInt(endTime.replace(":", ""));
+
+          if (currentTime >= start && currentTime <= end) {
+            currentClass = classInfo;
+            break;
+          }
+        }
+
+        // Find next class today or tomorrow
+        if (!currentClass) {
+          // Look for next class today
+          for (const classInfo of todayClasses) {
+            const startTime = parseInt(
+              classInfo.time.split("-")[0].replace(":", "")
+            );
+            if (currentTime < startTime) {
+              nextClass = classInfo;
+              break;
+            }
+          }
+
+          // If no more classes today, look for tomorrow's first class
+          if (!nextClass) {
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowName = [
+              "sunday",
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+              "saturday",
+            ][tomorrow.getDay()];
+            const tomorrowClasses = classSchedule[semester][tomorrowName] || [];
+            if (tomorrowClasses.length > 0) {
+              nextClass = tomorrowClasses[0];
+              nextClass.day = tomorrowName;
+            }
+          }
+        }
+
+        return { current: currentClass, next: nextClass };
+      }
+
+      function updateClassStatus() {
+        const { current, next } = getCurrentClass();
+        const currentClassElement = document.getElementById("current-class");
+
+        if (current) {
+          currentClassElement.textContent = `${current.name} (${current.location})`;
+          currentClassElement.style.color = "var(--rit-orange)";
+        } else {
+          currentClassElement.textContent = "Not in class";
+          currentClassElement.style.color = "var(--text-secondary)";
+        }
+      }
+
+      // Update class status on page load and every minute
+      updateClassStatus();
+      setInterval(updateClassStatus, 60000);
+
+      // Timeline toggle functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtns = document.querySelectorAll(".toggle-btn");
+        const timelineGroups = document.querySelectorAll(".timeline-group");
+
+        // Show fall2025 by default
+        showTimelineItems("fall2025");
+
+        toggleBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const type = this.getAttribute("data-type");
+
+            // Remove active class from all buttons
+            toggleBtns.forEach((b) => b.classList.remove("active"));
+
+            // Add active class to clicked button
+            this.classList.add("active");
+
+            // Show/hide timeline items based on type
+            showTimelineItems(type);
+          });
+        });
+
+        function showTimelineItems(type) {
+          timelineGroups.forEach((group) => {
+            if (type === "all" || group.classList.contains(type)) {
+              group.style.display = "block";
+            } else {
+              group.style.display = "none";
+            }
+          });
+        }
+      });
+    </script>
+    <style>
+      /* RIT School Colors Theme Override */
+      :root {
+        /* RIT Orange as primary */
+        --primary: #ff6600;
+        --primary-dark: #e55a00;
+        --primary-light: #ff8533;
+
+        /* Text colors with RIT theme */
+        --text-primary: #2d2d2d;
+        --text-secondary: #666666;
+        --text-accent: #ff6600;
+
+        /* Background colors */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f8f8;
+        --card-bg: #ffffff;
+        --header-bg: rgba(255, 255, 255, 0.95);
+
+        /* RIT-themed accent colors */
+        --success: #ff6600; /* Orange for success */
+        --warning: #000000; /* Black for warning */
+        --danger: #8b0000; /* Dark red for danger */
+        --info: #ff6600; /* Orange for info */
+
+        /* Border and shadow colors */
+        --border: #e0e0e0;
+        --shadow: rgba(255, 102, 0, 0.1);
+
+        /* Special RIT colors */
+        --rit-orange: #ff6600;
+        --rit-black: #000000;
+        --rit-white: #ffffff;
+        --rit-gray: #666666;
+      }
+
+      /* Dark mode with RIT colors */
+      [data-theme="dark"] {
+        --primary: #ff6600;
+        --primary-dark: #e55a00;
+        --primary-light: #ff8533;
+
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --text-accent: #ff6600;
+
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --card-bg: #2d2d2d;
+        --header-bg: rgba(26, 26, 26, 0.95);
+
+        --success: #ff6600;
+        --warning: #ffffff;
+        --danger: #ff4444;
+        --info: #ff6600;
+
+        --border: #404040;
+        --shadow: rgba(255, 102, 0, 0.2);
+      }
+
+      /* Enhanced RIT-themed elements */
+      .section-title {
+        color: var(--rit-orange) !important;
+        border-bottom: 3px solid var(--rit-orange);
+        padding-bottom: 0.5rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Navigation with RIT colors */
+      nav .nav-links a:hover {
+        color: var(--rit-orange) !important;
+        border-bottom: 2px solid var(--rit-orange);
+      }
+
+      /* RIT-themed skill tags */
+      .skill-tag {
+        background: linear-gradient(
+          135deg,
+          var(--rit-orange),
+          var(--primary-dark)
+        ) !important;
+        color: white !important;
+        border: 1px solid var(--rit-orange);
+        box-shadow: 0 2px 4px rgba(255, 102, 0, 0.3);
+      }
+
+      .skill-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(255, 102, 0, 0.4);
+      }
+
+      /* RIT-themed grade colors */
+      .grade-a {
+        background: linear-gradient(
+          135deg,
+          var(--rit-orange),
+          #ff8533
+        ) !important;
+        color: white !important;
+      }
+      .grade-b {
+        background: linear-gradient(
+          135deg,
+          var(--rit-black),
+          #333333
+        ) !important;
+        color: white !important;
+      }
+      .grade-c {
+        background: linear-gradient(135deg, #8b0000, #a00000) !important;
+        color: white !important;
+      }
+
+      /* RIT-themed achievement badges */
+      .achievement {
+        background: linear-gradient(
+          135deg,
+          var(--rit-orange),
+          var(--rit-black)
+        ) !important;
+        color: white !important;
+      }
+
+      .goal {
+        background: linear-gradient(
+          135deg,
+          var(--rit-black),
+          #333333
+        ) !important;
+        color: white !important;
+      }
+
+      .interest {
+        background: linear-gradient(
+          135deg,
+          var(--rit-gray),
+          var(--rit-black)
+        ) !important;
+        color: white !important;
+      }
+
+      /* Project cards with RIT theme */
+      .project-card {
+        border: 2px solid var(--rit-orange);
+        box-shadow: 0 4px 12px rgba(255, 102, 0, 0.15);
+      }
+
+      .project-card:hover {
+        border-color: var(--primary-dark);
+        box-shadow: 0 8px 24px rgba(255, 102, 0, 0.25);
+      }
+
+      .project-card h3 {
+        color: var(--rit-orange) !important;
+        border-bottom: 2px solid var(--rit-orange);
+        padding-bottom: 0.5rem;
+      }
+
+      .tech-tag {
+        background: linear-gradient(
+          135deg,
+          var(--rit-orange),
+          var(--primary-dark)
+        ) !important;
+        color: white !important;
+      }
+
+      /* Timeline items with RIT colors */
+      .timeline-item {
+        border-left: 4px solid var(--rit-orange);
+      }
+
+      .timeline-date-bubble {
+        background: var(--rit-orange) !important;
+        color: white !important;
+        border: 3px solid white;
+        box-shadow: 0 0 0 3px var(--rit-orange);
+      }
+
+      /* About cards with RIT styling */
+      .about-card {
+        border: 2px solid var(--rit-orange);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 102, 0, 0.05),
+          rgba(255, 102, 0, 0.1)
+        );
+      }
+
+      .about-card-title {
+        color: var(--rit-black) !important;
+        font-weight: 600;
+      }
+
+      .about-card-value {
+        color: var(--rit-orange) !important;
+        font-weight: 700;
+      }
+
+      /* Footer with RIT theme */
+      footer {
+        border-top: 3px solid var(--rit-orange);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 102, 0, 0.02),
+          rgba(255, 102, 0, 0.05)
+        );
+      }
+
+      /* Button styling with RIT colors */
+      .toggle-btn.active {
+        background: var(--rit-orange) !important;
+        color: white !important;
+        border: 2px solid var(--rit-orange);
+      }
+
+      .toggle-btn:hover {
+        background: var(--primary-light) !important;
+        color: white !important;
+      }
+
+      /* Resume buttons with RIT styling */
+      .resume-section .buttons a {
+        background: linear-gradient(
+          135deg,
+          var(--rit-orange),
+          var(--primary-dark)
+        ) !important;
+        color: white !important;
+        border: 2px solid var(--rit-orange);
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .resume-section .buttons a:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark),
+          var(--rit-black)
+        ) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+      }
+
+      /* Semester GPA with RIT styling */
+      .semester-gpa {
+        color: var(--rit-orange) !important;
+        background: rgba(255, 102, 0, 0.1);
+        border: 1px solid var(--rit-orange);
+        border-radius: 8px;
+        padding: 0.5rem;
+      }
+
+      /* Hero section enhancements */
+      .hero h1 {
+        background: linear-gradient(
+          135deg,
+          var(--rit-orange),
+          var(--primary-dark)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Additional styles for academic-specific elements */
+
+      /* About grid layout for 4 cards */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 768px) {
+        .about-grid {
+          width: 100%;
+          gap: 1rem;
+        }
+      }
+
+      .grade-a {
+        background-color: var(--success, #28a745);
+      }
+      .grade-b {
+        background-color: var(--warning, #ffc107);
+        color: var(--dark, #333);
+      }
+      .grade-c {
+        background-color: var(--danger, #dc3545);
+      }
+      .achievement {
+        background-color: var(--primary, #6c5ce7);
+      }
+      .goal {
+        background-color: var(--info, #17a2b8);
+      }
+      .interest {
+        background-color: var(--secondary, #6c757d);
+      }
+
+      .semester-gpa {
+        margin-top: 1rem;
+        font-weight: 600;
+        color: var(--primary);
+        text-align: center;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .project-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 1.5rem;
+        border: 1px solid var(--border);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .project-card h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
+
+      .project-card p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .tech-tag {
+        background: var(--primary);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .project-course {
+        font-style: italic;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
+      }
+    </style>
+  </body>
+</html>

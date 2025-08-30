@@ -3,23 +3,8 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import fs from "fs";
 import dotenv from "dotenv";
-import rateLimit from "express-rate-limit";
-import cors from "cors";
-import nodemailer from "nodemailer";
-import multer from "multer";
-
-const upload = multer();
-
-import {
-  getDerivative,
-  getIntegral,
-  evaluateExpression,
-} from "../../calculator/calculator.js";
-
-// Load environment variables
 dotenv.config();
 
-// Helper to get the file path
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -58,41 +43,23 @@ app1.get("/change", (req, res) =>
   res.sendFile(join(__dirname, "../../../public/sites/changehelp.html"))
 );
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-  tls: { rejectUnauthorized: false },
-});
-
-app1.post(
-  "/api/contact",
-  upload.single("attachment"), // <-- multer middleware
-  async (req, res) => {
-    const { name, email, message } = req.body;
-
-    try {
-      await transporter.sendMail({
-        from: `"${name}" <${email}>`,
-        to: "sdriver@sdriver1.me",
-        subject: `Portfolio message from ${name}`,
-        text: `${message} \n\nFrom: ${name} <${email}>`,
-      });
-      res.sendStatus(200);
-    } catch (err) {
-      console.error("Mail error:", err);
-      res.sendStatus(500);
-    }
-  }
-);
 app1.listen(port1, () =>
   console.log(`Server running on http://sdriver1.me:${port1}`)
 );
 
+// ======================== Server 2 (rit.sdriver1.me - Port 8085) ========================
+const app2 = express();
+const port2 = 8085;
+
+app2.use("/assets", express.static(join(__dirname, "../../../public/assets")));
+
+app2.get("/", (req, res) => {
+  res.sendFile(join(__dirname, "../../../public/rit/index.html"));
+});
+
+app2.listen(port2, () =>
+  console.log(`Server running on http://rit.sdriver1.me:${port2}`)
+);
 // ======================== SERVER 3 (images.sdriver1.me - Port 8086) ========================
 const app3 = express();
 const port3 = 8086;
