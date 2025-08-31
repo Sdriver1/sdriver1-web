@@ -182,6 +182,24 @@
         color: #f44336;
       }
 
+      /* Win/Lose animations */
+      @keyframes winCelebration {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+      }
+
+      @keyframes winPulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.8; }
+      }
+
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+      }
+
       /* Dark mode adjustments */
       [data-theme="dark"] .cell.revealed {
         background: #3a3a3a;
@@ -225,7 +243,7 @@
     <header>
       <nav>
         <div class="logo">
-          <a href="#"
+          <a href="https://sdriver1.me"
             ><img src="../assets/images/profile.png" alt="Logo" loading="lazy"
           /></a>
         </div>
@@ -600,6 +618,39 @@
           if (this.revealedCount === totalCells - this.totalMines) {
             this.gameState = "won";
             this.stopTimer();
+            this.celebrateWin();
+          }
+        }
+
+        celebrateWin() {
+          // Add celebration effects to all revealed cells
+          const cells = document.querySelectorAll('.cell.revealed');
+          cells.forEach((cell, index) => {
+            setTimeout(() => {
+              cell.style.background = 'linear-gradient(45deg, #4CAF50, #81C784)';
+              cell.style.color = 'white';
+              cell.style.animation = 'winCelebration 0.6s ease-in-out';
+            }, index * 20); // Staggered animation
+          });
+
+          // Save best time if it's a new record
+          const bestTimeKey = `minesweeper-best-${this.difficulty}`;
+          const currentBest = localStorage.getItem(bestTimeKey);
+          
+          if (!currentBest || this.timer < parseInt(currentBest)) {
+            localStorage.setItem(bestTimeKey, this.timer.toString());
+            setTimeout(() => {
+              const messageEl = document.getElementById("status-message");
+              messageEl.innerHTML += '<br><small>🏆 New Best Time!</small>';
+            }, 1000);
+          }
+
+          // Play celebration sound
+          try {
+            const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+b9xWgdBiaN2+/DCSQHIX/E9N+VQgoVX7bk6qpZFwoMnrPj+MlhGAQfidb3w3gkBSl+zO/EGSUEInTE8d2QQAsTXLPq6atWFAoNn7Ps+8kkBSN8yOzfJSUIHw==');
+            audio.play();
+          } catch (e) {
+            // Audio not available, continue without sound
           }
         }
 
@@ -631,13 +682,20 @@
               break;
             case "won":
               statusEl.textContent = "Won!";
-              messageEl.textContent = "🎉 Congratulations! You won!";
+              messageEl.textContent = "🎉 Congratulations! You cleared all mines!";
               messageEl.className = "game-status win";
+              messageEl.style.animation = 'winPulse 2s infinite';
+              
+              // Show final stats
+              setTimeout(() => {
+                messageEl.innerHTML += `<br><small>Time: ${this.timer}s | Difficulty: ${this.difficulty}</small>`;
+              }, 500);
               break;
             case "lost":
               statusEl.textContent = "Lost";
-              messageEl.textContent = "💥 Game Over! Try again!";
+              messageEl.textContent = "💥 Game Over! You hit a mine!";
               messageEl.className = "game-status lose";
+              messageEl.style.animation = 'shake 0.5s ease-in-out';
               break;
           }
         }

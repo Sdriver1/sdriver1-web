@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="64" height="64" rx="8" fill="#4f46e5"/>
+  
+  <!-- Sudoku Grid -->
+  <g stroke="#ffffff" stroke-width="1.5" fill="none">
+    <!-- Outer border -->
+    <rect x="8" y="8" width="48" height="48" stroke-width="2"/>
+    
+    <!-- Vertical lines -->
+    <line x1="24" y1="8" x2="24" y2="56" stroke-width="2"/>
+    <line x1="40" y1="8" x2="40" y2="56" stroke-width="2"/>
+    <line x1="16" y1="8" x2="16" y2="56" stroke-width="1"/>
+    <line x1="32" y1="8" x2="32" y2="56" stroke-width="1"/>
+    <line x1="48" y1="8" x2="48" y2="56" stroke-width="1"/>
+    
+    <!-- Horizontal lines -->
+    <line x1="8" y1="24" x2="56" y2="24" stroke-width="2"/>
+    <line x1="8" y1="40" x2="56" y2="40" stroke-width="2"/>
+    <line x1="8" y1="16" x2="56" y2="16" stroke-width="1"/>
+    <line x1="8" y1="32" x2="56" y2="32" stroke-width="1"/>
+    <line x1="8" y1="48" x2="56" y2="48" stroke-width="1"/>
+  </g>
+  
+  <!-- Sample numbers -->
+  <g fill="#ffffff" font-family="Arial, sans-serif" font-size="8" font-weight="bold" text-anchor="middle">
+    <text x="12" y="14" dominant-baseline="middle">5</text>
+    <text x="20" y="14" dominant-baseline="middle">3</text>
+    <text x="36" y="14" dominant-baseline="middle">7</text>
+    <text x="12" y="22" dominant-baseline="middle">6</text>
+    <text x="28" y="22" dominant-baseline="middle">1</text>
+    <text x="44" y="22" dominant-baseline="middle">9</text>
+    <text x="20" y="30" dominant-baseline="middle">9</text>
+    <text x="36" y="30" dominant-baseline="middle">6</text>
+    <text x="52" y="30" dominant-baseline="middle">2</text>
+    <text x="12" y="38" dominant-baseline="middle">8</text>
+    <text x="28" y="38" dominant-baseline="middle">4</text>
+    <text x="44" y="38" dominant-baseline="middle">3</text>
+    <text x="20" y="46" dominant-baseline="middle">7</text>
+    <text x="36" y="46" dominant-baseline="middle">2</text>
+    <text x="52" y="46" dominant-baseline="middle">1</text>
+    <text x="12" y="54" dominant-baseline="middle">4</text>
+    <text x="28" y="54" dominant-baseline="middle">5</text>
+    <text x="44" y="54" dominant-baseline="middle">6</text>
+  </g>
+</svg>
