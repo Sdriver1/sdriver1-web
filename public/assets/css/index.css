@@ -73,7 +73,7 @@ body {
 }
 
 .loading::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -87,8 +87,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* === Page Animations === */
@@ -170,6 +174,11 @@ nav {
   display: flex;
   gap: 1.5rem;
   flex-direction: row;
+}
+
+nav .nav-links a:hover {
+  color: var(--primary) !important;
+  border-bottom: 2px solid var(--primary);
 }
 
 @media (max-width: 768px) {
@@ -953,11 +962,11 @@ footer {
   color: var(--primary);
 }
 
-  .testimonial-role {
-    font-style: normal;
-    font-size: 0.92rem;
-    color: var(--secondary);
-  }
+.testimonial-role {
+  font-style: normal;
+  font-size: 0.92rem;
+  color: var(--secondary);
+}
 
 /* === Call to Action Section === */
 .cta-section {
@@ -1021,7 +1030,7 @@ footer {
     align-items: center;
     gap: 0.75rem;
   }
-  
+
   .cta-button {
     width: 100%;
     max-width: 280px;
