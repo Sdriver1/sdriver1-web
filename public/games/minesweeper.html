@@ -261,6 +261,8 @@
           aria-label="Main navigation"
         >
           <a href="https://games.sdriver1.me" aria-label="Games Portal">Games Portal</a>
+          <a href="https://games.sdriver1.me/sudoku" aria-label="Games Portal">Sudoku</a>
+          <a href="https://games.sdriver1.me/2048" aria-label="Games Portal">2048</a>
           <button
             class="theme-toggle"
             id="theme-toggle"
@@ -505,12 +507,52 @@
               cell.dataset.row = row;
               cell.dataset.col = col;
 
+              // Desktop controls
               cell.addEventListener("click", (e) =>
                 this.handleCellClick(e, row, col)
               );
               cell.addEventListener("contextmenu", (e) =>
                 this.handleRightClick(e, row, col)
               );
+
+              // Mobile touch controls
+              let touchStartTime = 0;
+              let touchTimer = null;
+              
+              cell.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                touchStartTime = Date.now();
+                // Long press to flag (500ms)
+                touchTimer = setTimeout(() => {
+                  this.handleRightClick(e, row, col);
+                  // Add haptic feedback if available
+                  if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                  }
+                }, 500);
+              });
+
+              cell.addEventListener("touchend", (e) => {
+                e.preventDefault();
+                const touchDuration = Date.now() - touchStartTime;
+                
+                if (touchTimer) {
+                  clearTimeout(touchTimer);
+                  touchTimer = null;
+                }
+                
+                // Short tap to reveal (less than 500ms)
+                if (touchDuration < 500) {
+                  this.handleCellClick(e, row, col);
+                }
+              });
+
+              cell.addEventListener("touchcancel", (e) => {
+                if (touchTimer) {
+                  clearTimeout(touchTimer);
+                  touchTimer = null;
+                }
+              });
 
               grid.appendChild(cell);
             }
