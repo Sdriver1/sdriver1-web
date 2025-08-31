@@ -5,48 +5,52 @@ const speed = 120;
 let idx = 0;
 
 function typePrimary() {
+  const el = document.getElementById("typewriter");
+  if (!el) return; // Skip if this page doesn't have the typewriter hero
   if (idx < primaryText.length) {
-    document.getElementById("typewriter").textContent += primaryText[idx++];
+    el.textContent += primaryText[idx++];
     setTimeout(typePrimary, speed);
   } else {
-    document.getElementById("cursor-primary").style.display = "none";
+    const cursor = document.getElementById("cursor-primary");
+    if (cursor) cursor.style.display = "none";
     idx = 0;
     setTimeout(typeSubtitle, 500);
   }
 }
 
 function typeSubtitle() {
+  const el = document.getElementById("subtitle");
+  if (!el) return;
   if (idx < subtitleText.length) {
-    document.getElementById("subtitle").textContent += subtitleText[idx++];
+    el.textContent += subtitleText[idx++];
     setTimeout(typeSubtitle, speed);
   } else {
-    document.getElementById("cursor-sub").style.display = "none";
+    const cursor = document.getElementById("cursor-sub");
+    if (cursor) cursor.style.display = "none";
   }
 }
 
 function updateFooterIcons(theme) {
   const isDark = theme === "dark";
-
   const emailIcon = document.getElementById("icon-email");
   const githubIcon = document.getElementById("icon-github");
   const xIcon = document.getElementById("icon-x");
 
+  // Determine correct relative base for SVG assets depending on current path
+  // /games/... pages live one level deeper than root public pages
+  const path = window.location.pathname; // e.g. /, /games, /games/index.html
+  const host = window.location.hostname;
+  const inGamesDir = /\/games(\/|$)/.test(path);
+  const inGamesSubdomain = /^games\./.test(host);
+  // If served from games subdomain root, assets are one level up relative to games/index.html
+  const base = (inGamesDir || inGamesSubdomain) ? "../assets/svg/" : "assets/svg/";
+
   if (emailIcon)
-    // For testing purposes, add "../../public/" before the paths
-    // In production please remove
-    emailIcon.src = isDark
-      ? "../../public/assets/svg/email-darkmode.svg"
-      : "../../public/assets/svg/email-lightmode.svg";
-
+    emailIcon.src = base + (isDark ? "email-darkmode.svg" : "email-lightmode.svg");
   if (githubIcon)
-    githubIcon.src = isDark
-      ? "../../public/assets/svg/github-darkmode.svg"
-      : "../../public/assets/svg/github-lightmode.svg";
-
+    githubIcon.src = base + (isDark ? "github-darkmode.svg" : "github-lightmode.svg");
   if (xIcon)
-    xIcon.src = isDark
-      ? "../../public/assets/svg/x-darkmode.svg"
-      : "../../public/assets/svg/x-lightmode.svg";
+    xIcon.src = base + (isDark ? "x-darkmode.svg" : "x-lightmode.svg");
 }
 
 // --- Theme Toggle ---
@@ -428,7 +432,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-  typePrimary();
+  if (document.getElementById("typewriter")) typePrimary();
   setupThemeToggle();
   setupNavigation();
   updateAge();
