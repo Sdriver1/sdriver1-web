@@ -5,124 +5,28 @@ import fs from "fs";
 import dotenv from "dotenv";
 dotenv.config();
 
+// ======================== CONFIGURATION ========================
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// ======================== SERVER 1 (sdriver1.me / stevendriver.com - Port 8084) ========================
-const app1 = express();
-const port1 = 8084;
-app1.use(express.json());
-app1.use(express.urlencoded({ extended: true }));
+const PORTS = {
+  MAIN: 8084,
+  RIT: 8085,
+  IMAGES: 8086,
+  GAY: 9090,
+  NIGHTWING: 6969,
+  GAMES: 8087
+};
 
-app1.use("/assets", express.static(join(__dirname, "../../../public/assets")));
+const PATHS = {
+  ASSETS: join(__dirname, "../../../public/assets"),
+  PUBLIC: join(__dirname, "../../../public"),
+  VISITOR_COUNT: join(__dirname, "../../../public/assets/data/visitorCount.json"),
+  CLICK_COUNT: join(__dirname, "../../../public/assets/data/clickCount.json")
+};
 
-app1.get("/", (req, res) =>
-  res.sendFile(join(__dirname, "../../../public/sites/index.html"))
-);
-app1.get("/github", (req, res) =>
-  res.sendFile(join(__dirname, "../../../public/redirects/github.html"))
-);
-app1.get("/linkedin", (req, res) =>
-  res.sendFile(join(__dirname, "../../../public/redirects/linkedin.html"))
-);
-app1.get("/kofi", (req, res) =>
-  res.sendFile(join(__dirname, "../../../public/redirects/kofi.html"))
-);
-
-app1.get("/calculator", (req, res) =>
-  res.sendFile(join(__dirname, "../../../public/calculator/index.html"))
-);
-
-app1.get("/resume", (req, res) =>
-  res.sendFile(join(__dirname, "../../../public/assets/resume/resume.pdf"))
-);
-app1.get("/resumepng", (req, res) =>
-  res.sendFile(join(__dirname, "../../../public/assets/resume/resume.png"))
-);
-app1.get("/change", (req, res) =>
-  res.sendFile(join(__dirname, "../../../public/sites/changehelp.html"))
-);
-
-app1.listen(port1, () =>
-  console.log(`Server running on http://sdriver1.me:${port1}`)
-);
-
-// ======================== Server 2 (rit.sdriver1.me - Port 8085) ========================
-const app2 = express();
-const port2 = 8085;
-
-app2.use("/assets", express.static(join(__dirname, "../../../public/assets")));
-
-app2.get("/", (req, res) => {
-  res.sendFile(join(__dirname, "../../../public/rit/index.html"));
-});
-
-app2.listen(port2, () =>
-  console.log(`Server running on http://rit.sdriver1.me:${port2}`)
-);
-// ======================== SERVER 3 (images.sdriver1.me - Port 8086) ========================
-const app3 = express();
-const port3 = 8086;
-
-app3.use("/assets", express.static(join(__dirname, "../../../public/assets")));
-
-app3.get("/:imageName", (req, res) => {
-  const imageName = req.params.imageName;
-  const imagePath = join(__dirname, "../../../public/assets/images", imageName);
-
-  console.log(`Requested image: ${imageName}`);
-  console.log(`Looking for image at: ${imagePath}`);
-
-  fs.access(imagePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.error(`Image not found: ${imagePath}`);
-      res.status(404).send("Image not found");
-    } else {
-      res.sendFile(imagePath);
-    }
-  });
-});
-
-app3.listen(port3, () =>
-  console.log(`Server running on http://images.sdriver1.me:${port3}`)
-);
-
-// ======================== SERVER 4 (youarenow.gay - Port 9090) ========================
-const app4 = express();
-const port4 = 9090;
-
-const visitorCountFile = join(
-  __dirname,
-  "../../../public/assets/data/visitorCount.json"
-);
-const clickCountFile = join(
-  __dirname,
-  "../../../public/assets/data/clickCount.json"
-);
-
-// Initialize Click Count
-let clickCount = fs.existsSync(clickCountFile)
-  ? JSON.parse(fs.readFileSync(clickCountFile)).count
-  : 0;
-
-app4.use(express.json());
-
-// ======================== Server 6 (nightwing7974is.gay - Port 6969) ========================
-
-const app6 = express();
-const port6 = 6969;
-
-app6.use("/assets", express.static(join(__dirname, "../../../public/assets")));
-
-app6.get("/", (req, res) => {
-  res.sendFile(join(__dirname, "../../../public/sites/nightwing7974is.html"));
-});
-
-app6.listen(port6, () =>
-  console.log(`Server running on http://nightwing7974is.gay:${port6}`)
-);
-
-// ======================== Server 5 ( ========================
+// ======================== SHARED MIDDLEWARE ========================
+const createStaticMiddleware = () => express.static(PATHS.ASSETS);
 
 const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
@@ -132,48 +36,135 @@ const authMiddleware = (req, res, next) => {
   next();
 };
 
-// ======================== API Routes ========================
-app4.get("/api/clicks", (req, res) => {
-  res.json({ clicks: clickCount });
-});
+// ======================== DATA MANAGEMENT ========================
+class CounterManager {
+  constructor(filePath, initialValue = 0) {
+    this.filePath = filePath;
+    this.count = fs.existsSync(filePath) 
+      ? JSON.parse(fs.readFileSync(filePath)).count 
+      : initialValue;
+  }
 
-app4.post("/api/addclicks", (req, res) => {
-  clickCount++;
-  fs.writeFileSync(clickCountFile, JSON.stringify({ count: clickCount }));
-  res.json({ clicks: clickCount });
-});
+  get() {
+    return this.count;
+  }
 
-let visitorCount = fs.existsSync(visitorCountFile)
-  ? JSON.parse(fs.readFileSync(visitorCountFile)).count
-  : 0;
+  increment() {
+    this.count++;
+    fs.writeFileSync(this.filePath, JSON.stringify({ count: this.count }));
+    return this.count;
+  }
+}
 
-app4.get("/api/visits", (req, res) => {
-  res.json({ visits: visitorCount });
-});
+const visitorCounter = new CounterManager(PATHS.VISITOR_COUNT);
+const clickCounter = new CounterManager(PATHS.CLICK_COUNT);
 
-app4.post("/api/addvisits", (req, res) => {
-  visitorCount++;
-  fs.writeFileSync(visitorCountFile, JSON.stringify({ count: visitorCount }));
-  res.json({ visits: visitorCount });
-});
+// ======================== SERVER 1: MAIN SITE (sdriver1.me / stevendriver.com) ========================
+function createMainServer() {
+  const app = express();
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use("/assets", createStaticMiddleware());
 
-// Serve the main page
-app4.use("/assets", express.static(join(__dirname, "../../../public/assets")));
-app4.use(
-  "/assets/videos",
-  express.static(join(__dirname, "../../../public/assets/videos"), {
+  // Routes
+  app.get("/", (req, res) => res.sendFile(join(PATHS.PUBLIC, "sites/index.html")));
+  app.get("/github", (req, res) => res.sendFile(join(PATHS.PUBLIC, "redirects/github.html")));
+  app.get("/linkedin", (req, res) => res.sendFile(join(PATHS.PUBLIC, "redirects/linkedin.html")));
+  app.get("/kofi", (req, res) => res.sendFile(join(PATHS.PUBLIC, "redirects/kofi.html")));
+  app.get("/calculator", (req, res) => res.sendFile(join(PATHS.PUBLIC, "calculator/index.html")));
+  app.get("/resume", (req, res) => res.sendFile(join(PATHS.ASSETS, "resume/resume.pdf")));
+  app.get("/resumepng", (req, res) => res.sendFile(join(PATHS.ASSETS, "resume/resume.png")));
+  app.get("/change", (req, res) => res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html")));
+
+  app.listen(PORTS.MAIN, () => console.log(`Main server running on port ${PORTS.MAIN}`));
+}
+
+// ======================== SERVER 2: RIT PORTFOLIO (rit.sdriver1.me) ========================
+function createRitServer() {
+  const app = express();
+  app.use("/assets", createStaticMiddleware());
+  
+  app.get("/", (req, res) => res.sendFile(join(PATHS.PUBLIC, "rit/index.html")));
+
+  app.listen(PORTS.RIT, () => console.log(`RIT server running on port ${PORTS.RIT}`));
+}
+
+// ======================== SERVER 3: IMAGE CDN (images.sdriver1.me) ========================
+function createImageServer() {
+  const app = express();
+  app.use("/assets", createStaticMiddleware());
+
+  app.get("/:imageName", (req, res) => {
+    const imageName = req.params.imageName;
+    const imagePath = join(PATHS.ASSETS, "images", imageName);
+
+    console.log(`Requested image: ${imageName}`);
+    console.log(`Looking for image at: ${imagePath}`);
+
+    fs.access(imagePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.error(`Image not found: ${imagePath}`);
+        res.status(404).send("Image not found");
+      } else {
+        res.sendFile(imagePath);
+      }
+    });
+  });
+
+  app.listen(PORTS.IMAGES, () => console.log(`Image server running on port ${PORTS.IMAGES}`));
+}
+
+// ======================== SERVER 4: GAY SITE (youarenow.gay) ========================
+function createGayServer() {
+  const app = express();
+  app.use(express.json());
+  app.use("/assets", createStaticMiddleware());
+  app.use("/assets/videos", express.static(join(PATHS.ASSETS, "videos"), {
     cacheControl: true,
     maxAge: "1d",
-  })
-);
+  }));
 
-app4.get("/", (req, res) => {
-  res.sendFile(join(__dirname, "../../../public/sites/gay.html"));
-});
-app4.get("/ungay", (req, res) => {
-  res.sendFile(join(__dirname, "../../../public/assets/videos/video.mp4"));
-});
+  // API Routes
+  app.get("/api/clicks", (req, res) => res.json({ clicks: clickCounter.get() }));
+  app.post("/api/addclicks", (req, res) => res.json({ clicks: clickCounter.increment() }));
+  app.get("/api/visits", (req, res) => res.json({ visits: visitorCounter.get() }));
+  app.post("/api/addvisits", (req, res) => res.json({ visits: visitorCounter.increment() }));
 
-app4.listen(port4, () =>
-  console.log(`Server running on http://youarenow.gay:${port4}`)
-);
+  // Page Routes
+  app.get("/", (req, res) => res.sendFile(join(PATHS.PUBLIC, "sites/gay.html")));
+  app.get("/ungay", (req, res) => res.sendFile(join(PATHS.ASSETS, "videos/video.mp4")));
+
+  app.listen(PORTS.GAY, () => console.log(`Gay server running on port ${PORTS.GAY}`));
+}
+
+// ======================== SERVER 5: NIGHTWING SITE (nightwing7974is.gay) ========================
+function createNightwingServer() {
+  const app = express();
+  app.use("/assets", createStaticMiddleware());
+  
+  app.get("/", (req, res) => res.sendFile(join(PATHS.PUBLIC, "sites/nightwing7974is.html")));
+
+  app.listen(PORTS.NIGHTWING, () => console.log(`Nightwing server running on port ${PORTS.NIGHTWING}`));
+}
+
+// ======================== SERVER 6: GAMES SITE (games.sdriver1.me) ========================
+function createGamesServer() {
+  const app = express();
+  app.use("/assets", createStaticMiddleware());
+
+  app.get("/", (req, res) => res.sendFile(join(PATHS.PUBLIC, "games/index.html")));
+  
+  app.get("/minesweeper", (req, res) => res.sendFile(join(PATHS.PUBLIC, "games/minesweeper.html")));
+  app.get("/sudoku", (req, res) => res.sendFile(join(PATHS.PUBLIC, "games/sudoku.html")));
+  app.get("/2048", (req, res) => res.sendFile(join(PATHS.PUBLIC, "games/2048.html")));
+
+  app.listen(PORTS.GAMES, () => console.log(`Games server running on port ${PORTS.GAMES}`));
+}
+
+// ======================== START ALL SERVERS ========================
+createMainServer();
+createRitServer();
+createImageServer();
+createGayServer();
+createNightwingServer();
+createGamesServer();
