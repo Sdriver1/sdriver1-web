@@ -157,6 +157,7 @@ function createGamesServer() {
   app.get("/minesweeper", (req, res) => res.sendFile(join(PATHS.PUBLIC, "games/minesweeper.html")));
   app.get("/sudoku", (req, res) => res.sendFile(join(PATHS.PUBLIC, "games/sudoku.html")));
   app.get("/2048", (req, res) => res.sendFile(join(PATHS.PUBLIC, "games/2048.html")));
+  app.get("/snake", (req, res) => res.sendFile(join(PATHS.PUBLIC, "games/snake.html")));
 
   app.listen(PORTS.GAMES, () => console.log(`Games server running on port ${PORTS.GAMES}`));
 }

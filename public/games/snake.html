@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake | Steven Driver Games</title>
+
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../assets/css/index.css" />
+    <style>
+      /* Snake game styles matching Minesweeper layout */
+      .game-container {
+        padding: 4rem 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .game-title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .game-subtitle {
+        color: var(--text-secondary, var(--secondary));
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .game-controls {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .difficulty-select,
+      .new-game-btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .difficulty-select {
+        background: var(--card-bg);
+        color: var(--text);
+        border: 1px solid var(--secondary);
+      }
+
+      .new-game-btn {
+        background: var(--primary);
+        color: white;
+      }
+
+      .game-info {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        color: var(--text);
+        font-weight: 600;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .snake-canvas-wrapper {
+        display: inline-block;
+        background: var(--card-bg);
+        padding: 12px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      canvas {
+        display: block;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(0, 0, 0, 0.02)
+        );
+        border-radius: 8px;
+        image-rendering: pixelated;
+      }
+
+      .game-status {
+        margin-top: 1rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      @media (max-width: 768px) {
+        .game-container {
+          padding: 2rem 1rem;
+        }
+        .game-title {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <a href="https://sdriver1.me"
+            ><img src="../assets/images/profile.png" alt="Logo" loading="lazy"
+          /></a>
+        </div>
+        <button
+          id="mobile-toggle"
+          class="mobile-toggle"
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
+        <div
+          class="nav-links"
+          id="nav-links"
+          role="navigation"
+          aria-label="Main navigation"
+        >
+          <a href="https://games.sdriver1.me" aria-label="Games Portal"
+            >Games Portal</a
+          >
+          <a
+            href="https://games.sdriver1.me/minesweeper"
+            aria-label="Minesweeper"
+            >Minesweeper</a
+          >
+          <a href="https://games.sdriver1.me/sudoku" aria-label="Sudoku"
+            >Sudoku</a
+          >
+          <a href="https://games.sdriver1.me/2048" aria-label="2048">2048</a>
+          <a href="https://games.sdriver1.me/snake" aria-label="Snake">Snake</a>
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Toggle between light and dark theme"
+          >
+            <span id="theme-icon"></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="game-container">
+        <h1 class="game-title">🐍 Snake</h1>
+        <div class="game-controls">
+          <select
+            id="difficulty"
+            class="difficulty-select"
+            aria-label="Select difficulty"
+          >
+            <option value="easy">Easy (20x20, slow)</option>
+            <option value="medium">Medium (25x20, normal)</option>
+            <option value="hard">Hard (30x24, fast)</option>
+          </select>
+          <button id="newGameBtn" class="new-game-btn">New Game</button>
+        </div>
+
+        <div class="game-info">
+          <div>Score: <span id="score">0</span></div>
+          <div>Speed: <span id="speedLabel">Normal</span></div>
+          <div>Status: <span id="status">Ready</span></div>
+        </div>
+
+        <div class="snake-canvas-wrapper">
+          <canvas id="snakeCanvas" width="400" height="320"></canvas>
+        </div>
+
+        <div id="status-message" class="game-status"></div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-left">
+          &copy; 2025 Steven Driver. All Rights Reserved.
+        </div>
+        <div class="footer-right">
+          <!-- Bluesky -->
+          <a
+            href="https://bsky.app/profile/sdriver1.me"
+            target="_blank"
+            title="Bluesky"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/bluesky.svg"
+              alt="Bluesky"
+              class="footer-icon"
+            />
+          </a>
+          <!-- Discord -->
+          <a
+            href="https://discord.com/users/691506668781174824"
+            target="_blank"
+            title="Discord"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
+              alt="Discord"
+              class="footer-icon"
+            />
+          </a>
+          <!-- Email -->
+          <a href="mailto:sdriver@sdriver1.me" title="Email">
+            <img id="icon-email" alt="Email" class="footer-icon" />
+          </a>
+          <a href="https://github.com/Sdriver1" target="_blank" title="GitHub">
+            <img id="icon-github" alt="GitHub" class="footer-icon" />
+          </a>
+
+          <!-- Instagram -->
+          <a
+            href="https://www.instagram.com/sdriver_1/"
+            target="_blank"
+            title="Instagram"
+          >
+            <img
+              src="../assets/svg/instagram.svg"
+              alt="Instagram"
+              class="footer-icon"
+            />
+          </a>
+          <!-- LinkedIn -->
+          <a
+            href="https://sdriver1.me/linkedin"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
+              alt="LinkedIn"
+              class="footer-icon"
+            />
+          </a>
+          <!-- Twitch -->
+          <a href="https://twitch.tv/sdriver1" target="_blank" title="Twitch">
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg"
+              alt="Twitch"
+              class="footer-icon"
+            />
+          </a>
+          <!-- X -->
+          <a href="https://x.com/sdriver_1" target="_blank" title="Twitter / X">
+            <img id="icon-x" alt="X" class="footer-icon" />
+          </a>
+          <!-- YouTube -->
+          <a
+            href="https://www.youtube.com/@sdriver_1"
+            target="_blank"
+            title="YouTube"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg"
+              alt="YouTube"
+              class="footer-icon"
+            />
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Snake game implementation
+      class SnakeGame {
+        constructor(canvas, ui) {
+          this.canvas = canvas;
+          this.ctx = canvas.getContext("2d");
+          this.ui = ui;
+          this.intervalId = null;
+          this.setDifficulty("easy");
+          this.bindKeys();
+        }
+
+        setDifficulty(level) {
+          const defs = {
+            easy: { cols: 20, rows: 20, box: 20, speed: 120, label: "Slow" },
+            medium: { cols: 25, rows: 20, box: 16, speed: 90, label: "Normal" },
+            hard: { cols: 30, rows: 24, box: 14, speed: 65, label: "Fast" },
+          };
+          this.level = level;
+          this.cfg = defs[level] || defs.medium;
+          this.canvas.width = this.cfg.cols * this.cfg.box;
+          this.canvas.height = this.cfg.rows * this.cfg.box;
+          this.ui.speedLabel.textContent = this.cfg.label;
+        }
+
+        start() {
+          this.reset();
+          if (this.intervalId) clearInterval(this.intervalId);
+          this.intervalId = setInterval(() => this.loop(), this.cfg.speed);
+          this.ui.status.textContent = "Playing";
+        }
+
+        reset() {
+          const { cols, rows } = this.cfg;
+          this.snake = [{ x: Math.floor(cols / 2), y: Math.floor(rows / 2) }];
+          this.dir = { x: 1, y: 0 };
+          this.spawnFood();
+          this.score = 0;
+          this.updateUI();
+        }
+
+        spawnFood() {
+          const { cols, rows } = this.cfg;
+          let pos;
+          do {
+            pos = {
+              x: Math.floor(Math.random() * cols),
+              y: Math.floor(Math.random() * rows),
+            };
+          } while (this.snake.some((s) => s.x === pos.x && s.y === pos.y));
+          this.food = pos;
+        }
+
+        bindKeys() {
+          window.addEventListener("keydown", (e) => {
+            const key = e.key.toLowerCase();
+            if (key === "arrowleft" || key === "a") this.changeDir(-1, 0);
+            if (key === "arrowup" || key === "w") this.changeDir(0, -1);
+            if (key === "arrowright" || key === "d") this.changeDir(1, 0);
+            if (key === "arrowdown" || key === "s") this.changeDir(0, 1);
+          });
+        }
+
+        changeDir(x, y) {
+          // Prevent reversing
+          if (this.dir.x === -x && this.dir.y === -y) return;
+          this.dir = { x, y };
+        }
+
+        loop() {
+          const head = {
+            x: this.snake[0].x + this.dir.x,
+            y: this.snake[0].y + this.dir.y,
+          };
+          // Wall collision
+          if (
+            head.x < 0 ||
+            head.x >= this.cfg.cols ||
+            head.y < 0 ||
+            head.y >= this.cfg.rows
+          ) {
+            this.gameOver();
+            return;
+          }
+          // Self collision
+          if (this.snake.some((s) => s.x === head.x && s.y === head.y)) {
+            this.gameOver();
+            return;
+          }
+
+          this.snake.unshift(head);
+          // Eat food
+          if (head.x === this.food.x && head.y === this.food.y) {
+            this.score += 1;
+            this.spawnFood();
+          } else {
+            this.snake.pop();
+          }
+
+          this.draw();
+          this.updateUI();
+        }
+
+        gameOver() {
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+          this.ui.status.textContent = "Game Over";
+          this.ui.statusMessage.textContent = `Game over — score ${this.score}. Press New Game to try again.`;
+        }
+
+        updateUI() {
+          this.ui.score.textContent = this.score;
+        }
+
+        draw() {
+          const ctx = this.ctx;
+          const { box } = this.cfg;
+          // background
+          ctx.fillStyle =
+            getComputedStyle(document.documentElement)
+              .getPropertyValue("--bg")
+              .trim() || "#fff";
+          ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+          // grid (subtle)
+          ctx.strokeStyle = "rgba(0,0,0,0.03)";
+          for (let x = 0; x <= this.canvas.width; x += box) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, this.canvas.height);
+            ctx.stroke();
+          }
+          for (let y = 0; y <= this.canvas.height; y += box) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(this.canvas.width, y);
+            ctx.stroke();
+          }
+
+          // food
+          ctx.fillStyle = "#e53935";
+          ctx.fillRect(
+            this.food.x * box + 2,
+            this.food.y * box + 2,
+            box - 4,
+            box - 4
+          );
+
+          // snake
+          for (let i = 0; i < this.snake.length; i++) {
+            const s = this.snake[i];
+            ctx.fillStyle = i === 0 ? "#43a047" : "#1e293b";
+            ctx.fillRect(s.x * box + 1, s.y * box + 1, box - 2, box - 2);
+          }
+        }
+      }
+
+      // Wire up UI
+      const canvas = document.getElementById("snakeCanvas");
+      const ui = {
+        score: document.getElementById("score"),
+        speedLabel: document.getElementById("speedLabel"),
+        status: document.getElementById("status"),
+        statusMessage: document.getElementById("status-message"),
+      };
+
+      const game = new SnakeGame(canvas, ui);
+
+      // Controls
+      document.getElementById("difficulty").addEventListener("change", (e) => {
+        game.setDifficulty(e.target.value);
+      });
+
+      document.getElementById("newGameBtn").addEventListener("click", () => {
+        game.setDifficulty(document.getElementById("difficulty").value);
+        game.start();
+        ui.statusMessage.textContent = "";
+      });
+
+      // Start with default difficulty shown
+      (function init() {
+        const sel = document.getElementById("difficulty");
+        game.setDifficulty(sel.value);
+        ui.status.textContent = "Ready";
+      })();
+    </script>
+    <script src="../assets/js/indexsite.js"></script>
+    <script>
+      // Initialize theme toggle and navigation
+      window.addEventListener('DOMContentLoaded', function() {
+        if (typeof setupThemeToggle === 'function') setupThemeToggle();
+        if (typeof setupNavigation === 'function') setupNavigation(); 
+      });
+    </script>
+  </body>
+</html>
