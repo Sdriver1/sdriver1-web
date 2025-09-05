@@ -574,6 +574,7 @@
         }, 500);
       });
 
+      // Class schedule - All times are in Eastern Time (EST/EDT - New York timezone)
       const classSchedule = {
         fall2025: {
           monday: [
@@ -597,7 +598,7 @@
           ],
           friday: [
             { name: "ECON-101", time: "09:00-09:50", location: "LOW-3235" },
-            { name: "CSCI-140 Lab", time: "12:00-13:50", location: "GOL-3520" },
+            { name: "CSCI-140 Lab", time: "11:00-13:50", location: "GOL-3520" },
           ],
           saturday: [],
           sunday: [],
@@ -605,8 +606,10 @@
       };
 
       function getCurrentSemester() {
+        // Get current date in Eastern Time (New York timezone)
         const now = new Date();
-        const month = now.getMonth() + 1; // 1-12
+        const easternTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+        const month = easternTime.getMonth() + 1; // 1-12
 
         // Fall semester: August - December
         if (month >= 8 && month <= 12) {
@@ -629,7 +632,7 @@
         }
 
         const now = new Date();
-        const dayOfWeek = now.toLocaleLowerCase().split(" ")[0]; // 'monday', 'tuesday', etc.
+        const easternTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
         const dayName = [
           "sunday",
           "monday",
@@ -638,14 +641,13 @@
           "thursday",
           "friday",
           "saturday",
-        ][now.getDay()];
-        const currentTime = now.getHours() * 100 + now.getMinutes(); // HHMM format
+        ][easternTime.getDay()];
+        const currentTime = easternTime.getHours() * 100 + easternTime.getMinutes();
 
         const todayClasses = classSchedule[semester][dayName] || [];
         let currentClass = null;
         let nextClass = null;
 
-        // Check if currently in a class
         for (const classInfo of todayClasses) {
           const [startTime, endTime] = classInfo.time.split("-");
           const start = parseInt(startTime.replace(":", ""));
@@ -672,7 +674,7 @@
 
           // If no more classes today, look for tomorrow's first class
           if (!nextClass) {
-            const tomorrow = new Date(now);
+            const tomorrow = new Date(easternTime);
             tomorrow.setDate(tomorrow.getDate() + 1);
             const tomorrowName = [
               "sunday",
@@ -699,7 +701,7 @@
         const currentClassElement = document.getElementById("current-class");
 
         if (current) {
-          currentClassElement.textContent = `${current.name} (${current.location})`;
+          currentClassElement.textContent = current.name;
           currentClassElement.style.color = "var(--rit-orange)";
         } else {
           currentClassElement.textContent = "Not in class";
