@@ -142,6 +142,33 @@
         color: #d32f2f;
       }
 
+      /* New styles for game end states */
+      .cell.mine-flagged-correct {
+        background: #ffd700 !important; /* Golden yellow for correctly flagged mines */
+        color: #d32f2f;
+        border: 3px solid #f57c00 !important;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      }
+
+      .cell.mine-unflagged {
+        background: #ff4444 !important; /* Red for unflagged mines */
+        color: white;
+        animation: mineReveal 0.5s ease-in-out;
+      }
+
+      .cell.flagged-incorrect {
+        background: #ffcccb !important; /* Light red for incorrectly flagged cells */
+        color: #d32f2f;
+        border: 2px solid #ff4444 !important;
+        text-decoration: line-through;
+      }
+
+      @keyframes mineReveal {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); background: #ff6666; }
+        100% { transform: scale(1); }
+      }
+
       .cell.number-1 {
         color: #1976d2;
       }
@@ -209,6 +236,24 @@
 
       [data-theme="dark"] .minesweeper-grid {
         background: #2a2a2a;
+      }
+
+      /* Dark mode support for mine reveal states */
+      [data-theme="dark"] .cell.mine-flagged-correct {
+        background: #b8860b !important; /* Darker gold for dark mode */
+        border: 3px solid #daa520 !important;
+        box-shadow: 0 0 10px rgba(184, 134, 11, 0.6);
+      }
+
+      [data-theme="dark"] .cell.mine-unflagged {
+        background: #cc3333 !important; /* Slightly darker red for dark mode */
+        color: #fff;
+      }
+
+      [data-theme="dark"] .cell.flagged-incorrect {
+        background: #8b4444 !important; /* Darker red background for dark mode */
+        border: 2px solid #cc3333 !important;
+        color: #ffcccc;
       }
 
       /* Mobile responsiveness */
@@ -643,9 +688,27 @@
         revealAllMines() {
           for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col < this.cols; col++) {
-              if (this.board[row][col].isMine) {
-                this.board[row][col].isRevealed = true;
-                this.updateCellDisplay(row, col);
+              const cellData = this.board[row][col];
+              const cell = document.querySelector(
+                `[data-row="${row}"][data-col="${col}"]`
+              );
+              
+              if (cellData.isMine) {
+                cellData.isRevealed = true;
+                
+                if (cellData.isFlagged) {
+                  // Correctly flagged mine - show with golden highlight
+                  cell.className = "cell mine-flagged-correct";
+                  cell.textContent = "🚩";
+                } else {
+                  // Unflagged mine - show with red background and bomb
+                  cell.className = "cell mine-unflagged";
+                  cell.textContent = "💣";
+                }
+              } else if (cellData.isFlagged) {
+                // Incorrectly flagged cell (not a mine) - show with light red and crossed out flag
+                cell.className = "cell flagged-incorrect";
+                cell.textContent = "🚩";
               }
             }
           }
@@ -671,6 +734,11 @@
             }, index * 20); // Staggered animation
           });
 
+          // Show all mine locations after celebration (2 seconds delay)
+          setTimeout(() => {
+            this.showAllMinesOnWin();
+          }, 2000);
+
           // Save best time if it's a new record
           const bestTimeKey = `minesweeper-best-${this.difficulty}`;
           const currentBest = localStorage.getItem(bestTimeKey);
@@ -689,6 +757,35 @@
             audio.play();
           } catch (e) {
             // Audio not available, continue without sound
+          }
+        }
+
+        showAllMinesOnWin() {
+          // Show all mine locations when game is won (gentler visualization)
+          for (let row = 0; row < this.rows; row++) {
+            for (let col = 0; col < this.cols; col++) {
+              const cellData = this.board[row][col];
+              const cell = document.querySelector(
+                `[data-row="${row}"][data-col="${col}"]`
+              );
+              
+              if (cellData.isMine && cellData.isFlagged) {
+                // Correctly flagged mine - show with gentle golden glow
+                cell.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.8)';
+                cell.style.border = '2px solid #ffd700';
+              } else if (cellData.isMine && !cellData.isFlagged) {
+                // Unflagged mine - show with subtle indicator
+                const mineIndicator = document.createElement('div');
+                mineIndicator.textContent = '💣';
+                mineIndicator.style.position = 'absolute';
+                mineIndicator.style.fontSize = '0.8em';
+                mineIndicator.style.opacity = '0.7';
+                mineIndicator.style.top = '2px';
+                mineIndicator.style.right = '2px';
+                cell.style.position = 'relative';
+                cell.appendChild(mineIndicator);
+              }
+            }
           }
         }
 
@@ -727,6 +824,7 @@
               // Show final stats
               setTimeout(() => {
                 messageEl.innerHTML += `<br><small>Time: ${this.timer}s | Difficulty: ${this.difficulty}</small>`;
+                messageEl.innerHTML += `<br><small>💎 Gold highlights show correctly flagged mines</small>`;
               }, 500);
               break;
             case "lost":
@@ -734,6 +832,11 @@
               messageEl.textContent = "💥 Game Over! You hit a mine!";
               messageEl.className = "game-status lose";
               messageEl.style.animation = 'shake 0.5s ease-in-out';
+              
+              // Add explanation of visual feedback after a short delay
+              setTimeout(() => {
+                messageEl.innerHTML += `<br><small>💎 Gold = Correct flags | ❌ Crossed flags = Wrong flags | 💣 Red = Unflagged mines</small>`;
+              }, 1000);
               break;
           }
         }
