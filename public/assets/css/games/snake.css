@@ -1,0 +1,100 @@
+/* Snake Game Styles */
+
+.game-container {
+  padding: 4rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.game-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.game-subtitle {
+  color: var(--text-secondary, var(--secondary));
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.difficulty-select,
+.new-game-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.difficulty-select {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--secondary);
+}
+
+.new-game-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.game-info {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+  font-weight: 600;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.snake-canvas-wrapper {
+  display: inline-block;
+  background: var(--card-bg);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+canvas {
+  display: block;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(0, 0, 0, 0.02)
+  );
+  border-radius: 8px;
+  image-rendering: pixelated;
+}
+
+.game-status {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    padding: 2rem 1rem;
+  }
+  .game-title {
+    font-size: 2rem;
+  }
+}

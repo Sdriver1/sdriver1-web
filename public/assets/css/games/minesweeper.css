@@ -1,0 +1,267 @@
+/* Minesweeper Game Styles */
+
+/* Game-specific styles */
+.game-container {
+  padding: 4rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.game-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.game-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.difficulty-select,
+.new-game-btn,
+.back-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.difficulty-select {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--secondary);
+}
+
+.new-game-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.new-game-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.back-btn {
+  background: #ff6b6b;
+  color: white;
+}
+
+.back-btn:hover {
+  background: #ff5252;
+  transform: translateY(-2px);
+}
+
+.game-info {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+  font-weight: 600;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.minesweeper-grid {
+  display: grid;
+  gap: 2px;
+  background: var(--secondary);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  background: var(--card-bg);
+  border: 2px outset var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cell:hover {
+  background: var(--bg-secondary);
+}
+
+.cell.revealed {
+  background: #f0f0f0;
+  border: 1px inset #ccc;
+  cursor: default;
+}
+
+.cell.mine {
+  background: #ff4444 !important;
+  color: white;
+}
+
+.cell.flagged {
+  background: #ffeb3b;
+  color: #d32f2f;
+}
+
+/* New styles for game end states */
+.cell.mine-flagged-correct {
+  background: #ffd700 !important; /* Golden yellow for correctly flagged mines */
+  color: #d32f2f;
+  border: 3px solid #f57c00 !important;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.cell.mine-unflagged {
+  background: #ff4444 !important; /* Red for unflagged mines */
+  color: white;
+  animation: mineReveal 0.5s ease-in-out;
+}
+
+.cell.flagged-incorrect {
+  background: #ffcccb !important; /* Light red for incorrectly flagged cells */
+  color: #d32f2f;
+  border: 2px solid #ff4444 !important;
+  text-decoration: line-through;
+}
+
+@keyframes mineReveal {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); background: #ff6666; }
+  100% { transform: scale(1); }
+}
+
+.cell.number-1 {
+  color: #1976d2;
+}
+.cell.number-2 {
+  color: #388e3c;
+}
+.cell.number-3 {
+  color: #f57c00;
+}
+.cell.number-4 {
+  color: #7b1fa2;
+}
+.cell.number-5 {
+  color: #c62828;
+}
+.cell.number-6 {
+  color: #00796b;
+}
+.cell.number-7 {
+  color: #424242;
+}
+.cell.number-8 {
+  color: #37474f;
+}
+
+.game-status {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.game-status.win {
+  color: #4caf50;
+}
+
+.game-status.lose {
+  color: #f44336;
+}
+
+/* Win/Lose animations */
+@keyframes winCelebration {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes winPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .cell.revealed {
+  background: #3a3a3a;
+  border: 1px inset #555;
+  color: #fff;
+}
+
+[data-theme="dark"] .minesweeper-grid {
+  background: #2a2a2a;
+}
+
+/* Dark mode support for mine reveal states */
+[data-theme="dark"] .cell.mine-flagged-correct {
+  background: #b8860b !important; /* Darker gold for dark mode */
+  border: 3px solid #daa520 !important;
+  box-shadow: 0 0 10px rgba(184, 134, 11, 0.6);
+}
+
+[data-theme="dark"] .cell.mine-unflagged {
+  background: #cc3333 !important; /* Slightly darker red for dark mode */
+  color: #fff;
+}
+
+[data-theme="dark"] .cell.flagged-incorrect {
+  background: #8b4444 !important; /* Darker red background for dark mode */
+  border: 2px solid #cc3333 !important;
+  color: #ffcccc;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .game-container {
+    padding: 2rem 1rem;
+  }
+
+  .game-title {
+    font-size: 2rem;
+  }
+
+  .game-controls {
+    gap: 0.5rem;
+  }
+
+  .game-info {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .cell {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+  }
+}
