@@ -5,6 +5,9 @@ class SnakeGame {
     this.ctx = canvas.getContext("2d");
     this.ui = ui;
     this.intervalId = null;
+    this.passThroughWalls = false;
+    this.appleCount = 1;
+    this.apples = [];
     this.setDifficulty("easy");
     this.bindKeys();
   }
@@ -23,6 +26,9 @@ class SnakeGame {
   }
 
   start() {
+    // Read settings
+    this.passThroughWalls = document.getElementById("passThroughWalls").checked;
+    this.appleCount = Math.max(1, Math.min(5, parseInt(document.getElementById("appleCount").value) || 1));
     this.reset();
     if (this.intervalId) clearInterval(this.intervalId);
     this.intervalId = setInterval(() => this.loop(), this.cfg.speed);
@@ -33,7 +39,10 @@ class SnakeGame {
     const { cols, rows } = this.cfg;
     this.snake = [{ x: Math.floor(cols / 2), y: Math.floor(rows / 2) }];
     this.dir = { x: 1, y: 0 };
-    this.spawnFood();
+    this.apples = [];
+    for (let i = 0; i < this.appleCount; i++) {
+      this.spawnFood();
+    }
     this.score = 0;
     this.updateUI();
   }
@@ -46,8 +55,11 @@ class SnakeGame {
         x: Math.floor(Math.random() * cols),
         y: Math.floor(Math.random() * rows),
       };
-    } while (this.snake.some((s) => s.x === pos.x && s.y === pos.y));
-    this.food = pos;
+    } while (
+      this.snake.some((s) => s.x === pos.x && s.y === pos.y) ||
+      this.apples.some((a) => a.x === pos.x && a.y === pos.y)
+    );
+    this.apples.push(pos);
   }
 
   bindKeys() {
@@ -67,19 +79,26 @@ class SnakeGame {
   }
 
   loop() {
-    const head = {
+    let head = {
       x: this.snake[0].x + this.dir.x,
       y: this.snake[0].y + this.dir.y,
     };
     // Wall collision
-    if (
-      head.x < 0 ||
-      head.x >= this.cfg.cols ||
-      head.y < 0 ||
-      head.y >= this.cfg.rows
-    ) {
-      this.gameOver();
-      return;
+    if (this.passThroughWalls) {
+      if (head.x < 0) head.x = this.cfg.cols - 1;
+      if (head.x >= this.cfg.cols) head.x = 0;
+      if (head.y < 0) head.y = this.cfg.rows - 1;
+      if (head.y >= this.cfg.rows) head.y = 0;
+    } else {
+      if (
+        head.x < 0 ||
+        head.x >= this.cfg.cols ||
+        head.y < 0 ||
+        head.y >= this.cfg.rows
+      ) {
+        this.gameOver();
+        return;
+      }
     }
     // Self collision
     if (this.snake.some((s) => s.x === head.x && s.y === head.y)) {
@@ -88,11 +107,18 @@ class SnakeGame {
     }
 
     this.snake.unshift(head);
-    // Eat food
-    if (head.x === this.food.x && head.y === this.food.y) {
-      this.score += 1;
-      this.spawnFood();
-    } else {
+    // Eat food (support multiple apples)
+    let ateApple = false;
+    for (let i = 0; i < this.apples.length; i++) {
+      if (head.x === this.apples[i].x && head.y === this.apples[i].y) {
+        this.score += 1;
+        this.apples.splice(i, 1);
+        this.spawnFood();
+        ateApple = true;
+        break;
+      }
+    }
+    if (!ateApple) {
       this.snake.pop();
     }
 
@@ -136,14 +162,16 @@ class SnakeGame {
       ctx.stroke();
     }
 
-    // food
-    ctx.fillStyle = "#e53935";
-    ctx.fillRect(
-      this.food.x * box + 2,
-      this.food.y * box + 2,
-      box - 4,
-      box - 4
-    );
+    // apples (multiple)
+    for (let i = 0; i < this.apples.length; i++) {
+      ctx.fillStyle = "#e53935";
+      ctx.fillRect(
+        this.apples[i].x * box + 2,
+        this.apples[i].y * box + 2,
+        box - 4,
+        box - 4
+      );
+    }
 
     // snake
     for (let i = 0; i < this.snake.length; i++) {
@@ -174,6 +202,23 @@ document.getElementById("newGameBtn").addEventListener("click", () => {
   game.setDifficulty(document.getElementById("difficulty").value);
   game.start();
   ui.statusMessage.textContent = "";
+});
+
+// Settings dropdown logic
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsDropdown = document.getElementById("settingsDropdown");
+const closeSettings = document.getElementById("closeSettings");
+
+settingsBtn.addEventListener("click", () => {
+  settingsDropdown.style.display = settingsDropdown.style.display === "none" ? "block" : "none";
+});
+closeSettings.addEventListener("click", () => {
+  settingsDropdown.style.display = "none";
+});
+document.addEventListener("click", (e) => {
+  if (!settingsDropdown.contains(e.target) && e.target !== settingsBtn) {
+    settingsDropdown.style.display = "none";
+  }
 });
 
 // Start with default difficulty shown

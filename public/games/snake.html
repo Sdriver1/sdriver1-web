@@ -51,7 +51,6 @@
             >Sudoku</a
           >
           <a href="https://games.sdriver1.me/2048" aria-label="2048">2048</a>
-          <a href="https://games.sdriver1.me/snake" aria-label="Snake">Snake</a>
           <button
             class="theme-toggle"
             id="theme-toggle"
@@ -77,6 +76,37 @@
             <option value="hard">Hard (30x24, fast)</option>
           </select>
           <button id="newGameBtn" class="new-game-btn">New Game</button>
+          <div class="settings-container">
+            <button id="settingsBtn" class="settings-btn">Settings</button>
+            <div
+              id="settingsDropdown"
+              class="settings-dropdown"
+              style="display: none"
+            >
+              <label style="display: flex; align-items: center; gap: 0.5rem">
+                <input type="checkbox" id="passThroughWalls" /> Pass Through
+                Walls
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  margin-top: 1rem;
+                "
+              >
+                Multiple Apples:
+                <input
+                  type="number"
+                  id="appleCount"
+                  min="1"
+                  max="5"
+                  value="1"
+                  style="width: 3em"
+                />
+              </label>
+            </div>
+          </div>
         </div>
 
         <div class="game-info">
@@ -185,12 +215,5 @@
 
     <script src="../assets/js/games/snake.js"></script>
     <script src="../assets/js/indexsite.js"></script>
-    <script>
-      // Initialize theme toggle and navigation
-      window.addEventListener('DOMContentLoaded', function() {
-        if (typeof setupThemeToggle === 'function') setupThemeToggle();
-        if (typeof setupNavigation === 'function') setupNavigation(); 
-      });
-    </script>
   </body>
 </html>
