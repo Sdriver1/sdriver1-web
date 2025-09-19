@@ -44,7 +44,7 @@
 }
 
 .new-game-btn:hover {
-  background: var(--primary-dark);
+  transform: translateY(-2px);
 }
 
 .score-info {

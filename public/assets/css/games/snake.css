@@ -1,3 +1,40 @@
+/* Settings dropdown styles */
+
+.settings-container {
+  position: relative;
+  display: inline-block;
+}
+
+.settings-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settings-btn:hover {
+  transform: translateY(-2px);
+}
+/* Snake Game Styles */
+
+.settings-dropdown {
+  position: absolute;
+  min-width: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(100% + 10px);
+  background: var(--card-bg);
+  border: 1px solid var(--secondary);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  color: var(--text);
+}
 /* Snake Game Styles */
 
 .game-container {
@@ -52,6 +89,10 @@
 .new-game-btn {
   background: var(--primary);
   color: white;
+}
+
+.new-game-btn:hover {
+  transform: translateY(-2px);
 }
 
 .game-info {

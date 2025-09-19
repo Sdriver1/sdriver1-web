@@ -57,7 +57,6 @@
 }
 
 .new-game-btn:hover {
-  background: var(--primary-dark);
   transform: translateY(-2px);
 }
 
@@ -148,9 +147,16 @@
 }
 
 @keyframes mineReveal {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); background: #ff6666; }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    background: #ff6666;
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .cell.number-1 {
@@ -195,20 +201,40 @@
 
 /* Win/Lose animations */
 @keyframes winCelebration {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes winPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
 /* Dark mode adjustments */
