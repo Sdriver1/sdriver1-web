@@ -53,6 +53,15 @@ class Minesweeper {
   }
 
   placeMines(firstClickRow, firstClickCol) {
+    if (this.rows === 16 && this.cols === 30) {
+      this.placeMinesWithGuaranteedEight(firstClickRow, firstClickCol);
+    } else {
+      this.placeMinesRegular(firstClickRow, firstClickCol);
+    }
+    this.calculateNeighborMines();
+  }
+
+  placeMinesRegular(firstClickRow, firstClickCol) {
     let minesPlaced = 0;
     while (minesPlaced < this.totalMines) {
       const row = Math.floor(Math.random() * this.rows);
@@ -69,7 +78,51 @@ class Minesweeper {
       this.board[row][col].isMine = true;
       minesPlaced++;
     }
-    this.calculateNeighborMines();
+  }
+
+  placeMinesWithGuaranteedEight(firstClickRow, firstClickCol) {
+    let eightSpaceRow, eightSpaceCol;
+    let attempts = 0;
+    const maxAttempts = 1000;
+
+    do {
+      eightSpaceRow = Math.floor(Math.random() * (this.rows - 2)) + 1;
+      eightSpaceCol = Math.floor(Math.random() * (this.cols - 2)) + 1;
+      attempts++;
+    } while (
+      attempts < maxAttempts &&
+      Math.abs(eightSpaceRow - firstClickRow) <= 2 &&
+      Math.abs(eightSpaceCol - firstClickCol) <= 2
+    );
+
+    let minesPlaced = 0;
+    for (let r = eightSpaceRow - 1; r <= eightSpaceRow + 1; r++) {
+      for (let c = eightSpaceCol - 1; c <= eightSpaceCol + 1; c++) {
+        if (r !== eightSpaceRow || c !== eightSpaceCol) {
+          if (r !== firstClickRow || c !== firstClickCol) {
+            this.board[r][c].isMine = true;
+            minesPlaced++;
+          }
+        }
+      }
+    }
+
+    while (minesPlaced < this.totalMines) {
+      const row = Math.floor(Math.random() * this.rows);
+      const col = Math.floor(Math.random() * this.cols);
+
+      if (
+        (row === firstClickRow && col === firstClickCol) ||
+        this.board[row][col].isMine ||
+        (Math.abs(row - eightSpaceRow) <= 1 &&
+          Math.abs(col - eightSpaceCol) <= 1)
+      ) {
+        continue;
+      }
+
+      this.board[row][col].isMine = true;
+      minesPlaced++;
+    }
   }
 
   calculateNeighborMines() {
@@ -126,7 +179,7 @@ class Minesweeper {
         // Mobile touch controls
         let touchStartTime = 0;
         let touchTimer = null;
-        
+
         cell.addEventListener("touchstart", (e) => {
           e.preventDefault();
           touchStartTime = Date.now();
@@ -143,12 +196,12 @@ class Minesweeper {
         cell.addEventListener("touchend", (e) => {
           e.preventDefault();
           const touchDuration = Date.now() - touchStartTime;
-          
+
           if (touchTimer) {
             clearTimeout(touchTimer);
             touchTimer = null;
           }
-          
+
           // Short tap to reveal (less than 500ms)
           if (touchDuration < 500) {
             this.handleCellClick(e, row, col);
@@ -169,8 +222,7 @@ class Minesweeper {
 
   handleCellClick(e, row, col) {
     e.preventDefault();
-    if (this.gameState !== "playing" || this.board[row][col].isFlagged)
-      return;
+    if (this.gameState !== "playing" || this.board[row][col].isFlagged) return;
 
     if (this.firstClick) {
       this.placeMines(row, col);
@@ -185,8 +237,7 @@ class Minesweeper {
 
   handleRightClick(e, row, col) {
     e.preventDefault();
-    if (this.gameState !== "playing" || this.board[row][col].isRevealed)
-      return;
+    if (this.gameState !== "playing" || this.board[row][col].isRevealed) return;
 
     this.board[row][col].isFlagged = !this.board[row][col].isFlagged;
     this.mineCount += this.board[row][col].isFlagged ? -1 : 1;
@@ -259,10 +310,10 @@ class Minesweeper {
         const cell = document.querySelector(
           `[data-row="${row}"][data-col="${col}"]`
         );
-        
+
         if (cellData.isMine) {
           cellData.isRevealed = true;
-          
+
           if (cellData.isFlagged) {
             // Correctly flagged mine - show with golden highlight
             cell.className = "cell mine-flagged-correct";
@@ -292,12 +343,12 @@ class Minesweeper {
 
   celebrateWin() {
     // Add celebration effects to all revealed cells
-    const cells = document.querySelectorAll('.cell.revealed');
+    const cells = document.querySelectorAll(".cell.revealed");
     cells.forEach((cell, index) => {
       setTimeout(() => {
-        cell.style.background = 'linear-gradient(45deg, #4CAF50, #81C784)';
-        cell.style.color = 'white';
-        cell.style.animation = 'winCelebration 0.6s ease-in-out';
+        cell.style.background = "linear-gradient(45deg, #4CAF50, #81C784)";
+        cell.style.color = "white";
+        cell.style.animation = "winCelebration 0.6s ease-in-out";
       }, index * 20); // Staggered animation
     });
 
@@ -309,18 +360,20 @@ class Minesweeper {
     // Save best time if it's a new record
     const bestTimeKey = `minesweeper-best-${this.difficulty}`;
     const currentBest = localStorage.getItem(bestTimeKey);
-    
+
     if (!currentBest || this.timer < parseInt(currentBest)) {
       localStorage.setItem(bestTimeKey, this.timer.toString());
       setTimeout(() => {
         const messageEl = document.getElementById("status-message");
-        messageEl.innerHTML += '<br><small>🏆 New Best Time!</small>';
+        messageEl.innerHTML += "<br><small>🏆 New Best Time!</small>";
       }, 1000);
     }
 
     // Play celebration sound
     try {
-      const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+b9xWgdBiaN2+/DCSQHIX/E9N+VQgoVX7bk6qpZFwoMnrPj+MlhGAQfidb3w3gkBSl+zO/EGSUEInTE8d2QQAsTXLPq6atWFAoNn7Ps+8kkBSN8yOzfJSUIHw==');
+      const audio = new Audio(
+        "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+b9xWgdBiaN2+/DCSQHIX/E9N+VQgoVX7bk6qpZFwoMnrPj+MlhGAQfidb3w3gkBSl+zO/EGSUEInTE8d2QQAsTXLPq6atWFAoNn7Ps+8kkBSN8yOzfJSUIHw=="
+      );
       audio.play();
     } catch (e) {
       // Audio not available, continue without sound
@@ -335,21 +388,21 @@ class Minesweeper {
         const cell = document.querySelector(
           `[data-row="${row}"][data-col="${col}"]`
         );
-        
+
         if (cellData.isMine && cellData.isFlagged) {
           // Correctly flagged mine - show with gentle golden glow
-          cell.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.8)';
-          cell.style.border = '2px solid #ffd700';
+          cell.style.boxShadow = "0 0 15px rgba(255, 215, 0, 0.8)";
+          cell.style.border = "2px solid #ffd700";
         } else if (cellData.isMine && !cellData.isFlagged) {
           // Unflagged mine - show with subtle indicator
-          const mineIndicator = document.createElement('div');
-          mineIndicator.textContent = '💣';
-          mineIndicator.style.position = 'absolute';
-          mineIndicator.style.fontSize = '0.8em';
-          mineIndicator.style.opacity = '0.7';
-          mineIndicator.style.top = '2px';
-          mineIndicator.style.right = '2px';
-          cell.style.position = 'relative';
+          const mineIndicator = document.createElement("div");
+          mineIndicator.textContent = "💣";
+          mineIndicator.style.position = "absolute";
+          mineIndicator.style.fontSize = "0.8em";
+          mineIndicator.style.opacity = "0.7";
+          mineIndicator.style.top = "2px";
+          mineIndicator.style.right = "2px";
+          cell.style.position = "relative";
           cell.appendChild(mineIndicator);
         }
       }
@@ -386,8 +439,8 @@ class Minesweeper {
         statusEl.textContent = "Won!";
         messageEl.textContent = "🎉 Congratulations! You cleared all mines!";
         messageEl.className = "game-status win";
-        messageEl.style.animation = 'winPulse 2s infinite';
-        
+        messageEl.style.animation = "winPulse 2s infinite";
+
         // Show final stats
         setTimeout(() => {
           messageEl.innerHTML += `<br><small>Time: ${this.timer}s | Difficulty: ${this.difficulty}</small>`;
@@ -398,8 +451,8 @@ class Minesweeper {
         statusEl.textContent = "Lost";
         messageEl.textContent = "💥 Game Over! You hit a mine!";
         messageEl.className = "game-status lose";
-        messageEl.style.animation = 'shake 0.5s ease-in-out';
-        
+        messageEl.style.animation = "shake 0.5s ease-in-out";
+
         // Add explanation of visual feedback after a short delay
         setTimeout(() => {
           messageEl.innerHTML += `<br><small>💎 Gold = Correct flags | ❌ Crossed flags = Wrong flags | 💣 Red = Unflagged mines</small>`;
@@ -418,7 +471,7 @@ class Minesweeper {
 let game;
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   game = new Minesweeper();
 });
 
@@ -428,7 +481,7 @@ function newGame() {
 }
 
 // Event listeners
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("difficulty").addEventListener("change", (e) => {
     game.changeDifficulty(e.target.value);
   });
