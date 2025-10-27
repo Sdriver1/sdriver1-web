@@ -9,8 +9,9 @@
     />
     <meta http-equiv="Content-Language" content="en" />
     <meta name="description" content="Welcome to the LGBTQ+! 🌈" />
-    <meta name="og:title" content="Congratulations! You Are Now Gay 🎉" />
-    <meta name="og:description" content="Welcome to the LGBTQ+! 🌈" />
+    <meta property="og:title" content="Congratulations! You Are Now Gay 🎉" />
+    <meta property="og:description" content="Welcome to the LGBTQ+! 🌈" />
+    <meta property="og:type" content="website" />
     <meta name="theme-color" content="#ff69b4" />
 
     <link
@@ -30,6 +31,12 @@
     />
 
     <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
       body {
         background: linear-gradient(
           135deg,
@@ -46,14 +53,13 @@
         text-align: center;
         font-family: "Poppins", sans-serif;
         color: white;
-        margin: 0; /* Remove default margin */
-        padding: 0; /* Remove padding to fix spacing */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        overflow: hidden; /* Prevents scrolling issues */
+        overflow-x: hidden;
+        position: relative;
       }
 
       @keyframes rainbowBG {
@@ -68,7 +74,6 @@
         }
       }
 
-      /* Confetti now covers the full screen */
       .confetti {
         position: fixed;
         width: 100%;
@@ -78,9 +83,9 @@
         transition: opacity 3s ease-in-out;
         top: 0;
         left: 0;
+        z-index: 1;
       }
 
-      /* Main Content */
       .content {
         display: flex;
         flex-direction: column;
@@ -88,18 +93,53 @@
         align-items: center;
         text-align: center;
         width: 100%;
+        position: relative;
+        z-index: 2;
+        padding: 20px;
       }
 
-      /* Text Styling */
+      h1 {
+        font-size: clamp(2rem, 8vw, 4rem);
+        margin-bottom: 20px;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        animation: bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
       p {
         font-size: clamp(1rem, 4vw, 1.5rem);
-        margin: 10px 10%;
-        line-height: 1.5;
-        max-width: 80%;
+        margin: 10px auto;
+        line-height: 1.6;
+        max-width: 90%;
         word-break: break-word;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
       }
 
-      /* Responsive Adjustments */
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
       @media screen and (max-width: 768px) {
         p {
           font-size: 1.2rem;
@@ -116,7 +156,6 @@
         }
       }
 
-      /* Button */
       .button {
         display: inline-block;
         margin-top: 20px;
@@ -128,12 +167,46 @@
         border: none;
         border-radius: 30px;
         cursor: pointer;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .button::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .button:hover::before {
+        width: 300px;
+        height: 300px;
       }
 
       .button:hover {
         background-color: #ff69b4;
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       }
+
+      .button:active {
+        transform: scale(0.95);
+      }
+
+      .button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
       #video-modal {
         display: none;
         position: fixed;
@@ -141,135 +214,286 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.9);
         z-index: 9999;
-        display: flex;
         justify-content: center;
         align-items: center;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
 
       #video-container {
         position: relative;
-        width: 80%;
+        width: 90%;
         max-width: 800px;
+        animation: slideIn 0.5s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
       }
 
       #video-container video {
         width: 100%;
         border-radius: 10px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
       }
 
       #close-video {
         position: absolute;
-        top: -20px;
-        right: -20px;
+        top: -40px;
+        right: -10px;
         background: #ff0080;
         color: white;
         border: none;
-        font-size: 20px;
+        font-size: 24px;
         cursor: pointer;
         padding: 10px 15px;
         border-radius: 50%;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
+
       #close-video:hover {
         background: #ff69b4;
+        transform: rotate(90deg) scale(1.1);
+      }
+
+      .error-message {
+        color: #ffcccc;
+        background: rgba(255, 0, 0, 0.2);
+        padding: 10px 20px;
+        border-radius: 10px;
+        margin-top: 10px;
+        display: none;
+      }
+
+      @media screen and (max-width: 768px) {
+        #close-video {
+          top: -35px;
+          right: 0;
+        }
       }
     </style>
   </head>
   <body>
-    <canvas class="confetti"></canvas>
-    <h1>🎉 CONGRATULATIONS! 🎉</h1>
-    <p>You have officially GAYYYYYY WOOOOOOOOOOOOOOW. 🌈</p>
-    <p id="visitor-message">
-      Don't worry, you join the other
-      <strong><span id="visitor-count">...</span></strong> people who now have
-      gay. You can use the button below though to ungay.
-    </p>
+    <canvas class="confetti" aria-hidden="true"></canvas>
+    <main class="content" role="main">
+      <h1>🎉 CONGRATULATIONS! 🎉</h1>
+      <p>You have officially GAYYYYYY WOOOOOOOOOOOOOOW. 🌈</p>
+      <p id="visitor-message">
+        Don't worry, you join the other
+        <strong
+          ><span id="visitor-count" aria-live="polite"
+            ><span class="loading"></span></span
+        ></strong>
+        people who now have gay. You can use the button below though to ungay.
+      </p>
 
-    <button class="button" onclick="trackClick()">Ungay here</button>
-    <p id="click-message"></p>
-    <div id="video-modal" style="display: none">
+      <button
+        class="button"
+        onclick="trackClick()"
+        aria-label="Attempt to ungay yourself"
+      >
+        Ungay here
+      </button>
+      <p id="click-message" aria-live="assertive"></p>
+      <p class="error-message" id="error-message" role="alert"></p>
+    </main>
+
+    <div
+      id="video-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="video-title"
+    >
       <div id="video-container">
-        <button id="close-video">&times;</button>
+        <button id="close-video" aria-label="Close video">&times;</button>
+        <h2 id="video-title" style="display: none">Ungay Video</h2>
         <video
           id="ungayed-video"
           src="/assets/videos/video.mp4"
           controls
+          aria-label="Ungay video player"
         ></video>
       </div>
     </div>
 
     <script>
-      function partyMode() {
-        window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
-      }
+      const API_BASE = "https://youarenow.gay";
+      const RETRY_DELAY = 2000;
+      const MAX_RETRIES = 3;
+      let SESSION_TOKEN = null;
 
-      const confettiCanvas = document.querySelector(".confetti");
-      const confettiCtx = confettiCanvas.getContext("2d");
-      confettiCanvas.width = window.innerWidth;
-      confettiCanvas.height = window.innerHeight;
+      async function getSessionToken() {
+        if (SESSION_TOKEN) return SESSION_TOKEN;
 
-      const confettiParticles = [];
-      class Confetti {
-        constructor() {
-          this.x = Math.random() * window.innerWidth;
-          this.y = Math.random() * window.innerHeight;
-          this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
-          this.size = Math.random() * 10 + 5;
-          this.speedY = Math.random() * 3 + 2;
-        }
-        update() {
-          this.y += this.speedY;
-          if (this.y > window.innerHeight) this.y = 0;
-        }
-        draw() {
-          confettiCtx.fillStyle = this.color;
-          confettiCtx.beginPath();
-          confettiCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          confettiCtx.fill();
+        try {
+          const response = await fetch(`${API_BASE}/api/token`);
+          const data = await response.json();
+          SESSION_TOKEN = data.token;
+          return SESSION_TOKEN;
+        } catch (error) {
+          console.error("Failed to get session token:", error);
+          throw error;
         }
       }
 
-      for (let i = 0; i < 100; i++) {
-        confettiParticles.push(new Confetti());
+      function showError(message) {
+        const errorEl = document.getElementById("error-message");
+        errorEl.textContent = message;
+        errorEl.style.display = "block";
+        setTimeout(() => {
+          errorEl.style.display = "none";
+        }, 5000);
       }
 
-      function animateConfetti() {
-        confettiCtx.clearRect(
-          0,
-          0,
-          confettiCanvas.width,
-          confettiCanvas.height
+      async function fetchWithRetry(url, options = {}, retries = MAX_RETRIES) {
+        try {
+          if (options.method === "POST") {
+            const token = await getSessionToken();
+            options.headers = {
+              ...options.headers,
+              "X-Session-Token": token,
+            };
+          }
+
+          const response = await fetch(url, {
+            ...options,
+            headers: {
+              "Content-Type": "application/json",
+              ...options.headers,
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          return await response.json();
+        } catch (error) {
+          if (retries > 0) {
+            await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+            return fetchWithRetry(url, options, retries - 1);
+          }
+          throw error;
+        }
+      }
+
+      function formatClicks(clicks) {
+        if (clicks < 1000) {
+          const ordinalSuffix = ["st", "nd", "rd"][(clicks % 10) - 1] || "th";
+          return `${clicks}${ordinalSuffix}`;
+        }
+        const suffixes = ["", "k", "m", "b", "t"];
+        const suffixIndex = Math.floor(Math.log10(clicks) / 3);
+        const formattedNumber = (clicks / Math.pow(1000, suffixIndex)).toFixed(
+          1
         );
-        confettiParticles.forEach((confetti) => {
-          confetti.update();
-          confetti.draw();
-        });
-        requestAnimationFrame(animateConfetti);
+        return `${formattedNumber.replace(/\.0$/, "")}${suffixes[suffixIndex]}`;
       }
 
-      animateConfetti();
+      function initConfetti() {
+        const confettiCanvas = document.querySelector(".confetti");
+        const confettiCtx = confettiCanvas.getContext("2d");
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
 
-      setTimeout(() => {
-        confettiCanvas.style.opacity = "0.3"; // Reduce visibility after 3 seconds
-      }, 3000);
-    </script>
-    <script>
+        const confettiParticles = [];
+
+        class Confetti {
+          constructor() {
+            this.x = Math.random() * window.innerWidth;
+            this.y = Math.random() * window.innerHeight - window.innerHeight;
+            this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+            this.size = Math.random() * 10 + 5;
+            this.speedY = Math.random() * 3 + 2;
+            this.speedX = Math.random() * 2 - 1;
+          }
+
+          update() {
+            this.y += this.speedY;
+            this.x += this.speedX;
+            if (this.y > window.innerHeight) {
+              this.y = -10;
+              this.x = Math.random() * window.innerWidth;
+            }
+          }
+
+          draw() {
+            confettiCtx.fillStyle = this.color;
+            confettiCtx.beginPath();
+            confettiCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            confettiCtx.fill();
+          }
+        }
+
+        for (let i = 0; i < 150; i++) {
+          confettiParticles.push(new Confetti());
+        }
+
+        function animateConfetti() {
+          confettiCtx.clearRect(
+            0,
+            0,
+            confettiCanvas.width,
+            confettiCanvas.height
+          );
+          confettiParticles.forEach((confetti) => {
+            confetti.update();
+            confetti.draw();
+          });
+          requestAnimationFrame(animateConfetti);
+        }
+
+        animateConfetti();
+
+        setTimeout(() => {
+          confettiCanvas.style.opacity = "0.3";
+        }, 3000);
+
+        window.addEventListener("resize", () => {
+          confettiCanvas.width = window.innerWidth;
+          confettiCanvas.height = window.innerHeight;
+        });
+      }
+
       async function updateVisitorCount() {
         try {
-          const response = await fetch("https://youarenow.gay/api/visits");
-          const data = await response.json();
-          document.getElementById("visitor-count").textContent = data.visits;
+          const data = await fetchWithRetry(`${API_BASE}/api/visits`);
+          document.getElementById("visitor-count").textContent =
+            data.visits.toLocaleString();
         } catch (error) {
           console.error("Error fetching visitor count:", error);
           document.getElementById("visitor-count").textContent = "many";
+          showError("Could not load visitor count. But you're still gay! 🌈");
         }
       }
 
       async function addVisitor() {
         if (!localStorage.getItem("visited")) {
           try {
-            await fetch("https://youarenow.gay/api/addvisits", {
+            await fetchWithRetry(`${API_BASE}/api/addvisits`, {
               method: "POST",
             });
             localStorage.setItem("visited", "true");
@@ -278,83 +502,90 @@
           }
         }
       }
-      async function updateClickCount() {
-        try {
-          const response = await fetch("https://youarenow.gay/api/clicks");
-          const data = await response.json();
-          document.getElementById("click-count").textContent = data.clicks;
-        } catch (error) {
-          console.error("Error fetching click count:", error);
-          document.getElementById("click-count").textContent = "many";
-        }
-      }
 
       async function trackClick() {
-        let clickMessage = document.getElementById("click-message");
-        if (!clickMessage) {
-          clickMessage = document.createElement("p");
-          clickMessage.id = "click-message";
-          clickMessage.style.fontSize = "1.1rem";
-          clickMessage.style.marginTop = "20px";
-          clickMessage.style.color = "white";
-          document.body.appendChild(clickMessage);
-        }
+        const button = event.target;
+        const clickMessage = document.getElementById("click-message");
 
-        function formatClicks(clicks) {
-          if (clicks < 1000) {
-            const ordinalSuffix = ["st", "nd", "rd"][(clicks % 10) - 1] || "th";
-            return `${clicks}${ordinalSuffix}`;
-          }
-          const suffixes = ["", "k", "m", "b", "t"];
-          const suffixIndex = Math.floor(Math.log10(clicks) / 3);
-          const formattedNumber = (
-            clicks / Math.pow(1000, suffixIndex)
-          ).toFixed(1);
-          return `${formattedNumber.replace(/\.0$/, "")}${
-            suffixes[suffixIndex]
-          }`;
-        }
+        // Disable button to prevent double-clicks
+        button.disabled = true;
+        button.textContent = "Processing...";
 
-        if (!localStorage.getItem("clicked")) {
-          try {
-            const response = await fetch(
-              "https://youarenow.gay/api/addclicks",
-              {
-                method: "POST",
-              }
-            );
-            const data = await response.json();
+        try {
+          if (!localStorage.getItem("clicked")) {
+            const data = await fetchWithRetry(`${API_BASE}/api/addclicks`, {
+              method: "POST",
+            });
             clickMessage.innerHTML = `You were the <strong>${formatClicks(
               data.clicks
             )}</strong> person to fall for it, you still gay. 🌈`;
             localStorage.setItem("clicked", "true");
-          } catch (error) {
-            console.error("Error tracking click:", error);
-            clickMessage.innerHTML =
-              "Something went wrong, but you still gay. 🌈";
+          } else {
+            const data = await fetchWithRetry(`${API_BASE}/api/clicks`);
+            clickMessage.innerHTML = `You already fell for it once with the other <strong>${(
+              data.clicks - 1
+            ).toLocaleString()}</strong> people, you still gay. 🌈`;
           }
-        } else {
+
+          // Show video modal
+          const modal = document.getElementById("video-modal");
+          const video = document.getElementById("ungayed-video");
+
+          modal.style.display = "flex";
+          video.load();
+
+          // Play video with error handling
+          try {
+            await video.play();
+          } catch (playError) {
+            console.error("Video playback failed:", playError);
+            showError("Video failed to load. But you're still gay! 🌈");
+          }
+
+          const closeBtn = document.getElementById("close-video");
+          const closeModal = () => {
+            modal.style.display = "none";
+            video.pause();
+            video.currentTime = 0;
+          };
+
+          closeBtn.onclick = closeModal;
+
+          document.addEventListener("keydown", function escHandler(e) {
+            if (e.key === "Escape") {
+              closeModal();
+              document.removeEventListener("keydown", escHandler);
+            }
+          });
+
+          modal.addEventListener("click", function outsideClickHandler(e) {
+            if (e.target === modal) {
+              closeModal();
+              modal.removeEventListener("click", outsideClickHandler);
+            }
+          });
+        } catch (error) {
+          console.error("Error tracking click:", error);
           clickMessage.innerHTML =
-            "You already fell for it once, you still gay. 🌈";
+            "Something went wrong, but you still gay. 🌈";
+          showError("Failed to process your request. But you're still gay! 🌈");
+        } finally {
+          button.disabled = false;
+          button.textContent = "Ungay here";
         }
-
-        const modal = document.getElementById("video-modal");
-        const video = document.getElementById("ungayed-video");
-
-        modal.style.display = "flex";
-        video.load();
-        video.play();
-
-        document.getElementById("close-video").onclick = function () {
-          modal.style.display = "none";
-          video.pause();
-          video.currentTime = 0;
-        };
       }
 
-      updateVisitorCount();
-      addVisitor();
-      updateClickCount();
+      function init() {
+        initConfetti();
+        updateVisitorCount();
+        addVisitor();
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
     </script>
     <script
       async
