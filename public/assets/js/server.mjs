@@ -54,6 +54,43 @@ setInterval(() => {
   }
 }, 300000);
 
+const userAgentCheckMiddleware = (req, res, next) => {
+  const userAgent = req.headers["user-agent"] || "";
+  const validAgents = process.env.VALID_USER_AGENTS?.split(",");
+  const isValidBrowser = validAgents.some((agent) => userAgent.includes(agent));
+
+  if (!isValidBrowser) {
+    console.log(
+      `[SECURITY] Blocked request - Invalid user-agent: ${userAgent} from IP: ${req.ip}`
+    );
+    return res.status(403).json({
+      error: "Forbidden",
+      message: "Invalid client",
+    });
+  }
+
+  next();
+};
+
+const referrerCheckMiddleware = (req, res, next) => {
+  const referrer = req.headers.referer || req.headers.referrer;
+
+  if (
+    !referrer ||
+    (!referrer.includes("youarenow.gay") && !referrer.includes("localhost"))
+  ) {
+    console.log(
+      `[SECURITY] Blocked request - Invalid referrer: ${referrer} from IP: ${req.ip}`
+    );
+    return res.status(403).json({
+      error: "Forbidden",
+      message: "Invalid request origin",
+    });
+  }
+
+  next();
+};
+
 const antiBotMiddleware = (req, res, next) => {
   const token = req.headers["x-session-token"];
 
@@ -64,18 +101,6 @@ const antiBotMiddleware = (req, res, next) => {
     return res.status(403).json({
       error: "Forbidden",
       message: "Invalid or missing session token",
-    });
-  }
-
-  const referrer = req.headers.referer || req.headers.referrer;
-  if (
-    !referrer ||
-    (!referrer.includes("youarenow.gay") && !referrer.includes("localhost"))
-  ) {
-    console.log(`[SECURITY] Blocked request - Invalid referrer: ${referrer}`);
-    return res.status(403).json({
-      error: "Forbidden",
-      message: "Invalid request origin",
     });
   }
 
@@ -102,7 +127,7 @@ const corsMiddleware = (req, res, next) => {
   next();
 };
 class RateLimiter {
-  constructor(windowMs = 60000, maxRequests = 100) {
+  constructor(windowMs = 60000, maxRequests = 20) {
     this.windowMs = windowMs;
     this.maxRequests = maxRequests;
     this.requests = new Map();
@@ -110,7 +135,11 @@ class RateLimiter {
 
   middleware() {
     return (req, res, next) => {
-      const ip = req.ip || req.connection.remoteAddress;
+      const ip =
+        req.ip ||
+        req.connection.remoteAddress ||
+        req.headers["x-forwarded-for"];
+      const cleanIp = ip.replace(/^::ffff:/, "");
       const now = Date.now();
 
       for (const [key, data] of this.requests.entries()) {
@@ -119,7 +148,7 @@ class RateLimiter {
         }
       }
 
-      const userRequests = this.requests.get(ip) || {
+      const userRequests = this.requests.get(cleanIp) || {
         count: 0,
         resetTime: now,
       };
@@ -130,7 +159,7 @@ class RateLimiter {
       }
 
       userRequests.count++;
-      this.requests.set(ip, userRequests);
+      this.requests.set(cleanIp, userRequests);
 
       res.setHeader("X-RateLimit-Limit", this.maxRequests);
       res.setHeader(
@@ -143,6 +172,9 @@ class RateLimiter {
       );
 
       if (userRequests.count > this.maxRequests) {
+        console.log(
+          `[RATE LIMIT] Blocked IP ${cleanIp} - ${userRequests.count}/${this.maxRequests} requests`
+        );
         return res.status(429).json({
           error: "Too many requests",
           message: "Please slow down and try again later",
@@ -353,8 +385,8 @@ function createGayServer() {
   app.use(corsMiddleware);
   app.use(requestLogger);
 
-  const apiLimiter = new RateLimiter(60000, 100);
-  const postLimiter = new RateLimiter(60000, 20);
+  const apiLimiter = new RateLimiter(60000, 20);
+  const postLimiter = new RateLimiter(60000, 1);
 
   app.use("/assets", createStaticMiddleware());
   app.use(
@@ -369,31 +401,44 @@ function createGayServer() {
     })
   );
 
-  // API Routes - Security via session tokens + referrer validation + rate limiting
-  app.get("/api/token", apiLimiter.middleware(), (req, res) => {
-    const token = generateSessionToken();
-    sessionTokens.set(token, {
-      created: Date.now(),
-      ip: req.ip,
-    });
-    res.json({ token });
-  });
-
-  app.get("/api/clicks", apiLimiter.middleware(), (req, res, next) => {
-    try {
-      const clicks = clickCounter.get();
-      res.set("Cache-Control", "public, max-age=5");
-      res.json({
-        clicks,
-        timestamp: new Date().toISOString(),
+  app.get(
+    "/api/token",
+    userAgentCheckMiddleware,
+    referrerCheckMiddleware,
+    apiLimiter.middleware(),
+    (req, res) => {
+      const token = generateSessionToken();
+      sessionTokens.set(token, {
+        created: Date.now(),
+        ip: req.ip,
       });
-    } catch (error) {
-      next(error);
+      res.json({ token });
     }
-  });
+  );
+
+  app.get(
+    "/api/clicks",
+    userAgentCheckMiddleware,
+    referrerCheckMiddleware,
+    apiLimiter.middleware(),
+    (req, res, next) => {
+      try {
+        const clicks = clickCounter.get();
+        res.set("Cache-Control", "public, max-age=5");
+        res.json({
+          clicks,
+          timestamp: new Date().toISOString(),
+        });
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
 
   app.post(
     "/api/addclicks",
+    userAgentCheckMiddleware,
+    referrerCheckMiddleware,
     postLimiter.middleware(),
     antiBotMiddleware,
     (req, res, next) => {
@@ -411,21 +456,29 @@ function createGayServer() {
     }
   );
 
-  app.get("/api/visits", apiLimiter.middleware(), (req, res, next) => {
-    try {
-      const visits = visitorCounter.get();
-      res.set("Cache-Control", "public, max-age=5");
-      res.json({
-        visits,
-        timestamp: new Date().toISOString(),
-      });
-    } catch (error) {
-      next(error);
+  app.get(
+    "/api/visits",
+    userAgentCheckMiddleware,
+    referrerCheckMiddleware,
+    apiLimiter.middleware(),
+    (req, res, next) => {
+      try {
+        const visits = visitorCounter.get();
+        res.set("Cache-Control", "public, max-age=5");
+        res.json({
+          visits,
+          timestamp: new Date().toISOString(),
+        });
+      } catch (error) {
+        next(error);
+      }
     }
-  });
+  );
 
   app.post(
     "/api/addvisits",
+    userAgentCheckMiddleware,
+    referrerCheckMiddleware,
     postLimiter.middleware(),
     antiBotMiddleware,
     (req, res, next) => {
