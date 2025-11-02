@@ -35,6 +35,7 @@ class Minesweeper {
     this.createBoard();
     this.renderBoard();
     this.updateUI();
+    this.updateBestTime();
   }
 
   createBoard() {
@@ -363,6 +364,7 @@ class Minesweeper {
 
     if (!currentBest || this.timer < parseInt(currentBest)) {
       localStorage.setItem(bestTimeKey, this.timer.toString());
+      this.updateBestTime();
       setTimeout(() => {
         const messageEl = document.getElementById("status-message");
         messageEl.innerHTML += "<br><small>🏆 New Best Time!</small>";
@@ -458,6 +460,20 @@ class Minesweeper {
           messageEl.innerHTML += `<br><small>💎 Gold = Correct flags | ❌ Crossed flags = Wrong flags | 💣 Red = Unflagged mines</small>`;
         }, 1000);
         break;
+    }
+  }
+
+  updateBestTime() {
+    const bestTimeKey = `minesweeper-best-${this.difficulty}`;
+    const bestTime = localStorage.getItem(bestTimeKey);
+    const bestTimeEl = document.getElementById("best-time");
+    
+    if (bestTime) {
+      bestTimeEl.textContent = `${bestTime}s`;
+      bestTimeEl.style.color = "#ffd700"; // Gold color for best time
+    } else {
+      bestTimeEl.textContent = "--";
+      bestTimeEl.style.color = "";
     }
   }
 
