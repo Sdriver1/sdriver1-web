@@ -54,11 +54,7 @@ class Minesweeper {
   }
 
   placeMines(firstClickRow, firstClickCol) {
-    if (this.rows === 16 && this.cols === 30) {
-      this.placeMinesWithGuaranteedEight(firstClickRow, firstClickCol);
-    } else {
-      this.placeMinesRegular(firstClickRow, firstClickCol);
-    }
+    this.placeMinesRegular(firstClickRow, firstClickCol);
     this.calculateNeighborMines();
   }
 
@@ -72,51 +68,6 @@ class Minesweeper {
       if (
         (row === firstClickRow && col === firstClickCol) ||
         this.board[row][col].isMine
-      ) {
-        continue;
-      }
-
-      this.board[row][col].isMine = true;
-      minesPlaced++;
-    }
-  }
-
-  placeMinesWithGuaranteedEight(firstClickRow, firstClickCol) {
-    let eightSpaceRow, eightSpaceCol;
-    let attempts = 0;
-    const maxAttempts = 1000;
-
-    do {
-      eightSpaceRow = Math.floor(Math.random() * (this.rows - 2)) + 1;
-      eightSpaceCol = Math.floor(Math.random() * (this.cols - 2)) + 1;
-      attempts++;
-    } while (
-      attempts < maxAttempts &&
-      Math.abs(eightSpaceRow - firstClickRow) <= 2 &&
-      Math.abs(eightSpaceCol - firstClickCol) <= 2
-    );
-
-    let minesPlaced = 0;
-    for (let r = eightSpaceRow - 1; r <= eightSpaceRow + 1; r++) {
-      for (let c = eightSpaceCol - 1; c <= eightSpaceCol + 1; c++) {
-        if (r !== eightSpaceRow || c !== eightSpaceCol) {
-          if (r !== firstClickRow || c !== firstClickCol) {
-            this.board[r][c].isMine = true;
-            minesPlaced++;
-          }
-        }
-      }
-    }
-
-    while (minesPlaced < this.totalMines) {
-      const row = Math.floor(Math.random() * this.rows);
-      const col = Math.floor(Math.random() * this.cols);
-
-      if (
-        (row === firstClickRow && col === firstClickCol) ||
-        this.board[row][col].isMine ||
-        (Math.abs(row - eightSpaceRow) <= 1 &&
-          Math.abs(col - eightSpaceCol) <= 1)
       ) {
         continue;
       }
@@ -467,7 +418,7 @@ class Minesweeper {
     const bestTimeKey = `minesweeper-best-${this.difficulty}`;
     const bestTime = localStorage.getItem(bestTimeKey);
     const bestTimeEl = document.getElementById("best-time");
-    
+
     if (bestTime) {
       bestTimeEl.textContent = `${bestTime}s`;
       bestTimeEl.style.color = "#ffd700"; // Gold color for best time
