@@ -24,7 +24,7 @@ const PATHS = {
   PUBLIC: join(__dirname, "../../../public"),
   VISITOR_COUNT: join(
     __dirname,
-    "../../../public/assets/data/visitorCount.json"
+    "../../../public/assets/data/visitorCount.json",
   ),
   CLICK_COUNT: join(__dirname, "../../../public/assets/data/clickCount.json"),
 };
@@ -61,7 +61,7 @@ const userAgentCheckMiddleware = (req, res, next) => {
 
   if (!isValidBrowser) {
     console.log(
-      `[SECURITY] Blocked request - Invalid user-agent: ${userAgent} from IP: ${req.ip}`
+      `[SECURITY] Blocked request - Invalid user-agent: ${userAgent} from IP: ${req.ip}`,
     );
     return res.status(403).json({
       error: "Forbidden",
@@ -80,7 +80,7 @@ const referrerCheckMiddleware = (req, res, next) => {
     (!referrer.includes("youarenow.gay") && !referrer.includes("localhost"))
   ) {
     console.log(
-      `[SECURITY] Blocked request - Invalid referrer: ${referrer} from IP: ${req.ip}`
+      `[SECURITY] Blocked request - Invalid referrer: ${referrer} from IP: ${req.ip}`,
     );
     return res.status(403).json({
       error: "Forbidden",
@@ -96,7 +96,7 @@ const antiBotMiddleware = (req, res, next) => {
 
   if (!token || !sessionTokens.has(token)) {
     console.log(
-      `[SECURITY] Blocked request - Invalid/missing session token from IP: ${req.ip}`
+      `[SECURITY] Blocked request - Invalid/missing session token from IP: ${req.ip}`,
     );
     return res.status(403).json({
       error: "Forbidden",
@@ -118,7 +118,7 @@ const corsMiddleware = (req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.header(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Session-Token"
+    "Content-Type, Authorization, X-Session-Token",
   );
 
   if (req.method === "OPTIONS") {
@@ -164,22 +164,22 @@ class RateLimiter {
       res.setHeader("X-RateLimit-Limit", this.maxRequests);
       res.setHeader(
         "X-RateLimit-Remaining",
-        Math.max(0, this.maxRequests - userRequests.count)
+        Math.max(0, this.maxRequests - userRequests.count),
       );
       res.setHeader(
         "X-RateLimit-Reset",
-        new Date(userRequests.resetTime + this.windowMs).toISOString()
+        new Date(userRequests.resetTime + this.windowMs).toISOString(),
       );
 
       if (userRequests.count > this.maxRequests) {
         console.log(
-          `[RATE LIMIT] Blocked IP ${cleanIp} - ${userRequests.count}/${this.maxRequests} requests`
+          `[RATE LIMIT] Blocked IP ${cleanIp} - ${userRequests.count}/${this.maxRequests} requests`,
         );
         return res.status(429).json({
           error: "Too many requests",
           message: "Please slow down and try again later",
           retryAfter: Math.ceil(
-            (userRequests.resetTime + this.windowMs - now) / 1000
+            (userRequests.resetTime + this.windowMs - now) / 1000,
           ),
         });
       }
@@ -196,7 +196,7 @@ const requestLogger = (req, res, next) => {
     console.log(
       `[${new Date().toISOString()}] ${req.method} ${req.path} - ${
         res.statusCode
-      } (${duration}ms)`
+      } (${duration}ms)`,
     );
   });
   next();
@@ -284,19 +284,22 @@ function createMainServer() {
     next();
   };
   app.get("/", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "sites/index.html"))
+    res.sendFile(join(PATHS.PUBLIC, "sites/index.html")),
   );
   app.get("/github", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "redirects/github.html"))
+    res.sendFile(join(PATHS.PUBLIC, "redirects/github.html")),
   );
   app.get("/linkedin", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "redirects/linkedin.html"))
+    res.sendFile(join(PATHS.PUBLIC, "redirects/linkedin.html")),
   );
   app.get("/kofi", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "redirects/kofi.html"))
+    res.sendFile(join(PATHS.PUBLIC, "redirects/kofi.html")),
+  );
+  app.get("/twitch", pageCache, (req, res) =>
+    res.sendFile(join(PATHS.PUBLIC, "redirects/twitch.html")),
   );
   app.get("/calculator", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "calculator/index.html"))
+    res.sendFile(join(PATHS.PUBLIC, "calculator/index.html")),
   );
   app.get("/resume", (req, res) => {
     res.set("Cache-Control", "public, max-age=86400");
@@ -307,12 +310,12 @@ function createMainServer() {
     res.sendFile(join(PATHS.ASSETS, "resume/resume.png"));
   });
   app.get("/change", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html"))
+    res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html")),
   );
 
   app.use(errorHandler);
   app.listen(PORTS.MAIN, () =>
-    console.log(`Main server running on port ${PORTS.MAIN}`)
+    console.log(`Main server running on port ${PORTS.MAIN}`),
   );
 }
 
@@ -330,7 +333,7 @@ function createRitServer() {
 
   app.use(errorHandler);
   app.listen(PORTS.RIT, () =>
-    console.log(`RIT server running on port ${PORTS.RIT}`)
+    console.log(`RIT server running on port ${PORTS.RIT}`),
   );
 }
 
@@ -373,7 +376,7 @@ function createImageServer() {
 
   app.use(errorHandler);
   app.listen(PORTS.IMAGES, () =>
-    console.log(`Image server running on port ${PORTS.IMAGES}`)
+    console.log(`Image server running on port ${PORTS.IMAGES}`),
   );
 }
 
@@ -398,7 +401,7 @@ function createGayServer() {
       setHeaders: (res, path) => {
         res.setHeader("Accept-Ranges", "bytes");
       },
-    })
+    }),
   );
 
   app.get(
@@ -413,7 +416,7 @@ function createGayServer() {
         ip: req.ip,
       });
       res.json({ token });
-    }
+    },
   );
 
   app.get(
@@ -432,7 +435,7 @@ function createGayServer() {
       } catch (error) {
         next(error);
       }
-    }
+    },
   );
 
   app.post(
@@ -453,7 +456,7 @@ function createGayServer() {
       } catch (error) {
         next(error);
       }
-    }
+    },
   );
 
   app.get(
@@ -472,7 +475,7 @@ function createGayServer() {
       } catch (error) {
         next(error);
       }
-    }
+    },
   );
 
   app.post(
@@ -493,7 +496,7 @@ function createGayServer() {
       } catch (error) {
         next(error);
       }
-    }
+    },
   );
 
   app.get("/api/health", (req, res) => {
@@ -529,7 +532,7 @@ function createGayServer() {
   app.use(errorHandler);
 
   app.listen(PORTS.GAY, () =>
-    console.log(`Gay server running on port ${PORTS.GAY}`)
+    console.log(`Gay server running on port ${PORTS.GAY}`),
   );
 }
 
@@ -547,7 +550,7 @@ function createNightwingServer() {
 
   app.use(errorHandler);
   app.listen(PORTS.NIGHTWING, () =>
-    console.log(`Nightwing server running on port ${PORTS.NIGHTWING}`)
+    console.log(`Nightwing server running on port ${PORTS.NIGHTWING}`),
   );
 }
 
@@ -564,24 +567,24 @@ function createGamesServer() {
   };
 
   app.get("/", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "games/index.html"))
+    res.sendFile(join(PATHS.PUBLIC, "games/index.html")),
   );
   app.get("/minesweeper", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "games/minesweeper.html"))
+    res.sendFile(join(PATHS.PUBLIC, "games/minesweeper.html")),
   );
   app.get("/sudoku", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "games/sudoku.html"))
+    res.sendFile(join(PATHS.PUBLIC, "games/sudoku.html")),
   );
   app.get("/2048", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "games/2048.html"))
+    res.sendFile(join(PATHS.PUBLIC, "games/2048.html")),
   );
   app.get("/snake", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "games/snake.html"))
+    res.sendFile(join(PATHS.PUBLIC, "games/snake.html")),
   );
 
   app.use(errorHandler);
   app.listen(PORTS.GAMES, () =>
-    console.log(`Games server running on port ${PORTS.GAMES}`)
+    console.log(`Games server running on port ${PORTS.GAMES}`),
   );
 }
 
@@ -620,7 +623,7 @@ function createBlogsServer() {
 
   app.use(errorHandler);
   app.listen(PORTS.BLOGS, () =>
-    console.log(`Blogs server running on port ${PORTS.BLOGS}`)
+    console.log(`Blogs server running on port ${PORTS.BLOGS}`),
   );
 }
 
