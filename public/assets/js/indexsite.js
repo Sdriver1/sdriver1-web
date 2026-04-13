@@ -127,8 +127,8 @@ function fetchStats() {
             : data.currentGuildCount;
       if (userEl)
         userEl.textContent =
-          data.totalUserCount >= 1000
-            ? (data.totalUserCount / 1000).toFixed(1) + "k+"
+          data.totalUserCount >= 1000000
+            ? (data.totalUserCount / 1000000).toFixed(1) + "M+"
             : data.totalUserCount;
     })
     .catch((err) => console.error("Stats fetch error:", err));
@@ -191,11 +191,9 @@ function renderActivities(data) {
           a.state && a.state.startsWith("Workspace: ")
             ? a.state.replace("Workspace: ", "")
             : "";
-        return `<div class="activity-item">${
-          activityIcons.coding
-        }<span>Coding: ${file}${
-          workspace ? " in " + workspace : ""
-        }</span></div>`;
+        return `<div class="activity-item">${activityIcons.coding
+          }<span>Coding: ${file}${workspace ? " in " + workspace : ""
+          }</span></div>`;
       }
       if (a.type === 0 && a.name && a.name !== "Visual Studio Code") {
         return `<div class="activity-item">${activityIcons.playing}<span>Playing: ${a.name}</span></div>`;
