@@ -136,7 +136,7 @@ function fetchStats() {
 
 // --- Fetch and Update Discord Status ---
 function fetchDiscordStatus() {
-  fetch("https://sbot1.api.sdriver1.me/status")
+  fetch("https://sbot1-api.sdriver1.dev/status")
     .then((res) => res.json())
     .then((data) => {
       const statusEl = document.getElementById("discord-status");
@@ -208,7 +208,7 @@ function renderActivities(data) {
 }
 
 function updateActivities() {
-  fetch("https://sbot1.api.sdriver1.me/rich-current")
+  fetch("https://sbot1-api.sdriver1.dev/rich-current")
     .then((res) => res.json())
     .then((data) => {
       const doingCard = document.getElementById("doing-card");
