@@ -1,290 +1,240 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Steven Driver | Portfolio - Software Developer & Computer Science Student
-    </title>
 
-    <!-- SEO Meta Tags -->
-    <meta
-      name="description"
-      content="Steven Driver (Sdriver1) - Computer Science student at RIT, Discord bot developer, and software engineer. Creator of Pridebot serving 5k+ servers."
-    />
-    <meta
-      name="keywords"
-      content="Steven Driver, Sdriver1, software developer, computer science, Discord bots, Pridebot, RIT, portfolio"
-    />
-    <meta name="author" content="Steven Driver" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    Steven Driver | Portfolio - Software Developer & Computer Science Student
+  </title>
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sdriver1.me/" />
-    <meta
-      property="og:title"
-      content="Steven Driver | Portfolio - Software Developer"
-    />
-    <meta
-      property="og:description"
-      content="Computer Science student at RIT, Discord bot developer, and software engineer. Creator of Pridebot serving 5k+ servers."
-    />
-    <meta
-      property="og:image"
-      content="https://sdriver1.me/assets/images/profile.png"
-    />
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="Steven Driver (Sdriver1) - Computer Science student at RIT, Discord bot developer, and software engineer. Creator of Pridebot serving 5k+ servers." />
+  <meta name="keywords"
+    content="Steven Driver, Sdriver1, software developer, computer science, Discord bots, Pridebot, RIT, portfolio" />
+  <meta name="author" content="Steven Driver" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://sdriver1.me/" />
-    <meta
-      property="twitter:title"
-      content="Steven Driver | Portfolio - Software Developer"
-    />
-    <meta
-      property="twitter:description"
-      content="Computer Science student at RIT, Discord bot developer, and software engineer."
-    />
-    <meta
-      property="twitter:image"
-      content="https://sdriver1.me/assets/images/profile.png"
-    />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sdriver1.me/" />
+  <meta property="og:title" content="Steven Driver | Portfolio - Software Developer" />
+  <meta property="og:description"
+    content="Computer Science student at RIT, Discord bot developer, and software engineer. Creator of Pridebot serving 5k+ servers." />
+  <meta property="og:image" content="https://sdriver1.me/assets/images/profile.png" />
 
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://sdriver1.me/" />
+  <meta property="twitter:title" content="Steven Driver | Portfolio - Software Developer" />
+  <meta property="twitter:description"
+    content="Computer Science student at RIT, Discord bot developer, and software engineer." />
+  <meta property="twitter:image" content="https://sdriver1.me/assets/images/profile.png" />
 
-    <link rel="stylesheet" href="../assets/css/index.css" />
-  </head>
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Google tag (gtag.js) -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-V0M68NMCDJ"
-  ></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
+  <link rel="stylesheet" href="../assets/css/index.css" />
+</head>
 
-    gtag("config", "G-V0M68NMCDJ");
-  </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V0M68NMCDJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
 
-  <body>
-    <header>
-      <nav>
-        <div class="logo">
-          <a href="#"
-            ><img src="../assets/images/profile.png" alt="Logo" loading="lazy"
-          /></a>
-        </div>
-        <button
-          id="mobile-toggle"
-          class="mobile-toggle"
-          aria-label="Toggle menu"
-        >
-          ☰
+  gtag("config", "G-V0M68NMCDJ");
+</script>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="#"><img src="../assets/images/profile.png" alt="Logo" loading="lazy" /></a>
+      </div>
+      <button id="mobile-toggle" class="mobile-toggle" aria-label="Toggle menu">
+        ☰
+      </button>
+      <div class="nav-links" id="nav-links" role="navigation" aria-label="Main navigation">
+        <a href="#about" aria-label="About section">About</a>
+        <a href="#skills" aria-label="Skills section">Skills</a>
+        <a href="#resume" aria-label="Resume section">Resume</a>
+        <a href="#work" aria-label="Work Experience section">Work Experience</a>
+        <a href="#projects" aria-label="Projects section">Projects</a>
+        <a href="#testimonials" aria-label="Testimonials section">Testimonials</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle between light and dark theme">
+          <span id="theme-icon"> </span>
         </button>
-        <div
-          class="nav-links"
-          id="nav-links"
-          role="navigation"
-          aria-label="Main navigation"
-        >
-          <a href="#about" aria-label="About section">About</a>
-          <a href="#skills" aria-label="Skills section">Skills</a>
-          <a href="#resume" aria-label="Resume section">Resume</a>
-          <a href="#work" aria-label="Work Experience section"
-            >Work Experience</a
-          >
-          <a href="#projects" aria-label="Projects section">Projects</a>
-          <a href="#testimonials" aria-label="Testimonials section"
-            >Testimonials</a
-          >
-          <button
-            class="theme-toggle"
-            id="theme-toggle"
-            aria-label="Toggle between light and dark theme"
-          >
-            <span id="theme-icon"> </span>
-          </button>
-        </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+  </header>
 
-    <main>
-      <section id="hero" class="hero">
-        <h1>
-          <span id="typewriter"></span
-          ><span class="cursor" id="cursor-primary"></span>
-        </h1>
-        <p>
-          <span id="subtitle"></span
-          ><span class="cursor" id="cursor-sub"></span>
-        </p>
-      </section>
+  <main>
+    <section id="hero" class="hero">
+      <h1>
+        <span id="typewriter"></span><span class="cursor" id="cursor-primary"></span>
+      </h1>
+      <p>
+        <span id="subtitle"></span><span class="cursor" id="cursor-sub"></span>
+      </p>
+    </section>
 
-      <section id="about">
-        <h2 class="section-title">About Me</h2>
-        <p>
-          Hello! My name is Steven Driver, also known as Sdriver1. I'm an
-          incoming freshman at RIT studying computer science. I have been
-          programming for a bit over 3 years now and have a passion for Discord
-          bots and web development. In my free time I like to listen to music,
-          play video games, or code. I primarily work with JavaScript and
-          HTML/CSS, but I also have experience with Python and Java. I love
-          swimming and have been a lifeguard for about 3 years and have been
-          teaching swimming for about 2 years now. I am currently employed as an
-          intern for devEco Consulting, where I work on various projects and
-          help with development of the portalBot. My main project is Pridebot, a
-          multi-function LGBTQIA+ themed Discord bot that serves
-          <span id="server-count">7.5k+</span> servers and over
-          <span id="user-count">666k+</span> users.
-        </p>
-        <div class="about-cards-container">
-          <div class="about-grid">
-            <div class="about-card">
-              <!-- Age -->
-              <div class="about-card-title">Age</div>
-              <div class="about-card-value" id="age">18</div>
-            </div>
-            <div class="about-card">
-              <!-- Pronouns -->
-              <div class="about-card-title">Pronouns</div>
-              <div class="about-card-value">He/Him</div>
-            </div>
-            <div class="about-card">
-              <!-- Location -->
-              <div class="about-card-title">Location</div>
-              <div class="about-card-value">NY, USA</div>
-            </div>
-            <div class="about-card">
-              <!-- Discord Presence -->
-              <div class="about-card-title">Discord Presence</div>
-              <div class="about-card-value" id="discord-status">Loading...</div>
-            </div>
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <p>
+        Hello! My name is Steven Driver, also known as Sdriver1. I'm an
+        incoming freshman at RIT studying computer science. I have been
+        programming for a bit over 3 years now and have a passion for Discord
+        bots and web development. In my free time I like to listen to music,
+        play video games, or code. I primarily work with JavaScript and
+        HTML/CSS, but I also have experience with Python and Java. I love
+        swimming and have been a lifeguard for about 3 years and have been
+        teaching swimming for about 2 years now. I am currently employed as an
+        intern for devEco Consulting, where I work on various projects and
+        help with development of the portalBot. My main project is Pridebot, a
+        multi-function LGBTQIA+ themed Discord bot that serves
+        <span id="server-count">7.5k+</span> servers and over
+        <span id="user-count">666k+</span> users.
+      </p>
+      <div class="about-cards-container">
+        <div class="about-grid">
+          <div class="about-card">
+            <!-- Age -->
+            <div class="about-card-title">Age</div>
+            <div class="about-card-value" id="age">18</div>
           </div>
-          <div class="about-side-card" id="doing-card" style="display: none">
-            <div class="about-card-title">What am I doing?</div>
-            <div id="discord-activity"></div>
+          <div class="about-card">
+            <!-- Pronouns -->
+            <div class="about-card-title">Pronouns</div>
+            <div class="about-card-value">He/Him</div>
+          </div>
+          <div class="about-card">
+            <!-- Location -->
+            <div class="about-card-title">Location</div>
+            <div class="about-card-value">NY, USA</div>
+          </div>
+          <div class="about-card">
+            <!-- Discord Presence -->
+            <div class="about-card-title">Discord Presence</div>
+            <div class="about-card-value" id="discord-status">Loading...</div>
           </div>
         </div>
-      </section>
+        <div class="about-side-card" id="doing-card" style="display: none">
+          <div class="about-card-title">What am I doing?</div>
+          <div id="discord-activity"></div>
+        </div>
+      </div>
+    </section>
 
-      <section id="skills">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-grid">
-          <div class="skill-category">
-            <h3>Programming Languages</h3>
-            <div class="skill-items">
-              <span class="skill-tag">JavaScript</span>
-              <span class="skill-tag">Python</span>
-              <span class="skill-tag">Java</span>
-              <span class="skill-tag">HTML5</span>
-              <span class="skill-tag">CSS3</span>
-            </div>
+    <section id="skills">
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>Programming Languages</h3>
+          <div class="skill-items">
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
           </div>
-          <div class="skill-category">
-            <h3>Frameworks & Libraries</h3>
-            <div class="skill-items">
-              <span class="skill-tag">Discord.js</span>
-              <span class="skill-tag">Express.js</span>
-              <span class="skill-tag">Node.js</span>
-              <span class="skill-tag">React</span>
-            </div>
+        </div>
+        <div class="skill-category">
+          <h3>Frameworks & Libraries</h3>
+          <div class="skill-items">
+            <span class="skill-tag">Discord.js</span>
+            <span class="skill-tag">Express.js</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">React</span>
           </div>
-          <div class="skill-category">
-            <h3>Databases & Tools</h3>
-            <div class="skill-items">
-              <span class="skill-tag">MongoDB</span>
-              <span class="skill-tag">SQLite</span>
-              <span class="skill-tag">Prisma</span>
-              <span class="skill-tag">Git</span>
-              <span class="skill-tag">Maven</span>
-            </div>
+        </div>
+        <div class="skill-category">
+          <h3>Databases & Tools</h3>
+          <div class="skill-items">
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">SQLite</span>
+            <span class="skill-tag">Prisma</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Maven</span>
           </div>
-          <div class="skill-category">
-            <h3>Platforms & Services</h3>
-            <div class="skill-items">
-              <span class="skill-tag">Discord Bots</span>
-              <span class="skill-tag">Web Development</span>
-              <span class="skill-tag">API Development</span>
-              <span class="skill-tag">Minecraft Plugins</span>
+        </div>
+        <div class="skill-category">
+          <h3>Platforms & Services</h3>
+          <div class="skill-items">
+            <span class="skill-tag">Discord Bots</span>
+            <span class="skill-tag">Web Development</span>
+            <span class="skill-tag">API Development</span>
+            <span class="skill-tag">Minecraft Plugins</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Resume, Certifications, & Achievements</h2>
+      <div id="resume" class="resume-section">
+        <div class="buttons">
+          <a href="https://sdriver1.me/resume" target="_blank">Download Resume (PDF)</a>
+          <a href="https://sdriver1.me/resumepng" target="_blank">Download Resume (PNG)</a>
+        </div>
+        <div class="cert-group">
+          <h3>Coding Certifications</h3>
+          <div class="cert-list">
+            <div class="cert-item">
+              <h4>Website Development & Design</h4>
+              <p>RIT Certified Pro Advantage</p>
             </div>
           </div>
         </div>
-      </section>
-
-      <section>
-        <h2 class="section-title">Resume, Certifications, & Achievements</h2>
-        <div id="resume" class="resume-section">
-          <div class="buttons">
-            <a href="https://sdriver1.me/resume" target="_blank"
-              >Download Resume (PDF)</a
-            >
-            <a href="https://sdriver1.me/resumepng" target="_blank"
-              >Download Resume (PNG)</a
-            >
-          </div>
-          <div class="cert-group">
-            <h3>Coding Certifications</h3>
-            <div class="cert-list">
-              <div class="cert-item">
-                <h4>Website Development & Design</h4>
-                <p>RIT Certified Pro Advantage</p>
-              </div>
+        <div class="cert-group">
+          <h3>Lifeguard Certifications</h3>
+          <div class="cert-list">
+            <div class="cert-item">
+              <h4>Water Safety Instructor (WSI)</h4>
+              <p>American Red Cross</p>
             </div>
-          </div>
-          <div class="cert-group">
-            <h3>Lifeguard Certifications</h3>
-            <div class="cert-list">
-              <div class="cert-item">
-                <h4>Water Safety Instructor (WSI)</h4>
-                <p>American Red Cross</p>
-              </div>
-              <div class="cert-item">
-                <h4>CPR/AED for Professional Rescuers</h4>
-                <p>American Red Cross</p>
-              </div>
-              <div class="cert-item">
-                <h4>
-                  Lifeguarding (Including Deep Water) with CPR/AED for
-                  Professional Rescuers and First Aid and Waterfront Skills
-                </h4>
-                <p>American Red Cross</p>
-              </div>
+            <div class="cert-item">
+              <h4>CPR/AED for Professional Rescuers</h4>
+              <p>American Red Cross</p>
             </div>
-          </div>
-          <div class="cert-group">
-            <h3>Other Certifications</h3>
-            <div class="cert-list">
-              <div class="cert-item">
-                <h4>National Youth Leadership Training</h4>
-                <p>Boy Scouts of America</p>
-              </div>
+            <div class="cert-item">
+              <h4>
+                Lifeguarding (Including Deep Water) with CPR/AED for
+                Professional Rescuers and First Aid and Waterfront Skills
+              </h4>
+              <p>American Red Cross</p>
             </div>
           </div>
         </div>
-      </section>
-      <section id="work">
-        <h2 class="section-title">Work Experience</h2>
-        <div class="timeline-toggle">
-          <button class="toggle-btn active" data-type="all">All</button>
-          <button class="toggle-btn" data-type="irl">IRL</button>
-          <button class="toggle-btn" data-type="discord">Discord</button>
+        <div class="cert-group">
+          <h3>Other Certifications</h3>
+          <div class="cert-list">
+            <div class="cert-item">
+              <h4>National Youth Leadership Training</h4>
+              <p>Boy Scouts of America</p>
+            </div>
+          </div>
         </div>
-        <div class="timeline">
-          <div class="timeline-line"></div>
+      </div>
+    </section>
+    <section id="work">
+      <h2 class="section-title">Work Experience</h2>
+      <div class="timeline-toggle">
+        <button class="toggle-btn active" data-type="all">All</button>
+        <button class="toggle-btn" data-type="irl">IRL</button>
+        <button class="toggle-btn" data-type="discord">Discord</button>
+      </div>
+      <div class="timeline">
+        <div class="timeline-line"></div>
 
-          <!-- 2025 June -->
-          <!-- <div class="timeline-group" data-year="2025" data-month="June">
+        <!-- 2025 June -->
+        <!-- <div class="timeline-group" data-year="2025" data-month="June">
             <div class="timeline-date-bubble">2025 June</div>
             <div class="timeline-item discord">
               <div class="timeline-content">
@@ -308,969 +258,747 @@
               </div>
             </div>
           </div> -->
-          <!-- 2025 May -->
-          <div class="timeline-group" data-year="2025" data-month="May">
-            <div class="timeline-date-bubble">2025 May</div>
-            <div class="timeline-item irl">
-              <div class="timeline-content">
-                <div class="job-title">Lifeguard</div>
-                <div class="job-company">
-                  <a
-                    href="https://www.lakeislecountryclub.com/pool"
-                    target="_blank"
-                    style="
+        <!-- 2025 May -->
+        <div class="timeline-group" data-year="2025" data-month="May">
+          <div class="timeline-date-bubble">2025 May</div>
+          <div class="timeline-item irl">
+            <div class="timeline-content">
+              <div class="job-title">Lifeguard</div>
+              <div class="job-company">
+                <a href="https://www.lakeislecountryclub.com/pool" target="_blank" style="
                       color: var(--primary);
                       text-decoration: none;
                       font-weight: 500;
-                    "
-                  >
-                    Lake Isle Country Club
-                  </a>
-                </div>
-                <div
-                  class="job-dates"
-                  data-start="2025-05-01"
-                  data-end="2025-08-01"
-                >
-                  May 2025 – August 2025 <span class="job-duration"></span>
-                </div>
+                    ">
+                  Lake Isle Country Club
+                </a>
               </div>
-            </div>
-          </div>
-          <!-- 2024 Dec -->
-          <div class="timeline-group" data-year="2024" data-month="Dec">
-            <div class="timeline-date-bubble">2024 Dec</div>
-            <div class="timeline-item irl">
-              <div class="timeline-content">
-                <div class="job-title">Software Developer Intern</div>
-                <div class="job-company">
-                  <a
-                    href="https://thedeveco.com/"
-                    target="_blank"
-                    style="
-                      color: var(--primary);
-                      text-decoration: none;
-                      font-weight: 500;
-                    "
-                  >
-                    devEco Consulting LLC
-                  </a>
-                </div>
-                <div class="job-dates" data-start="2024-12-01" data-end="">
-                  December 2024 – Present <span class="job-duration"></span>
-                </div>
-              </div>
-            </div>
-            <div class="timeline-item discord">
-              <div class="timeline-content">
-                <div class="job-title">Administrator & Core Member</div>
-                <div class="job-company">
-                  <a
-                    href="https://discord.gg/deveco"
-                    target="_blank"
-                    style="
-                      color: var(--primary);
-                      text-decoration: none;
-                      font-weight: 500;
-                    "
-                  >
-                    Developer Ecosystem (devEco)
-                  </a>
-                </div>
-                <div class="job-dates" data-start="2024-12-01" data-end="">
-                  December 2024 – Present <span class="job-duration"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 2024 Sep -->
-          <div class="timeline-group" data-year="2024" data-month="Sep">
-            <div class="timeline-date-bubble">2024 Sep</div>
-            <div class="timeline-item irl">
-              <div class="timeline-content">
-                <div class="job-title">Swim Instructor</div>
-                <div class="job-company">Ardsley School District</div>
-                <div
-                  class="job-dates"
-                  data-start="2024-09-01"
-                  data-end="2025-06-17"
-                >
-                  September 2024 – June 2025 <span class="job-duration"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 2024 Jun -->
-          <div class="timeline-group" data-year="2024" data-month="Summer">
-            <div class="timeline-date-bubble">2024 Summer</div>
-            <div class="timeline-item irl">
-              <div class="timeline-content">
-                <div class="job-title">Lifeguard/Swim Instructor</div>
-                <div class="job-company">Westchester County</div>
-                <div
-                  class="job-dates"
-                  data-start="2024-06-01"
-                  data-end="2024-08-31"
-                >
-                  Summer 2024 <span class="job-duration"></span>
-                </div>
-                <div
-                  class="job-dates"
-                  data-start="2023-06-01"
-                  data-end="2023-08-31"
-                >
-                  Summer 2023 <span class="job-duration"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 2024 Feb -->
-          <div class="timeline-group" data-year="2024" data-month="Feb">
-            <div class="timeline-date-bubble">2024 Feb</div>
-            <div class="timeline-item discord">
-              <div class="timeline-content">
-                <div class="job-title">Beta Tester</div>
-                <div class="job-company">
-                  <a
-                    href="https://wouldyoubot.gg/"
-                    target="_blank"
-                    style="
-                      color: var(--primary);
-                      text-decoration: none;
-                      font-weight: 500;
-                    "
-                  >
-                    Would You Bot
-                  </a>
-                </div>
-                <div class="job-dates" data-start="2024-02-16" data-end="">
-                  February 2024 – Present <span class="job-duration"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 2023 Apr -->
-          <div class="timeline-group" data-year="2023" data-month="Apr">
-            <div class="timeline-date-bubble">2023 Apr</div>
-            <div class="timeline-item discord">
-              <div class="timeline-content">
-                <div class="job-title">Founder & Developer</div>
-                <div class="job-company">
-                  <a
-                    href="https://pridebot.xyz"
-                    target="_blank"
-                    style="
-                      color: var(--primary);
-                      text-decoration: none;
-                      font-weight: 500;
-                    "
-                  >
-                    Pridebot
-                  </a>
-                </div>
-                <div class="job-dates" data-start="2023-04-01" data-end="">
-                  April 2023 – Present <span class="job-duration"></span>
-                </div>
+              <div class="job-dates" data-start="2025-05-01" data-end="2025-08-01">
+                May 2025 – August 2025 <span class="job-duration"></span>
               </div>
             </div>
           </div>
         </div>
-      </section>
-      <section id="projects">
-        <h2 class="section-title">Projects</h2>
+        <!-- 2024 Dec -->
+        <div class="timeline-group" data-year="2024" data-month="Dec">
+          <div class="timeline-date-bubble">2024 Dec</div>
+          <div class="timeline-item irl">
+            <div class="timeline-content">
+              <div class="job-title">Software Developer Intern</div>
+              <div class="job-company">
+                <a href="https://thedeveco.com/" target="_blank" style="
+                      color: var(--primary);
+                      text-decoration: none;
+                      font-weight: 500;
+                    ">
+                  devEco Consulting LLC
+                </a>
+              </div>
+              <div class="job-dates" data-start="2024-12-01" data-end="">
+                December 2024 – Present <span class="job-duration"></span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item discord">
+            <div class="timeline-content">
+              <div class="job-title">Administrator & Core Member</div>
+              <div class="job-company">
+                <a href="https://discord.gg/deveco" target="_blank" style="
+                      color: var(--primary);
+                      text-decoration: none;
+                      font-weight: 500;
+                    ">
+                  Developer Ecosystem (devEco)
+                </a>
+              </div>
+              <div class="job-dates" data-start="2024-12-01" data-end="">
+                December 2024 – Present <span class="job-duration"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 2024 Sep -->
+        <div class="timeline-group" data-year="2024" data-month="Sep">
+          <div class="timeline-date-bubble">2024 Sep</div>
+          <div class="timeline-item irl">
+            <div class="timeline-content">
+              <div class="job-title">Swim Instructor</div>
+              <div class="job-company">Ardsley School District</div>
+              <div class="job-dates" data-start="2024-09-01" data-end="2025-06-17">
+                September 2024 – June 2025 <span class="job-duration"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 2024 Jun -->
+        <div class="timeline-group" data-year="2024" data-month="Summer">
+          <div class="timeline-date-bubble">2024 Summer</div>
+          <div class="timeline-item irl">
+            <div class="timeline-content">
+              <div class="job-title">Lifeguard/Swim Instructor</div>
+              <div class="job-company">Westchester County</div>
+              <div class="job-dates" data-start="2024-06-01" data-end="2024-08-31">
+                Summer 2024 <span class="job-duration"></span>
+              </div>
+              <div class="job-dates" data-start="2023-06-01" data-end="2023-08-31">
+                Summer 2023 <span class="job-duration"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 2024 Feb -->
+        <div class="timeline-group" data-year="2024" data-month="Feb">
+          <div class="timeline-date-bubble">2024 Feb</div>
+          <div class="timeline-item discord">
+            <div class="timeline-content">
+              <div class="job-title">Beta Tester</div>
+              <div class="job-company">
+                <a href="https://wouldyoubot.gg/" target="_blank" style="
+                      color: var(--primary);
+                      text-decoration: none;
+                      font-weight: 500;
+                    ">
+                  Would You Bot
+                </a>
+              </div>
+              <div class="job-dates" data-start="2024-02-16" data-end="">
+                February 2024 – Present <span class="job-duration"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 2023 Apr -->
+        <div class="timeline-group" data-year="2023" data-month="Apr">
+          <div class="timeline-date-bubble">2023 Apr</div>
+          <div class="timeline-item discord">
+            <div class="timeline-content">
+              <div class="job-title">Founder & Developer</div>
+              <div class="job-company">
+                <a href="https://pridebot.xyz" target="_blank" style="
+                      color: var(--primary);
+                      text-decoration: none;
+                      font-weight: 500;
+                    ">
+                  Pridebot
+                </a>
+              </div>
+              <div class="job-dates" data-start="2023-04-01" data-end="">
+                April 2023 – Present <span class="job-duration"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="projects">
+      <h2 class="section-title">Projects</h2>
 
-        <!-- Discord Bots -->
-        <div class="cert-group">
-          <h3>Discord Bots</h3>
-          <div class="projects">
-            <!-- Pridebot -->
-            <div class="project-card">
-              <h3>Pridebot</h3>
-              <p>
-                Your Discord bot to LGBTQ Identities! Explore terms,
-                definitions, resources, and more to be yourself.
-              </p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
-                      alt="Discord.js"
-                    />
-                    <span class="tooltip-text">Discord.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-                      alt="Express.js"
-                    />
-                    <span class="tooltip-text">Express.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-                      alt="Node.js"
-                    />
-                    <span class="tooltip-text">Node.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
-                      alt="MongoDB"
-                    />
-                    <span class="tooltip-text">MongoDB</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a href="https://pridebot.xyz" target="_blank">Website</a>
-                  <a href="https://pridebot.xyz/github" target="_blank"
-                    >Github</a
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- portalBot -->
-            <div class="project-card">
-              <h3>AdvancedCounter</h3>
-              <p>
-                An advanced counting discord bot supporting multiple counting
-                modes and input validation.
-              </p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
-                      alt="Discord.js"
-                    />
-                    <span class="tooltip-text">Discord.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-                      alt="Node.js"
-                    />
-                    <span class="tooltip-text">Node.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg"
-                      alt="Prisma (SQLite)"
-                    />
-                    <span class="tooltip-text">Prisma (SQLite)</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a href="https://counter.sdriver1.me" target="_blank"
-                    >Website</a
-                  >
-                  <a
-                    href="https://github.com/Sdriver1/AdvancedCounter"
-                    target="_blank"
-                    >Github</a
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- Pridebot Manager -->
-            <div class="project-card">
-              <h3>Pridebot Manager</h3>
-              <p>Utility bot for Pridebot support server.</p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-                      alt="Python"
-                    />
-                    <span class="tooltip-text">Python</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
-                      alt="Discord.js"
-                    />
-                    <span class="tooltip-text">Discord.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-                      alt="Node.js"
-                    />
-                    <span class="tooltip-text">Node.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg"
-                      alt="Prisma (SQLite)"
-                    />
-                    <span class="tooltip-text">Prisma (SQLite)</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/Pridebot-Systems/Manager"
-                    target="_blank"
-                    >Github</a
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- portalBot -->
-            <div class="project-card">
-              <h3>portalBot</h3>
-              <p>Connecting communities through the portal.</p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
-                      alt="Discord.js"
-                    />
-                    <span class="tooltip-text">Discord.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-                      alt="Node.js"
-                    />
-                    <span class="tooltip-text">Node.js</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
-                      alt="MongoDB"
-                    />
-                    <span class="tooltip-text">MongoDB</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a href="https://portalnet.work" target="_blank">Website</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Websites -->
-        <div class="cert-group">
-          <h3>Websites</h3>
-          <div class="projects">
-            <!-- pridebot.xyz -->
-            <div class="project-card">
-              <h3>pridebot.xyz</h3>
-              <p>Website for Pridebot Discord bot.</p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                      alt="HTML5"
-                    />
-                    <span class="tooltip-text">HTML5</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-                      alt="CSS3"
-                    />
-                    <span class="tooltip-text">CSS3</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-                      alt="Express.js"
-                    />
-                    <span class="tooltip-text">Express.js</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a href="https://pridebot.xyz" target="_blank">Website</a>
-                  <a
-                    href="https://github.com/Pridebot-Systems/Website"
-                    target="_blank"
-                    >Github</a
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- youarenow.gay -->
-            <div class="project-card">
-              <h3>youarenow.gay</h3>
-              <p>Fun website to mess with your friends and prank them.</p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                      alt="HTML5"
-                    />
-                    <span class="tooltip-text">HTML5</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-                      alt="CSS3"
-                    />
-                    <span class="tooltip-text">CSS3</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-                      alt="Express.js"
-                    />
-                    <span class="tooltip-text">Express.js</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a href="https://youarenow.gay" target="_blank">Website</a>
-                </div>
-              </div>
-            </div>
-            <div class="project-card">
-              <h3>sdriver1.me / Stevendriver.com</h3>
-              <p>This portfolio site.</p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                      alt="HTML5"
-                    />
-                    <span class="tooltip-text">HTML5</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-                      alt="CSS3"
-                    />
-                    <span class="tooltip-text">CSS3</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a href="#" target="_blank">Website</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Fun Projects -->
-        <div class="cert-group">
-          <h3>Fun Projects</h3>
-          <div class="projects">
-            <!-- Work Rotation Calculator -->
-            <div class="project-card">
-              <h3>Work Rotation Calculator</h3>
-              <p>
-                Little tool to help me figure what my day will look like at work
-                based on differnet rotations.
-              </p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-                      alt="Python"
-                    />
-                    <span class="tooltip-text">Python</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/feathersjs/feathersjs-original.svg"
-                      alt="Tkinter"
-                    />
-                    <span class="tooltip-text">Tkinter</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/Sdriver1/WorkRotationTimer"
-                    target="_blank"
-                    >Github</a
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- Work Rotation Calculator -->
-            <div class="project-card">
-              <h3>sdriver1.me/change</h3>
-              <p>
-                Little tool to help teach counting change in a fun and exciting
-                way.
-              </p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                      alt="HTML5"
-                    />
-                    <span class="tooltip-text">HTML5</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-                      alt="CSS3"
-                    />
-                    <span class="tooltip-text">CSS3</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a href="https://sdriver1.me/change" target="_blank"
-                    >Website</a
-                  >
-                  <a
-                    href="https://github.com/Sdriver1/sdriver1-web/blob/main/public/sites/changehelp.html"
-                    target="_blank"
-                    >Github</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Minecraft Projects -->
-        <div class="cert-group">
-          <h3>Minecraft Projects</h3>
-          <div class="projects">
-            <!-- Pingbriel -->
-            <div class="project-card">
-              <h3>Pingbriel</h3>
-              <p>
-                Spigot plugin that allows users to ping other players. Features
-                custom colors for styling and more to come. <br />[Custom Plugin
-                for
-                <a
-                  href="https://discord.gg/lgbtqia"
-                  style="
-                    color: var(--primary);
-                    text-decoration: none;
-                    font-weight: 500;
-                  "
-                  >Pridecord</a
-                >
-                only]
-              </p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
-                      alt="Java"
-                    />
-                    <span class="tooltip-text">Java</span>
-                  </span>
-                  <span class="tooltip">
-                    <img src="../assets/svg/maven.svg" alt="Maven" />
-                    <span class="tooltip-text">Maven</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/Pridecord/Pingbriel"
-                    target="_blank"
-                    >Github</a
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- PridebotMC -->
-            <div class="project-card">
-              <h3>PridebotMC</h3>
-              <p>
-                Minecraft plugin for Pridebot. Features couple commands with
-                more to come!
-              </p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
-                      alt="Java"
-                    />
-                    <span class="tooltip-text">Java</span>
-                  </span>
-                  <span class="tooltip">
-                    <img src="../assets/svg/maven.svg" alt="Maven" />
-                    <span class="tooltip-text">Maven</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/Pridebot-Systems/PridebotMC"
-                    target="_blank"
-                    >Github</a
-                  >
-                  <a
-                    href="https://www.spigotmc.org/resources/pridebotmc.126885/"
-                    target="_blank"
-                    >Spigot</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Twitch Projects -->
-        <div class="cert-group">
-          <h3>Twitch Projects</h3>
-          <div class="projects">
-            <!-- SdriverBot -->
-            <div class="project-card">
-              <h3>SdriverBot</h3>
-              <p>
-                Custom Twitch bot for my
-                <a
-                  href="https://twitch.tv/sdriver1"
-                  target="_blank"
-                  style="
-                    color: var(--primary);
-                    text-decoration: none;
-                    font-weight: 500;
-                  "
-                  >Twitch channel</a
-                >. Features various chat and moderation commands.
-              </p>
-              <div class="project-details">
-                <div class="tech-icons">
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      alt="JavaScript"
-                    />
-                    <span class="tooltip-text">JavaScript</span>
-                  </span>
-                  <span class="tooltip">
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-                      alt="Node.js"
-                    />
-                    <span class="tooltip-text">Node.js</span>
-                  </span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/Sdriver1/TwitchDriverBot"
-                    target="_blank"
-                    >Github</a
-                  >
-                  <a
-                    href="https://twitch.tv/sdriver1"
-                    target="_blank"
-                    >Twitch</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="testimonials">
-        <h2 class="section-title">Testimonials</h2>
-        <div class="testimonials">
-          <div class="testimonial-card">
-            <p class="testimonial-text">
-              "I have known Sdriver1 for a couple of years now, and he has been
-              a huge help with improving a few of my projects. Usually in
-              regards to directing the marketability of upcoming announcements
-              within my projects. He has an entrepreneurial mindset that has
-              been a great asset to my startups. Well as he has been easy to
-              communicate with, and has never given any sign of negligence.
-              Overall a well rounded guy. I look forward to seeing what pathway
-              he takes in life, i'm sure he'll become a great business man like
-              myself one day."
+      <!-- Discord Bots -->
+      <div class="cert-group">
+        <h3>Discord Bots</h3>
+        <div class="projects">
+          <!-- Pridebot -->
+          <div class="project-card">
+            <h3>Pridebot</h3>
+            <p>
+              Your Discord bot to LGBTQ Identities! Explore terms,
+              definitions, resources, and more to be yourself.
             </p>
-            <div class="testimonial-meta">
-              <img
-                src="https://images.sdriver1.me/billy.png"
-                alt="thybilly"
-                class="testimonial-avatar"
-                loading="lazy"
-              />
-              <span class="testimonial-meta-text">
-                <span class="testimonial-author">ThyBilly</span>
-                <span class="testimonial-role"
-                  >CEO & Founder of Bumpy.gg and Interly</span
-                >
-              </span>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">
-              "I’ve had the pleasure of working with Steven for close to a year
-              now, and in that short time, he’s proven to be a valuable
-              contributor across multiple projects. Despite being early in his
-              journey, he brings a remarkable combination of creativity,
-              initiative, and determination. His ideas are bold, thoughtful, and
-              backed by a strong drive to see them through to execution. He
-              communicates clearly, follows through on responsibilities, and has
-              never once shown signs of carelessness or neglect. I’m genuinely
-              excited to see the path he chooses next. With his ambition and
-              work ethic, I wouldn’t be surprised if he becomes a successful
-              entrepreneur in his own right someday."
-            </p>
-            <div class="testimonial-meta">
-              <img
-                src="https://images.sdriver1.me/robert.png"
-                alt="robertwolff"
-                class="testimonial-avatar"
-                loading="lazy"
-              />
-              <span class="testimonial-meta-text">
-                <span class="testimonial-author"
-                  ><a
-                    href="https://linktr.ee/robertwolff"
-                    target="_blank"
-                    style="color: var(--primary); text-decoration: none"
-                    >Robert Wolff</a
-                  ></span
-                >
-                <span class="testimonial-role">
-                  Founder & Core member of devEco Community
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
                 </span>
-              </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
+                    alt="Discord.js" />
+                  <span class="tooltip-text">Discord.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                    alt="Express.js" />
+                  <span class="tooltip-text">Express.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                    alt="Node.js" />
+                  <span class="tooltip-text">Node.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                    alt="MongoDB" />
+                  <span class="tooltip-text">MongoDB</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://pridebot.xyz" target="_blank">Website</a>
+                <a href="https://pridebot.xyz/github" target="_blank">Github</a>
+              </div>
             </div>
           </div>
-          <!-- Add more testimonials as you get them! -->
+          <!-- portalBot -->
+          <div class="project-card">
+            <h3>AdvancedCounter</h3>
+            <p>
+              An advanced counting discord bot supporting multiple counting
+              modes and input validation.
+            </p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
+                    alt="Discord.js" />
+                  <span class="tooltip-text">Discord.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                    alt="Node.js" />
+                  <span class="tooltip-text">Node.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg"
+                    alt="Prisma (SQLite)" />
+                  <span class="tooltip-text">Prisma (SQLite)</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://counter.sdriver1.me" target="_blank">Website</a>
+                <a href="https://github.com/Sdriver1/AdvancedCounter" target="_blank">Github</a>
+              </div>
+            </div>
+          </div>
+          <!-- Pridebot Manager -->
+          <div class="project-card">
+            <h3>Pridebot Manager</h3>
+            <p>Utility bot for Pridebot support server.</p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                    alt="Python" />
+                  <span class="tooltip-text">Python</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
+                    alt="Discord.js" />
+                  <span class="tooltip-text">Discord.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                    alt="Node.js" />
+                  <span class="tooltip-text">Node.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg"
+                    alt="Prisma (SQLite)" />
+                  <span class="tooltip-text">Prisma (SQLite)</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/Pridebot-Systems/Manager" target="_blank">Github</a>
+              </div>
+            </div>
+          </div>
+          <!-- portalBot -->
+          <div class="project-card">
+            <h3>portalBot</h3>
+            <p>Connecting communities through the portal.</p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg"
+                    alt="Discord.js" />
+                  <span class="tooltip-text">Discord.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                    alt="Node.js" />
+                  <span class="tooltip-text">Node.js</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                    alt="MongoDB" />
+                  <span class="tooltip-text">MongoDB</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://portalnet.work" target="_blank">Website</a>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
 
-      <section id="contact" class="cta-section">
-        <h2 class="section-title">Let's Connect!</h2>
-        <p class="cta-text">
-          I'm always interested in new opportunities, collaborations, and
-          connecting with fellow developers. Whether you want to discuss a
-          project, ask about my work, or just say hello, feel free to reach out!
-        </p>
-        <div class="contact-buttons">
-          <a href="mailto:sdriver@sdriver1.me" class="cta-button secondary">
-            Get In Touch
-          </a>
-          <a
-            href="https://sdriver1.me/linkedin"
-            target="_blank"
-            class="cta-button secondary"
-          >
-            Connect on LinkedIn
-          </a>
+      <!-- Websites -->
+      <div class="cert-group">
+        <h3>Websites</h3>
+        <div class="projects">
+          <!-- pridebot.xyz -->
+          <div class="project-card">
+            <h3>pridebot.xyz</h3>
+            <p>Website for Pridebot Discord bot.</p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+                  <span class="tooltip-text">HTML5</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" />
+                  <span class="tooltip-text">CSS3</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                    alt="Express.js" />
+                  <span class="tooltip-text">Express.js</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://pridebot.xyz" target="_blank">Website</a>
+                <a href="https://github.com/Pridebot-Systems/Website" target="_blank">Github</a>
+              </div>
+            </div>
+          </div>
+          <!-- youarenow.gay -->
+          <div class="project-card">
+            <h3>youarenow.gay</h3>
+            <p>Fun website to mess with your friends and prank them.</p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+                  <span class="tooltip-text">HTML5</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" />
+                  <span class="tooltip-text">CSS3</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                    alt="Express.js" />
+                  <span class="tooltip-text">Express.js</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://youarenow.gay" target="_blank">Website</a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card">
+            <h3>sdriver1.me / Stevendriver.com</h3>
+            <p>This portfolio site.</p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+                  <span class="tooltip-text">HTML5</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" />
+                  <span class="tooltip-text">CSS3</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="#" target="_blank">Website</a>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
-      <section id="othersites" class="cta-section">
-        <h2 class="section-title">Other sdriver1.me sites</h2>
-        <div
-          style="
+      </div>
+      <!-- Fun Projects -->
+      <div class="cert-group">
+        <h3>Fun Projects</h3>
+        <div class="projects">
+          <!-- Work Rotation Calculator -->
+          <div class="project-card">
+            <h3>Work Rotation Calculator</h3>
+            <p>
+              Little tool to help me figure what my day will look like at work
+              based on differnet rotations.
+            </p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                    alt="Python" />
+                  <span class="tooltip-text">Python</span>
+                </span>
+                <span class="tooltip">
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/feathersjs/feathersjs-original.svg"
+                    alt="Tkinter" />
+                  <span class="tooltip-text">Tkinter</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/Sdriver1/WorkRotationTimer" target="_blank">Github</a>
+              </div>
+            </div>
+          </div>
+          <!-- Change Website -->
+          <div class="project-card">
+            <h3>sdriver1.me/change</h3>
+            <p>
+              Little tool to help teach counting change in a fun and exciting
+              way.
+            </p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+                  <span class="tooltip-text">HTML5</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" />
+                  <span class="tooltip-text">CSS3</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://sdriver1.me/change" target="_blank">Website</a>
+                <a href="https://github.com/Sdriver1/sdriver1-web/blob/main/public/sites/changehelp.html"
+                  target="_blank">Github</a>
+              </div>
+            </div>
+          </div>
+          <!-- Spelling Bee Solver -->
+          <div class="project-card">
+            <h3>Spelling Bee Solver</h3>
+            <p>
+              A Chrome extension that solves the NY Times Spelling Bee puzzle
+            </p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+                  <span class="tooltip-text">HTML5</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg"
+                    alt="Google API" />
+                  <span class="tooltip-text">Google API</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/Sdriver1/SpellingBeeSolver" target="_blank">Github</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- Minecraft Projects -->
+      <div class="cert-group">
+        <h3>Minecraft Projects</h3>
+        <div class="projects">
+          <!-- Pingbriel -->
+          <div class="project-card">
+            <h3>Pingbriel</h3>
+            <p>
+              Spigot plugin that allows users to ping other players. Features
+              custom colors for styling and more to come. <br />[Custom Plugin
+              for
+              <a href="https://discord.gg/lgbtqia" style="
+                    color: var(--primary);
+                    text-decoration: none;
+                    font-weight: 500;
+                  ">Pridecord</a>
+              only]
+            </p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
+                  <span class="tooltip-text">Java</span>
+                </span>
+                <span class="tooltip">
+                  <img src="../assets/svg/maven.svg" alt="Maven" />
+                  <span class="tooltip-text">Maven</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/Pridecord/Pingbriel" target="_blank">Github</a>
+              </div>
+            </div>
+          </div>
+          <!-- PridebotMC -->
+          <div class="project-card">
+            <h3>PridebotMC</h3>
+            <p>
+              Minecraft plugin for Pridebot. Features couple commands with
+              more to come!
+            </p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
+                  <span class="tooltip-text">Java</span>
+                </span>
+                <span class="tooltip">
+                  <img src="../assets/svg/maven.svg" alt="Maven" />
+                  <span class="tooltip-text">Maven</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/Pridebot-Systems/PridebotMC" target="_blank">Github</a>
+                <a href="https://www.spigotmc.org/resources/pridebotmc.126885/" target="_blank">Spigot</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Twitch Projects -->
+      <div class="cert-group">
+        <h3>Twitch Projects</h3>
+        <div class="projects">
+          <!-- SdriverBot -->
+          <div class="project-card">
+            <h3>SdriverBot</h3>
+            <p>
+              Custom Twitch bot for my
+              <a href="https://twitch.tv/sdriver1" target="_blank" style="
+                    color: var(--primary);
+                    text-decoration: none;
+                    font-weight: 500;
+                  ">Twitch channel</a>. Features various chat and moderation commands.
+            </p>
+            <div class="project-details">
+              <div class="tech-icons">
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript" />
+                  <span class="tooltip-text">JavaScript</span>
+                </span>
+                <span class="tooltip">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                    alt="Node.js" />
+                  <span class="tooltip-text">Node.js</span>
+                </span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/Sdriver1/TwitchDriverBot" target="_blank">Github</a>
+                <a href="https://twitch.tv/sdriver1" target="_blank">Twitch</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="testimonials">
+      <h2 class="section-title">Testimonials</h2>
+      <div class="testimonials">
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "I have known Sdriver1 for a couple of years now, and he has been
+            a huge help with improving a few of my projects. Usually in
+            regards to directing the marketability of upcoming announcements
+            within my projects. He has an entrepreneurial mindset that has
+            been a great asset to my startups. Well as he has been easy to
+            communicate with, and has never given any sign of negligence.
+            Overall a well rounded guy. I look forward to seeing what pathway
+            he takes in life, i'm sure he'll become a great business man like
+            myself one day."
+          </p>
+          <div class="testimonial-meta">
+            <img src="https://images.sdriver1.me/billy.png" alt="thybilly" class="testimonial-avatar" loading="lazy" />
+            <span class="testimonial-meta-text">
+              <span class="testimonial-author">ThyBilly</span>
+              <span class="testimonial-role">CEO & Founder of Bumpy.gg and Interly</span>
+            </span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "I’ve had the pleasure of working with Steven for close to a year
+            now, and in that short time, he’s proven to be a valuable
+            contributor across multiple projects. Despite being early in his
+            journey, he brings a remarkable combination of creativity,
+            initiative, and determination. His ideas are bold, thoughtful, and
+            backed by a strong drive to see them through to execution. He
+            communicates clearly, follows through on responsibilities, and has
+            never once shown signs of carelessness or neglect. I’m genuinely
+            excited to see the path he chooses next. With his ambition and
+            work ethic, I wouldn’t be surprised if he becomes a successful
+            entrepreneur in his own right someday."
+          </p>
+          <div class="testimonial-meta">
+            <img src="https://images.sdriver1.me/robert.png" alt="robertwolff" class="testimonial-avatar"
+              loading="lazy" />
+            <span class="testimonial-meta-text">
+              <span class="testimonial-author"><a href="https://linktr.ee/robertwolff" target="_blank"
+                  style="color: var(--primary); text-decoration: none">Robert Wolff</a></span>
+              <span class="testimonial-role">
+                Founder & Core member of devEco Community
+              </span>
+            </span>
+          </div>
+        </div>
+        <!-- Add more testimonials as you get them! -->
+      </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+      <h2 class="section-title">Let's Connect!</h2>
+      <p class="cta-text">
+        I'm always interested in new opportunities, collaborations, and
+        connecting with fellow developers. Whether you want to discuss a
+        project, ask about my work, or just say hello, feel free to reach out!
+      </p>
+      <div class="contact-buttons">
+        <a href="mailto:sdriver@sdriver1.me" class="cta-button secondary">
+          Get In Touch
+        </a>
+        <a href="https://sdriver1.me/linkedin" target="_blank" class="cta-button secondary">
+          Connect on LinkedIn
+        </a>
+      </div>
+    </section>
+    <section id="othersites" class="cta-section">
+      <h2 class="section-title">Other sdriver1.me sites</h2>
+      <div style="
             display: flex;
             align-items: flex-start;
             gap: 3rem;
             max-width: 1000px;
             margin: 0 auto;
             flex-wrap: wrap;
-          "
-        >
-          <div style="flex: 1; min-width: 300px">
-            <p
-              class="cta-text"
-              style="text-align: left; margin-bottom: 1rem; margin-left: 0"
-            >
-              Here are some other sites I developed that are within my domain:
-            </p>
-            <div style="text-align: left">
-              <ul
-                style="
+          ">
+        <div style="flex: 1; min-width: 300px">
+          <p class="cta-text" style="text-align: left; margin-bottom: 1rem; margin-left: 0">
+            Here are some other sites I developed that are within my domain:
+          </p>
+          <div style="text-align: left">
+            <ul style="
                   list-style-type: disc;
                   padding-left: 1.5rem;
                   line-height: 1.8;
                   color: var(--text-color);
                   font-size: 1.1rem;
-                "
-              >
-                <li>
-                  <strong>RIT page:</strong> A page more focused on my academic
-                  portfolio. Can find more of my academic projects there too
-                </li>
-                <li>
-                  <strong>Minigames:</strong> A collection of fun little web
-                  games I like to play when bored, including Minesweeper,
-                  Sudoku, and 2048
-                </li>
-              </ul>
-            </div>
+                ">
+              <li>
+                <strong>RIT page:</strong> A page more focused on my academic
+                portfolio. Can find more of my academic projects there too
+              </li>
+              <li>
+                <strong>Minigames:</strong> A collection of fun little web
+                games I like to play when bored, including Minesweeper,
+                Sudoku, and 2048
+              </li>
+            </ul>
           </div>
-          <div
-            style="
+        </div>
+        <div style="
               display: flex;
               flex-direction: column;
               gap: 1rem;
               min-width: 200px;
               margin-top: 2rem;
-            "
-          >
-            <a
-              href="https://rit.sdriver1.me/"
-              target="_blank"
-              class="cta-button secondary"
-              style="width: 100%; text-align: center"
-            >
-              RIT page
-            </a>
-            <a
-              href="https://games.sdriver1.me/"
-              target="_blank"
-              class="cta-button secondary"
-              style="width: 100%; text-align: center"
-            >
-              Minigames
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
-    <footer>
-      <div class="footer-content">
-        <div class="footer-left">
-          &copy; 2025 Steven Driver. All Rights Reserved.
-        </div>
-        <div class="footer-right">
-          <!-- Bluesky -->
-          <a
-            href="https://bsky.app/profile/sdriver1.me"
-            target="_blank"
-            title="Bluesky"
-          >
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/bluesky.svg"
-              alt="Bluesky"
-              class="footer-icon"
-            />
+            ">
+          <a href="https://rit.sdriver1.me/" target="_blank" class="cta-button secondary"
+            style="width: 100%; text-align: center">
+            RIT page
           </a>
-          <!-- Discord -->
-          <a
-            href="https://discord.com/users/691506668781174824"
-            target="_blank"
-            title="Discord"
-          >
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
-              alt="Discord"
-              class="footer-icon"
-            />
-          </a>
-          <!-- Email -->
-          <a href="mailto:sdriver@sdriver1.me" title="Email">
-            <img id="icon-email" alt="Email" class="footer-icon" />
-          </a>
-          <a href="https://github.com/Sdriver1" target="_blank" title="GitHub">
-            <img id="icon-github" alt="GitHub" class="footer-icon" />
-          </a>
-
-          <!-- Instagram -->
-          <a
-            href="https://www.instagram.com/sdriver_1/"
-            target="_blank"
-            title="Instagram"
-          >
-            <img
-              src="../assets/svg/instagram.svg"
-              alt="Instagram"
-              class="footer-icon"
-            />
-          </a>
-          <!-- LinkedIn -->
-          <a
-            href="https://sdriver1.me/linkedin"
-            target="_blank"
-            title="LinkedIn"
-          >
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
-              alt="LinkedIn"
-              class="footer-icon"
-            />
-          </a>
-          <!-- Twitch -->
-          <a href="https://twitch.tv/sdriver1" target="_blank" title="Twitch">
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg"
-              alt="Twitch"
-              class="footer-icon"
-            />
-          </a>
-          <!-- X -->
-          <a href="https://x.com/sdriver_1" target="_blank" title="Twitter / X">
-            <img id="icon-x" alt="X" class="footer-icon" />
-          </a>
-          <!-- YouTube -->
-          <a
-            href="https://www.youtube.com/@sdriver_1"
-            target="_blank"
-            title="YouTube"
-          >
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg"
-              alt="YouTube"
-              class="footer-icon"
-            />
+          <a href="https://games.sdriver1.me/" target="_blank" class="cta-button secondary"
+            style="width: 100%; text-align: center">
+            Minigames
           </a>
         </div>
       </div>
-    </footer>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-left">
+        &copy; 2025 Steven Driver. All Rights Reserved.
+      </div>
+      <div class="footer-right">
+        <!-- Bluesky -->
+        <a href="https://bsky.app/profile/sdriver1.me" target="_blank" title="Bluesky">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/bluesky.svg" alt="Bluesky"
+            class="footer-icon" />
+        </a>
+        <!-- Discord -->
+        <a href="https://discord.com/users/691506668781174824" target="_blank" title="Discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            class="footer-icon" />
+        </a>
+        <!-- Email -->
+        <a href="mailto:sdriver@sdriver1.me" title="Email">
+          <img id="icon-email" alt="Email" class="footer-icon" />
+        </a>
+        <a href="https://github.com/Sdriver1" target="_blank" title="GitHub">
+          <img id="icon-github" alt="GitHub" class="footer-icon" />
+        </a>
 
-    <script src="../assets/js/indexsite.js"></script>
-  </body>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/sdriver_1/" target="_blank" title="Instagram">
+          <img src="../assets/svg/instagram.svg" alt="Instagram" class="footer-icon" />
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://sdriver1.me/linkedin" target="_blank" title="LinkedIn">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"
+            class="footer-icon" />
+        </a>
+        <!-- Twitch -->
+        <a href="https://twitch.tv/sdriver1" target="_blank" title="Twitch">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg" alt="Twitch"
+            class="footer-icon" />
+        </a>
+        <!-- X -->
+        <a href="https://x.com/sdriver_1" target="_blank" title="Twitter / X">
+          <img id="icon-x" alt="X" class="footer-icon" />
+        </a>
+        <!-- YouTube -->
+        <a href="https://www.youtube.com/@sdriver_1" target="_blank" title="YouTube">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube"
+            class="footer-icon" />
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/indexsite.js"></script>
+</body>
+
 </html>
