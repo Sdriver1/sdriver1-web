@@ -286,6 +286,12 @@ function createMainServer() {
   app.get("/", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "sites/index.html")),
   );
+   app.get("/change", pageCache, (req, res) =>
+    res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html")),
+  );
+   app.get("/nytgames", pageCache, (req, res) =>
+    res.sendFile(join(PATHS.PUBLIC, "sites/nytgames.html")),
+  );
   app.get("/github", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "redirects/github.html")),
   );
@@ -298,9 +304,6 @@ function createMainServer() {
   app.get("/twitch", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "redirects/twitch.html")),
   );
-  app.get("/calculator", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "calculator/index.html")),
-  );
   app.get("/resume", (req, res) => {
     res.set("Cache-Control", "public, max-age=86400");
     res.sendFile(join(PATHS.ASSETS, "resume/resume.pdf"));
@@ -309,9 +312,6 @@ function createMainServer() {
     res.set("Cache-Control", "public, max-age=86400");
     res.sendFile(join(PATHS.ASSETS, "resume/resume.png"));
   });
-  app.get("/change", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html")),
-  );
 
   app.use(errorHandler);
   app.listen(PORTS.MAIN, () =>

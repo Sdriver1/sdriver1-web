@@ -1,0 +1,399 @@
+/* NYT Games Stats Page Styles */
+
+.nyt-container {
+  padding: 3rem 1rem 5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nyt-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.nyt-header .section-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.nyt-header .section-subtitle {
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+/* Edit toggle button */
+.edit-toggle-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.edit-toggle-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.55rem 1.4rem;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-toggle-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* Games grid */
+.nyt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+/* Game card */
+.nyt-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 1.8rem;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.nyt-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* Per-game accent colors */
+.nyt-card.wordle       { border-color: #6aaa64; }
+.nyt-card.spelling-bee { border-color: #f7da21; }
+.nyt-card.connections  { border-color: #b59fda; }
+
+/* Card header */
+.nyt-card-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.nyt-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.nyt-card-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.nyt-card-header h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.nyt-card-header .nyt-streak-badge {
+  margin-left: auto;
+  background: var(--primary);
+  color: white;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Stat rows */
+.nyt-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.nyt-stat {
+  text-align: center;
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 0.7rem 0.5rem;
+}
+
+.nyt-stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.1;
+}
+
+.nyt-stat-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--secondary);
+  margin-top: 0.2rem;
+}
+
+/* Wordle guess distribution bar chart */
+.nyt-dist {
+  margin-top: 0.2rem;
+}
+
+.nyt-dist-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dist-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+  font-size: 0.88rem;
+}
+
+.dist-label {
+  width: 14px;
+  text-align: right;
+  color: var(--secondary);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.dist-bar-wrap {
+  flex: 1;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden;
+  height: 20px;
+}
+
+.dist-bar.dist-bar-fail {
+  background: #ba81c5;
+}
+
+.dist-bar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+  font-size: 0.78rem;
+  color: white;
+  font-weight: 600;
+  min-width: 24px;
+  transition: width 0.5s ease;
+}
+
+/* Connections color dots */
+.connections-groups {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.conn-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.conn-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Latest game section */
+.nyt-latest {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.nyt-latest-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--secondary);
+  margin-bottom: 0.6rem;
+}
+
+.nyt-latest-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--secondary);
+  margin-bottom: 0.6rem;
+}
+
+.nyt-latest-meta span:not(:last-child):not(:empty) + span:not(:empty)::before {
+  content: "·";
+  margin-right: 0.5rem;
+}
+
+.nyt-latest-result {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.nyt-latest-result.result-win  { color: #6aaa64; }
+.nyt-latest-result.result-loss { color: #e57373; }
+
+/* Wordle emoji grid */
+.wordle-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.wordle-grid-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.wordle-guess-word {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  text-transform: uppercase;
+  width: 3rem;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.wordle-guess-squares {
+  font-size: 1.3rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+
+/* Spelling Bee latest */
+.spellingbee-latest-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+/* Spelling Bee pangram */
+.spellingbee-latest-pangram {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #f7da21;
+  margin-bottom: 0.5rem;
+}
+
+/* Spelling Bee honeycomb SVG */
+.sb-honeycomb {
+  display: block;
+  width: 190px;
+  height: auto;
+}
+
+.sb-outer-hex {
+  fill: #d1d5db;
+  stroke: var(--card-bg);
+  stroke-width: 3;
+}
+
+[data-theme="dark"] .sb-outer-hex {
+  fill: #2e3140;
+  stroke: var(--card-bg);
+  stroke-width: 3;
+}
+
+.sb-center-hex {
+  fill: #f7da21;
+  stroke: var(--card-bg);
+  stroke-width: 3;
+}
+
+.sb-outer-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  fill: var(--text);
+}
+
+.sb-center-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  fill: #1a1a1a;
+}
+
+/* Connections guess grid */
+.connections-guess-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 0.4rem;
+}
+
+.conn-guess-row {
+  display: flex;
+  gap: 4px;
+}
+
+.conn-guess-tile {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nyt-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nyt-header .section-title {
+    font-size: 2rem;
+  }
+
+  .nyt-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .nyt-card {
+    padding: 1.3rem;
+  }
+}

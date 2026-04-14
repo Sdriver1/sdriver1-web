@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Steven Driver | NYT Games Stats</title>
+
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/css/index.css" />
+  <link rel="stylesheet" href="../assets/css/nytgames.css" />
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="https://sdriver1.me"><img src="../assets/images/profile.png" alt="Logo" loading="lazy" /></a>
+      </div>
+      <button id="mobile-toggle" class="mobile-toggle" aria-label="Toggle menu">
+        ☰
+      </button>
+      <div class="nav-links" id="nav-links" role="navigation" aria-label="Main navigation">
+        <a href="https://sdriver1.me" aria-label="Home">Home</a>
+        <a href="https://games.sdriver1.me" aria-label="Games">Games</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle between light and dark theme">
+          <span id="theme-icon"> </span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="nyt-container">
+      <div class="nyt-header">
+        <h1 class="section-title">NYT Games Stats</h1>
+      </div>
+
+      <div class="nyt-grid" id="nyt-grid">
+
+        <!-- Wordle -->
+        <div class="nyt-card wordle" id="card-wordle">
+          <div class="nyt-card-header">
+            <img class="nyt-card-logo" src="../assets/svg/wordle.svg" alt="Wordle" />
+            <h2>Wordle</h2>
+          </div>
+
+          <div class="nyt-stats">
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="wordle-played">—</span>
+              <span class="nyt-stat-label">Played</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="wordle-win-pct">—</span>
+              <span class="nyt-stat-label">Win %</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="wordle-streak">—</span>
+              <span class="nyt-stat-label">Current Streak</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="wordle-max-streak">—</span>
+              <span class="nyt-stat-label">Max Streak</span>
+            </div>
+          </div>
+
+          <div class="nyt-dist">
+            <div class="nyt-dist-title">Guess Distribution</div>
+            <div id="wordle-dist-rows"></div>
+          </div>
+
+          <div class="nyt-latest" id="wordle-latest">
+            <div class="nyt-latest-title">Latest Game</div>
+            <div class="nyt-latest-meta">
+              <span id="wordle-latest-date"></span>
+              <span id="wordle-latest-number"></span>
+              <span class="nyt-latest-result" id="wordle-latest-guesses"></span>
+            </div>
+            <div class="wordle-grid" id="wordle-latest-grid"></div>
+          </div>
+        </div>
+
+        <!-- Spelling Bee -->
+        <div class="nyt-card spelling-bee" id="card-spellingbee">
+          <div class="nyt-card-header">
+            <img class="nyt-card-logo" src="../assets/svg/spellingbee.svg" alt="Spelling Bee" />
+            <h2>Spelling Bee</h2>
+          </div>
+
+          <div class="nyt-stats">
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="spellingbee-puzzles">—</span>
+              <span class="nyt-stat-label">Puzzles</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="spellingbee-words">—</span>
+              <span class="nyt-stat-label">Words</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="spellingbee-pangrams">—</span>
+              <span class="nyt-stat-label">Pangrams</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="spellingbee-geniuses">—</span>
+              <span class="nyt-stat-label">Geniuses</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="spellingbee-queenbees">—</span>
+              <span class="nyt-stat-label">Queen Bees</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="spellingbee-longest-word">—</span>
+              <span class="nyt-stat-label">Longest Word</span>
+            </div>
+          </div>
+
+          <div class="nyt-latest" id="spellingbee-latest">
+            <div class="nyt-latest-title">Latest Game</div>
+            <div class="nyt-latest-meta">
+              <span id="spellingbee-latest-date"></span>
+              <span class="nyt-latest-result" id="spellingbee-latest-rank"></span>
+            </div>
+            <div class="spellingbee-latest-stats">
+              <span id="spellingbee-latest-points"></span>
+              <span id="spellingbee-latest-words"></span>
+            </div>
+            <div class="spellingbee-latest-pangram" id="spellingbee-latest-pangram"></div>
+            <svg id="spellingbee-honeycomb" class="sb-honeycomb" viewBox="0 0 180 188" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+        </div>
+
+        <!-- Connections -->
+        <div class="nyt-card connections" id="card-connections">
+          <div class="nyt-card-header">
+            <img class="nyt-card-logo" src="../assets/svg/connections.svg" alt="Connections" />
+            <h2>Connections</h2>
+          </div>
+
+          <div class="nyt-stats">
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="connections-played">—</span>
+              <span class="nyt-stat-label">Completed</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="connections-win-pct">—</span>
+              <span class="nyt-stat-label">Win %</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="connections-streak">—</span>
+              <span class="nyt-stat-label">Current Streak</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="connections-max-streak">—</span>
+              <span class="nyt-stat-label">Max Streak</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="connections-perfect">—</span>
+              <span class="nyt-stat-label">Perfect Puzzles</span>
+            </div>
+            <div class="nyt-stat">
+              <span class="nyt-stat-value" id="connections-purple-first">—</span>
+              <span class="nyt-stat-label">Purple First</span>
+            </div>
+          </div>
+
+          <div class="nyt-dist">
+            <div class="nyt-dist-title">Mistake Distribution</div>
+            <div id="connections-dist-rows"></div>
+          </div>
+
+          <div class="nyt-latest" id="connections-latest">
+            <div class="nyt-latest-title">Latest Game</div>
+            <div class="nyt-latest-meta">
+              <span id="connections-latest-date"></span>
+              <span id="connections-latest-number"></span>
+              <span class="nyt-latest-result" id="connections-latest-result"></span>
+              <span id="connections-latest-mistakes"></span>
+            </div>
+            <div class="connections-guess-grid" id="connections-latest-grid"></div>
+          </div>
+        </div>
+
+      </div><!-- /nyt-grid -->
+    </div><!-- /nyt-container -->
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-left">
+        &copy; 2025 Steven Driver. All Rights Reserved.
+      </div>
+      <div class="footer-right">
+        <a href="https://bsky.app/profile/sdriver1.me" target="_blank" title="Bluesky">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/bluesky.svg" alt="Bluesky"
+            class="footer-icon" />
+        </a>
+        <a href="https://discord.com/users/691506668781174824" target="_blank" title="Discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord"
+            class="footer-icon" />
+        </a>
+        <a href="mailto:sdriver@sdriver1.me" title="Email">
+          <img id="icon-email" alt="Email" class="footer-icon" />
+        </a>
+        <a href="https://github.com/Sdriver1" target="_blank" title="GitHub">
+          <img id="icon-github" alt="GitHub" class="footer-icon" />
+        </a>
+        <a href="https://www.instagram.com/sdriver_1/" target="_blank" title="Instagram">
+          <img src="../assets/svg/instagram.svg" alt="Instagram" class="footer-icon" />
+        </a>
+        <a href="https://sdriver1.me/linkedin" target="_blank" title="LinkedIn">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"
+            class="footer-icon" />
+        </a>
+        <a href="https://twitch.tv/sdriver1" target="_blank" title="Twitch">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg" alt="Twitch"
+            class="footer-icon" />
+        </a>
+        <a href="https://x.com/sdriver_1" target="_blank" title="Twitter / X">
+          <img id="icon-x" alt="X" class="footer-icon" />
+        </a>
+        <a href="https://www.youtube.com/@sdriver_1" target="_blank" title="YouTube">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube"
+            class="footer-icon" />
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/indexsite.js"></script>
+  <script src="../assets/js/nytgames-data.js"></script>
+  <script>
+    function set(id, val) {
+      const el = document.getElementById(id);
+      if (el && val !== "" && val !== undefined && val !== null) el.textContent = val;
+    }
+
+    const CONN_COLORS = {
+      yellow: "#f9df6d",
+      green: "#a0c35a",
+      blue: "#b0c4ef",
+      purple: "#ba81c5",
+    };
+
+    function buildHoneycomb(centerLetter, outerLetters) {
+        const svg = document.getElementById("spellingbee-honeycomb");
+        if (!svg) return;
+        if (!centerLetter) { svg.style.display = "none"; return; }
+        svg.style.display = "block";
+
+        // Flat-top hexagon geometry
+        // h  = r√3/2  — half-height of hex (center to top/bottom edge midpoint)
+        // For adjacent flat-top hexes:
+        //   top/bottom neighbor offset: (0, ±r√3)
+        //   diagonal neighbor offset:   (±1.5r, ±h)
+        const r  = 36;
+        const h  = r * Math.sqrt(3) / 2;  // ≈ 31.2
+        const rt = r * Math.sqrt(3);       // ≈ 62.4 — full top/bottom offset
+        const bx = 90, by = 94;
+        const ns = "http://www.w3.org/2000/svg";
+
+        // Flat-top hex: points on left/right, flat edges top/bottom
+        function hexPoints(cx, cy) {
+          return [
+            [cx + r,   cy    ], [cx + r/2, cy + h],
+            [cx - r/2, cy + h], [cx - r,   cy    ],
+            [cx - r/2, cy - h], [cx + r/2, cy - h],
+          ].map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+        }
+
+        const hexes = [
+          { x: bx,         y: by,      letter: centerLetter,          isCenter: true  },
+          { x: bx,         y: by - rt, letter: outerLetters[0] || "", isCenter: false }, // top
+          { x: bx - 1.5*r, y: by - h,  letter: outerLetters[1] || "", isCenter: false }, // top-left
+          { x: bx + 1.5*r, y: by - h,  letter: outerLetters[2] || "", isCenter: false }, // top-right
+          { x: bx - 1.5*r, y: by + h,  letter: outerLetters[3] || "", isCenter: false }, // bottom-left
+          { x: bx + 1.5*r, y: by + h,  letter: outerLetters[4] || "", isCenter: false }, // bottom-right
+          { x: bx,         y: by + rt, letter: outerLetters[5] || "", isCenter: false }, // bottom
+        ];
+
+        svg.innerHTML = "";
+        hexes.forEach(({ x, y, letter, isCenter }) => {
+          const poly = document.createElementNS(ns, "polygon");
+          poly.setAttribute("points", hexPoints(x, y));
+          poly.setAttribute("class", isCenter ? "sb-center-hex" : "sb-outer-hex");
+          svg.appendChild(poly);
+          if (letter) {
+            const text = document.createElementNS(ns, "text");
+            text.setAttribute("x", x);
+            text.setAttribute("y", y);
+            text.setAttribute("text-anchor", "middle");
+            text.setAttribute("dominant-baseline", "central");
+            text.setAttribute("class", isCenter ? "sb-center-text" : "sb-outer-text");
+            text.textContent = letter.toUpperCase();
+            svg.appendChild(text);
+          }
+        });
+      }
+
+    function render() {
+      // ── Wordle ──────────────────────────────────────────────────────────
+      const w = NYT_STATS.wordle;
+      set("wordle-played", w.played);
+      set("wordle-win-pct", w.winPct !== "" ? w.winPct + "%" : "");
+      set("wordle-streak", w.streak);
+      set("wordle-max-streak", w.maxStreak);
+      buildWordleDist(w.dist);
+
+      const wl = w.latest;
+      if (wl && (wl.date || wl.grid.length)) {
+        set("wordle-latest-date", wl.date);
+        set("wordle-latest-number", wl.number !== "" ? "#" + wl.number : "");
+        set("wordle-latest-guesses", wl.guesses !== "" ? wl.guesses + " guesses" : "");
+        const grid = document.getElementById("wordle-latest-grid");
+        if (grid) {
+          grid.innerHTML = wl.grid.map((row, i) => {
+            const word = (wl.words && wl.words[i]) ? wl.words[i] : "";
+            return `<div class="wordle-grid-row">
+                ${word ? `<span class="wordle-guess-word">${word}</span>` : ""}
+                <span class="wordle-guess-squares">${row}</span>
+              </div>`;
+          }).join("");
+        }
+      } else {
+        const el = document.getElementById("wordle-latest");
+        if (el) el.style.display = "none";
+      }
+
+      // ── Spelling Bee ─────────────────────────────────────────────────────
+      const b = NYT_STATS.spellingbee;
+      set("spellingbee-puzzles", b.puzzles);
+      set("spellingbee-words", b.words);
+      set("spellingbee-pangrams", b.pangrams);
+      set("spellingbee-geniuses", b.geniuses);
+      set("spellingbee-queenbees", b.queenBees);
+      set("spellingbee-longest-word", b.longestWord);
+
+      const bl = b.latest;
+      if (bl && bl.date) {
+        set("spellingbee-latest-date", bl.date);
+        set("spellingbee-latest-rank", bl.rank);
+        const pts = document.getElementById("spellingbee-latest-points");
+        const wds = document.getElementById("spellingbee-latest-words");
+        if (pts && bl.points !== "") pts.textContent = bl.points + " pts";
+        if (wds && bl.wordsFound !== "") wds.textContent = bl.wordsFound + " words";
+        const pgEl = document.getElementById("spellingbee-latest-pangram");
+        if (pgEl && bl.pangram) pgEl.textContent = bl.pangram.toUpperCase();
+        buildHoneycomb(bl.centerLetter, bl.outerLetters);
+      } else {
+        const el = document.getElementById("spellingbee-latest");
+        if (el) el.style.display = "none";
+      }
+
+      // ── Connections ──────────────────────────────────────────────────────
+      const c = NYT_STATS.connections;
+      set("connections-played", c.played);
+      set("connections-win-pct", c.winPct !== "" ? c.winPct + "%" : "");
+      set("connections-streak", c.streak);
+      set("connections-max-streak", c.maxStreak);
+      set("connections-perfect", c.perfectSolves);
+      set("connections-purple-first", c.purpleFirst);
+      buildConnDist(c.mistakeDist);
+
+      const cl = c.latest;
+      if (cl && cl.date) {
+        set("connections-latest-date", cl.date);
+        set("connections-latest-number", cl.number !== "" ? "#" + cl.number : "");
+        const resultEl = document.getElementById("connections-latest-result");
+        if (resultEl && cl.result) {
+          resultEl.textContent = cl.result === "solved" ? "Solved" : "Failed";
+          resultEl.classList.add(cl.result === "solved" ? "result-win" : "result-loss");
+        }
+        const mEl = document.getElementById("connections-latest-mistakes");
+        if (mEl && cl.mistakes !== "") mEl.textContent = cl.mistakes + " mistake" + (cl.mistakes === 1 ? "" : "s");
+        const gridEl = document.getElementById("connections-latest-grid");
+        if (gridEl && cl.grid && cl.grid.length) {
+          gridEl.innerHTML = cl.grid.map((row) =>
+            `<div class="conn-guess-row">${row.map((color) =>
+              `<span class="conn-guess-tile" style="background:${CONN_COLORS[color] || "#ccc"}"></span>`
+            ).join("")}</div>`
+          ).join("");
+        }
+      } else {
+        const el = document.getElementById("connections-latest");
+        if (el) el.style.display = "none";
+      }
+    }
+
+    function buildConnDist(dist) {
+      const container = document.getElementById("connections-dist-rows");
+      if (!container || !dist) return;
+      container.innerHTML = "";
+      const max = Math.max(...dist, 1);
+      dist.forEach((count, i) => {
+        const pct = Math.max(8, Math.round((count / max) * 100));
+        const isFail = i >= 4;
+        const row = document.createElement("div");
+        row.className = "dist-row";
+        row.innerHTML = `
+            <span class="dist-label">${i}</span>
+            <div class="dist-bar-wrap">
+              <div class="dist-bar${isFail ? " dist-bar-fail" : ""}" style="width:${pct}%">${count > 0 ? count : ""}</div>
+            </div>
+          `;
+        container.appendChild(row);
+      });
+    }
+
+    function buildWordleDist(dist) {
+      const container = document.getElementById("wordle-dist-rows");
+      if (!container) return;
+      container.innerHTML = "";
+      const max = Math.max(...dist, 1);
+      dist.forEach((count, i) => {
+        const pct = Math.max(8, Math.round((count / max) * 100));
+        const row = document.createElement("div");
+        row.className = "dist-row";
+        row.innerHTML = `
+            <span class="dist-label">${i + 1}</span>
+            <div class="dist-bar-wrap">
+              <div class="dist-bar" style="width:${pct}%">${count > 0 ? count : ""}</div>
+            </div>
+          `;
+        container.appendChild(row);
+      });
+    }
+
+    render();
+  </script>
+</body>
+
+</html>
