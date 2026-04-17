@@ -131,7 +131,8 @@
               <span id="spellingbee-latest-words"></span>
             </div>
             <div class="spellingbee-latest-pangram" id="spellingbee-latest-pangram"></div>
-            <svg id="spellingbee-honeycomb" class="sb-honeycomb" viewBox="0 0 180 188" xmlns="http://www.w3.org/2000/svg"></svg>
+            <svg id="spellingbee-honeycomb" class="sb-honeycomb" viewBox="0 0 180 188"
+              xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
         </div>
 
@@ -233,8 +234,25 @@
   </footer>
 
   <script src="../assets/js/indexsite.js"></script>
-  <script src="../assets/js/nytgames-data.js"></script>
   <script>
+    // Default empty state — filled in by loadApiStats() from the API
+    const NYT_STATS = {
+      wordle: {
+        played: "", winPct: "", streak: "", maxStreak: "",
+        dist: [0, 0, 0, 0, 0, 0],
+        latest: { date: "", number: "", guesses: "", grid: [], words: [] },
+      },
+      spellingbee: {
+        puzzles: "", words: "", pangrams: "", geniuses: "", queenBees: "", longestWord: "",
+        latest: { date: "", rank: "", points: "", wordsFound: "", pangram: "", centerLetter: "", outerLetters: [] },
+      },
+      connections: {
+        played: "", winPct: "", streak: "", maxStreak: "", perfectSolves: "", purpleFirst: "",
+        mistakeDist: [0, 0, 0, 0, 0],
+        latest: { date: "", number: "", result: "", mistakes: "", grid: [] },
+      },
+    };
+
     function set(id, val) {
       const el = document.getElementById(id);
       if (el && val !== "" && val !== undefined && val !== null) el.textContent = val;
@@ -248,59 +266,59 @@
     };
 
     function buildHoneycomb(centerLetter, outerLetters) {
-        const svg = document.getElementById("spellingbee-honeycomb");
-        if (!svg) return;
-        if (!centerLetter) { svg.style.display = "none"; return; }
-        svg.style.display = "block";
+      const svg = document.getElementById("spellingbee-honeycomb");
+      if (!svg) return;
+      if (!centerLetter) { svg.style.display = "none"; return; }
+      svg.style.display = "block";
 
-        // Flat-top hexagon geometry
-        // h  = r√3/2  — half-height of hex (center to top/bottom edge midpoint)
-        // For adjacent flat-top hexes:
-        //   top/bottom neighbor offset: (0, ±r√3)
-        //   diagonal neighbor offset:   (±1.5r, ±h)
-        const r  = 36;
-        const h  = r * Math.sqrt(3) / 2;  // ≈ 31.2
-        const rt = r * Math.sqrt(3);       // ≈ 62.4 — full top/bottom offset
-        const bx = 90, by = 94;
-        const ns = "http://www.w3.org/2000/svg";
+      // Flat-top hexagon geometry
+      // h  = r√3/2  — half-height of hex (center to top/bottom edge midpoint)
+      // For adjacent flat-top hexes:
+      //   top/bottom neighbor offset: (0, ±r√3)
+      //   diagonal neighbor offset:   (±1.5r, ±h)
+      const r = 36;
+      const h = r * Math.sqrt(3) / 2;  // ≈ 31.2
+      const rt = r * Math.sqrt(3);       // ≈ 62.4 — full top/bottom offset
+      const bx = 90, by = 94;
+      const ns = "http://www.w3.org/2000/svg";
 
-        // Flat-top hex: points on left/right, flat edges top/bottom
-        function hexPoints(cx, cy) {
-          return [
-            [cx + r,   cy    ], [cx + r/2, cy + h],
-            [cx - r/2, cy + h], [cx - r,   cy    ],
-            [cx - r/2, cy - h], [cx + r/2, cy - h],
-          ].map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
-        }
-
-        const hexes = [
-          { x: bx,         y: by,      letter: centerLetter,          isCenter: true  },
-          { x: bx,         y: by - rt, letter: outerLetters[0] || "", isCenter: false }, // top
-          { x: bx - 1.5*r, y: by - h,  letter: outerLetters[1] || "", isCenter: false }, // top-left
-          { x: bx + 1.5*r, y: by - h,  letter: outerLetters[2] || "", isCenter: false }, // top-right
-          { x: bx - 1.5*r, y: by + h,  letter: outerLetters[3] || "", isCenter: false }, // bottom-left
-          { x: bx + 1.5*r, y: by + h,  letter: outerLetters[4] || "", isCenter: false }, // bottom-right
-          { x: bx,         y: by + rt, letter: outerLetters[5] || "", isCenter: false }, // bottom
-        ];
-
-        svg.innerHTML = "";
-        hexes.forEach(({ x, y, letter, isCenter }) => {
-          const poly = document.createElementNS(ns, "polygon");
-          poly.setAttribute("points", hexPoints(x, y));
-          poly.setAttribute("class", isCenter ? "sb-center-hex" : "sb-outer-hex");
-          svg.appendChild(poly);
-          if (letter) {
-            const text = document.createElementNS(ns, "text");
-            text.setAttribute("x", x);
-            text.setAttribute("y", y);
-            text.setAttribute("text-anchor", "middle");
-            text.setAttribute("dominant-baseline", "central");
-            text.setAttribute("class", isCenter ? "sb-center-text" : "sb-outer-text");
-            text.textContent = letter.toUpperCase();
-            svg.appendChild(text);
-          }
-        });
+      // Flat-top hex: points on left/right, flat edges top/bottom
+      function hexPoints(cx, cy) {
+        return [
+          [cx + r, cy], [cx + r / 2, cy + h],
+          [cx - r / 2, cy + h], [cx - r, cy],
+          [cx - r / 2, cy - h], [cx + r / 2, cy - h],
+        ].map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
       }
+
+      const hexes = [
+        { x: bx, y: by, letter: centerLetter, isCenter: true },
+        { x: bx, y: by - rt, letter: outerLetters[0] || "", isCenter: false }, // top
+        { x: bx - 1.5 * r, y: by - h, letter: outerLetters[1] || "", isCenter: false }, // top-left
+        { x: bx + 1.5 * r, y: by - h, letter: outerLetters[2] || "", isCenter: false }, // top-right
+        { x: bx - 1.5 * r, y: by + h, letter: outerLetters[3] || "", isCenter: false }, // bottom-left
+        { x: bx + 1.5 * r, y: by + h, letter: outerLetters[4] || "", isCenter: false }, // bottom-right
+        { x: bx, y: by + rt, letter: outerLetters[5] || "", isCenter: false }, // bottom
+      ];
+
+      svg.innerHTML = "";
+      hexes.forEach(({ x, y, letter, isCenter }) => {
+        const poly = document.createElementNS(ns, "polygon");
+        poly.setAttribute("points", hexPoints(x, y));
+        poly.setAttribute("class", isCenter ? "sb-center-hex" : "sb-outer-hex");
+        svg.appendChild(poly);
+        if (letter) {
+          const text = document.createElementNS(ns, "text");
+          text.setAttribute("x", x);
+          text.setAttribute("y", y);
+          text.setAttribute("text-anchor", "middle");
+          text.setAttribute("dominant-baseline", "central");
+          text.setAttribute("class", isCenter ? "sb-center-text" : "sb-outer-text");
+          text.textContent = letter.toUpperCase();
+          svg.appendChild(text);
+        }
+      });
+    }
 
     function render() {
       // ── Wordle ──────────────────────────────────────────────────────────
@@ -312,19 +330,30 @@
       buildWordleDist(w.dist);
 
       const wl = w.latest;
-      if (wl && (wl.date || wl.grid.length)) {
+      const hasLatest = wl && (wl.date || wl.grid.length || wl.words.length);
+      if (hasLatest) {
         set("wordle-latest-date", wl.date);
         set("wordle-latest-number", wl.number !== "" ? "#" + wl.number : "");
         set("wordle-latest-guesses", wl.guesses !== "" ? wl.guesses + " guesses" : "");
-        const grid = document.getElementById("wordle-latest-grid");
-        if (grid) {
-          grid.innerHTML = wl.grid.map((row, i) => {
-            const word = (wl.words && wl.words[i]) ? wl.words[i] : "";
-            return `<div class="wordle-grid-row">
-                ${word ? `<span class="wordle-guess-word">${word}</span>` : ""}
-                <span class="wordle-guess-squares">${row}</span>
-              </div>`;
-          }).join("");
+        const gridEl = document.getElementById("wordle-latest-grid");
+        if (gridEl) {
+          // Use emoji rows when available; fall back to word-only rows
+          const rows = wl.grid.length ? wl.grid : (wl.words || []).map(() => "");
+          gridEl.innerHTML =
+            `<p class="spoiler-hint" id="wordle-spoiler-hint">Click to reveal</p>` +
+            `<div class="spoiler" id="wordle-spoiler">` +
+            rows.map((emojiRow, i) => {
+              const word = wl.words?.[i] ?? "";
+              return `<div class="wordle-grid-row">
+                  ${word ? `<span class="wordle-guess-word">${word}</span>` : ""}
+                  ${emojiRow ? `<span class="wordle-guess-squares">${emojiRow}</span>` : ""}
+                </div>`;
+            }).join("") +
+            `</div>`;
+          document.getElementById("wordle-spoiler").addEventListener("click", function () {
+            this.classList.add("revealed");
+            document.getElementById("wordle-spoiler-hint").classList.add("hidden");
+          });
         }
       } else {
         const el = document.getElementById("wordle-latest");
@@ -349,8 +378,19 @@
         if (pts && bl.points !== "") pts.textContent = bl.points + " pts";
         if (wds && bl.wordsFound !== "") wds.textContent = bl.wordsFound + " words";
         const pgEl = document.getElementById("spellingbee-latest-pangram");
-        if (pgEl && bl.pangram) pgEl.textContent = bl.pangram.toUpperCase();
+        if (pgEl && bl.pangram) {
+          pgEl.textContent = bl.pangram.toUpperCase();
+          pgEl.classList.add("spoiler");
+          pgEl.title = "Click to reveal";
+          pgEl.addEventListener("click", function () { this.classList.add("revealed"); });
+        }
         buildHoneycomb(bl.centerLetter, bl.outerLetters);
+        const hive = document.getElementById("spellingbee-honeycomb");
+        if (hive && bl.centerLetter) {
+          hive.classList.add("spoiler");
+          hive.title = "Click to reveal";
+          hive.addEventListener("click", function () { this.classList.add("revealed"); });
+        }
       } else {
         const el = document.getElementById("spellingbee-latest");
         if (el) el.style.display = "none";
@@ -430,7 +470,157 @@
       });
     }
 
-    render();
+    // Fetch a single endpoint — returns parsed JSON or null on failure
+    async function fetchStat(path) {
+      try {
+        const res = await fetch(path);
+        return res.ok ? await res.json() : null;
+      } catch (e) {
+        console.warn(`Failed to load ${path}:`, e);
+        return null;
+      }
+    }
+
+    // Compute the Wordle emoji grid from the guess words.
+    // The last word in the array is always the answer (all green).
+    // Uses the standard two-pass algorithm to handle duplicate letters correctly:
+    //   pass 1 — mark greens and remove those letters from the answer pool
+    //   pass 2 — mark yellows (letter in pool) or gray (not in pool)
+    function computeWordleGrid(guesses) {
+      if (!Array.isArray(guesses) || guesses.length === 0) return [];
+      const answer = guesses[guesses.length - 1].toUpperCase().split("");
+
+      return guesses.map(rawGuess => {
+        const guess = rawGuess.toUpperCase().split("");
+        const result = Array(guess.length).fill("⬛");
+        const pool = [...answer]; // remaining unmatched answer letters
+
+        // Pass 1: greens
+        for (let i = 0; i < guess.length; i++) {
+          if (guess[i] === pool[i]) {
+            result[i] = "🟩";
+            pool[i] = null; // consumed
+          }
+        }
+
+        // Pass 2: yellows
+        for (let i = 0; i < guess.length; i++) {
+          if (result[i] === "🟩") continue;
+          const idx = pool.indexOf(guess[i]);
+          if (idx !== -1) {
+            result[i] = "🟨";
+            pool[idx] = null; // consumed
+          }
+        }
+
+        return result.join("");
+      });
+    }
+
+    // Decode Connections guesses into color arrays the page can render.
+    // Each guess row is [{position, level}, ...] — level maps to a color group:
+    //   0 = yellow, 1 = green, 2 = blue, 3 = purple
+    const CONN_LEVEL = ["yellow", "green", "blue", "purple"];
+
+    function computeConnectionsGrid(guesses) {
+      if (!Array.isArray(guesses) || guesses.length === 0) return [];
+      return guesses.map(row => row.map(tile => CONN_LEVEL[tile.level] ?? "yellow"));
+    }
+
+    // Format "2026-04-14" → "Apr 14, 2026"
+    function formatDate(iso) {
+      if (!iso) return "";
+      const d = new Date(iso + "T00:00:00");
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    }
+
+    async function loadApiStats() {
+      // Fetch all three endpoints in parallel
+      const [wordle, connections, spelling] = await Promise.all([
+        fetchStat("/api/nytstats/wordle"),
+        fetchStat("/api/nytstats/connect"),
+        fetchStat("/api/nytstats/spelling"),
+      ]);
+
+      if (wordle) {
+        // Extension sends { game, capturedAt, page, data: { ...stats... } }
+        const w = wordle.data || wordle;
+        const gd = w.guessDistribution || {};
+
+        if (w.played != null) NYT_STATS.wordle.played = String(w.played);
+        if (w.winPercent != null) NYT_STATS.wordle.winPct = String(w.winPercent);
+        if (w.currentStreak != null) NYT_STATS.wordle.streak = String(w.currentStreak);
+        if (w.maxStreak != null) NYT_STATS.wordle.maxStreak = String(w.maxStreak);
+        if (Object.keys(gd).length) NYT_STATS.wordle.dist = [1, 2, 3, 4, 5, 6].map(i => gd[i] ?? 0);
+
+        // Latest game — compute emoji grid from the guess words
+        const lg = w.latestGame || {};
+        if (w.lastWonPrintDate) NYT_STATS.wordle.latest.date = formatDate(w.lastWonPrintDate);
+        if (lg.guessCount != null) NYT_STATS.wordle.latest.guesses = String(lg.guessCount);
+        if (Array.isArray(lg.guesses) && lg.guesses.length) {
+          NYT_STATS.wordle.latest.words = lg.guesses;
+          NYT_STATS.wordle.latest.grid = computeWordleGrid(lg.guesses);
+        }
+      }
+
+      if (spelling) {
+        const b = spelling.data || spelling;
+        const ranks = b.ranks || {};
+        if (b.puzzlesStarted != null) NYT_STATS.spellingbee.puzzles = String(b.puzzlesStarted);
+        if (b.totalWords != null) NYT_STATS.spellingbee.words = String(b.totalWords);
+        if (b.totalPangrams != null) NYT_STATS.spellingbee.pangrams = String(b.totalPangrams);
+        if (Object.keys(ranks).length) {
+          NYT_STATS.spellingbee.geniuses = String((ranks["Genius"] ?? 0) + (ranks["Amazing"] ?? 0) + (ranks["Queen Bee"] ?? 0));
+          NYT_STATS.spellingbee.queenBees = String(ranks["Queen Bee"] ?? 0);
+        }
+        if (b.longestWord?.word) NYT_STATS.spellingbee.longestWord = b.longestWord.word;
+
+        // Latest game — populated from progress, letters, and pangrams
+        const prog = b.progress || {};
+        const letters = b.letters || {};
+        if (prog.printDate) NYT_STATS.spellingbee.latest.date = formatDate(prog.printDate);
+        if (prog.rank) NYT_STATS.spellingbee.latest.rank = prog.rank;
+        if (prog.score != null) NYT_STATS.spellingbee.latest.points = String(prog.score);
+        if (prog.foundCount != null) NYT_STATS.spellingbee.latest.wordsFound = String(prog.foundCount);
+        if (Array.isArray(b.pangrams) && b.pangrams.length) {
+          // Show pangrams found so far (comma-separated if multiple)
+          const found = b.pangrams.filter(p => prog.foundAnswers?.includes(p));
+          NYT_STATS.spellingbee.latest.pangram = (found.length ? found : b.pangrams)[0];
+        }
+        if (letters.center) NYT_STATS.spellingbee.latest.centerLetter = letters.center.toUpperCase();
+        if (Array.isArray(letters.outer) && letters.outer.length) {
+          NYT_STATS.spellingbee.latest.outerLetters = letters.outer.map(l => l.toUpperCase());
+        }
+      }
+
+      if (connections) {
+        const c = connections.data || connections;
+        // mistakeDistribution is the current field name; fall back to old mistakes field
+        const m = c.mistakeDistribution || c.mistakes || {};
+
+        if (c.puzzlesCompleted != null) NYT_STATS.connections.played = String(c.puzzlesCompleted);
+        if (c.winPercent != null) NYT_STATS.connections.winPct = String(c.winPercent);
+        if (c.currentStreak != null) NYT_STATS.connections.streak = String(c.currentStreak);
+        if (c.maxStreak != null) NYT_STATS.connections.maxStreak = String(c.maxStreak);
+        if (c.purpleFirstWins != null) NYT_STATS.connections.purpleFirst = String(c.purpleFirstWins);
+        // perfectPuzzles is now its own top-level field; fall back to mistakeDistribution["0"]
+        const perfect = c.perfectPuzzles ?? m["0"];
+        if (perfect != null) NYT_STATS.connections.perfectSolves = String(perfect);
+        if (Object.keys(m).length) NYT_STATS.connections.mistakeDist = [0, 1, 2, 3, 4].map(i => m[String(i)] ?? 0);
+
+        // Latest game — decode guesses into color grid
+        const lg = c.latestGame || {};
+        if (lg.printDate) NYT_STATS.connections.latest.date = formatDate(lg.printDate);
+        if (lg.puzzleId) NYT_STATS.connections.latest.number = String(lg.puzzleId);
+        if (lg.solved != null) NYT_STATS.connections.latest.result = lg.solved ? "solved" : "failed";
+        if (lg.mistakes != null) NYT_STATS.connections.latest.mistakes = String(lg.mistakes);
+        if (Array.isArray(lg.guesses) && lg.guesses.length) {
+          NYT_STATS.connections.latest.grid = computeConnectionsGrid(lg.guesses);
+        }
+      }
+    }
+
+    loadApiStats().then(render);
   </script>
 </body>
 

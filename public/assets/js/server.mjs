@@ -27,6 +27,10 @@ const PATHS = {
     "../../../public/assets/data/visitorCount.json",
   ),
   CLICK_COUNT: join(__dirname, "../../../public/assets/data/clickCount.json"),
+  NYT_DATA_DIR: join(__dirname, "../../../public/assets/data"),
+  NYT_WORDLE: join(__dirname, "../../../public/assets/data/nyt-wordle.json"),
+  NYT_CONNECTIONS: join(__dirname, "../../../public/assets/data/nyt-connections.json"),
+  NYT_SPELLINGBEE: join(__dirname, "../../../public/assets/data/nyt-spellingbee.json"),
 };
 
 // ======================== SHARED MIDDLEWARE ========================
@@ -189,13 +193,70 @@ class RateLimiter {
   }
 }
 
+const debugLogger = (req, res, next) => {
+  if (
+    req.path === "/videos/video.mp4" ||
+    req.path.startsWith("/assets")
+  ) {
+    return next();
+  }
+
+  const realIp =
+    req.headers["cf-connecting-ip"] ||
+    req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
+    req.socket.remoteAddress ||
+    "unknown";
+
+  const realIpv6 = req.headers["cf-connecting-ipv6"] || null;
+  const pseudoIpv4 = req.headers["cf-pseudo-ipv4"] || null;
+
+  console.log(`
+=========== [DEBUG VISITOR] ===========
+Real IP: ${realIp}
+IPv6 Header: ${realIpv6}
+Pseudo IPv4: ${pseudoIpv4}
+Country: ${req.headers["cf-ipcountry"] || null}
+Region: ${req.headers["cf-region"] || null} (${req.headers["cf-region-code"] || null})
+City: ${req.headers["cf-ipcity"] || null}
+Timezone: ${req.headers["cf-timezone"] || null}
+Lat/Lon (CF): ${req.headers["cf-iplatitude"] || null}, ${req.headers["cf-iplongitude"] || null}
+Postal Code: ${req.headers["cf-postal-code"] || null}
+Metro Code: ${req.headers["cf-metro-code"] || null}
+CF-Ray: ${req.headers["cf-ray"] || null}
+======================================
+`);
+
+  if (realIp !== "unknown" && realIp !== "::1" && realIp !== "127.0.0.1") {
+    fetch(`http://ip-api.com/json/${realIp}?fields=status,country,regionName,city,zip,lat,lon,isp,org,as,query`)
+      .then((r) => r.json())
+      .then((geo) => {
+        if (geo.status === "success") {
+          console.log(`
+=========== [IP-API GEO: ${realIp}] ===========
+Country: ${geo.country}
+Region: ${geo.regionName}
+City: ${geo.city}
+ZIP: ${geo.zip}
+Lat/Lon: ${geo.lat}, ${geo.lon}
+ISP: ${geo.isp}
+Org: ${geo.org}
+AS: ${geo.as}
+=============================================
+`);
+        }
+      })
+      .catch(() => {});
+  }
+
+  next();
+};
+
 const requestLogger = (req, res, next) => {
   const start = Date.now();
   res.on("finish", () => {
     const duration = Date.now() - start;
     console.log(
-      `[${new Date().toISOString()}] ${req.method} ${req.path} - ${
-        res.statusCode
+      `[${new Date().toISOString()}] ${req.method} ${req.path} - ${res.statusCode
       } (${duration}ms)`,
     );
   });
@@ -286,10 +347,10 @@ function createMainServer() {
   app.get("/", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "sites/index.html")),
   );
-   app.get("/change", pageCache, (req, res) =>
+  app.get("/change", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html")),
   );
-   app.get("/nytgames", pageCache, (req, res) =>
+  app.get("/nytgames", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "sites/nytgames.html")),
   );
   app.get("/github", pageCache, (req, res) =>
@@ -312,6 +373,100 @@ function createMainServer() {
     res.set("Cache-Control", "public, max-age=86400");
     res.sendFile(join(PATHS.ASSETS, "resume/resume.png"));
   });
+
+  // ======================== NYT STATS ROUTES ========================
+  // Ensure data directory exists on first use
+  fs.mkdirSync(PATHS.NYT_DATA_DIR, { recursive: true });
+
+  // Shared helper — validates body, logs, writes to disk, responds
+  function saveNytJson(filePath, game, req, res) {
+    const body = req.body;
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return res.status(400).json({ ok: false, error: "Invalid payload" });
+    }
+    const timestamp = new Date().toISOString();
+    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    console.log(`📊 NYT ${game} Stats Received`);
+    console.log("  Timestamp:", timestamp);
+    console.log("  IP:", ip);
+    console.log("  Body:", JSON.stringify(body, null, 2));
+    fs.writeFileSync(filePath, JSON.stringify(body, null, 2));
+    res.json({ ok: true, saved: game });
+  }
+
+  // Shared helper — reads a JSON file safely, returns parsed object or null
+  function readNytJson(filePath) {
+    if (!fs.existsSync(filePath)) return null;
+    const raw = fs.readFileSync(filePath, "utf8").trim();
+    if (!raw) return null;
+    return JSON.parse(raw); // let caller catch parse errors
+  }
+
+  // GET routes — serve saved JSON files to the frontend
+  app.get("/api/nytstats/wordle", (_req, res) => {
+    try {
+      const data = readNytJson(PATHS.NYT_WORDLE);
+      if (!data) return res.status(404).json({ ok: false, error: "No data yet" });
+      res.set("Cache-Control", "no-cache");
+      res.json(data);
+    } catch (err) {
+      console.error("[NYT Wordle] GET error:", err);
+      res.status(500).json({ ok: false, error: "Failed to read" });
+    }
+  });
+
+  app.get("/api/nytstats/connect", (_req, res) => {
+    try {
+      const data = readNytJson(PATHS.NYT_CONNECTIONS);
+      if (!data) return res.status(404).json({ ok: false, error: "No data yet" });
+      res.set("Cache-Control", "no-cache");
+      res.json(data);
+    } catch (err) {
+      console.error("[NYT Connections] GET error:", err);
+      res.status(500).json({ ok: false, error: "Failed to read" });
+    }
+  });
+
+  app.get("/api/nytstats/spelling", (_req, res) => {
+    try {
+      const data = readNytJson(PATHS.NYT_SPELLINGBEE);
+      if (!data) return res.status(404).json({ ok: false, error: "No data yet" });
+      res.set("Cache-Control", "no-cache");
+      res.json(data);
+    } catch (err) {
+      console.error("[NYT Spelling Bee] GET error:", err);
+      res.status(500).json({ ok: false, error: "Failed to read" });
+    }
+  });
+
+  // POST routes — receive data from the Chrome extension
+  app.post("/api/nytstats/wordle", (req, res) => {
+    try {
+      saveNytJson(PATHS.NYT_WORDLE, "wordle", req, res);
+    } catch (err) {
+      console.error("[NYT Wordle] POST error:", err);
+      res.status(500).json({ ok: false, error: "Server error" });
+    }
+  });
+
+  app.post("/api/nytstats/connect", (req, res) => {
+    try {
+      saveNytJson(PATHS.NYT_CONNECTIONS, "connections", req, res);
+    } catch (err) {
+      console.error("[NYT Connections] POST error:", err);
+      res.status(500).json({ ok: false, error: "Server error" });
+    }
+  });
+
+  app.post("/api/nytstats/spelling", (req, res) => {
+    try {
+      saveNytJson(PATHS.NYT_SPELLINGBEE, "spelling", req, res);
+    } catch (err) {
+      console.error("[NYT Spelling Bee] POST error:", err);
+      res.status(500).json({ ok: false, error: "Server error" });
+    }
+  });
+  // =================================================================
 
   app.use(errorHandler);
   app.listen(PORTS.MAIN, () =>
@@ -388,9 +543,6 @@ function createGayServer() {
   app.use(corsMiddleware);
   app.use(requestLogger);
 
-  const apiLimiter = new RateLimiter(60000, 20);
-  const postLimiter = new RateLimiter(60000, 1);
-
   app.use("/assets", createStaticMiddleware());
   app.use(
     "/assets/videos",
@@ -408,7 +560,6 @@ function createGayServer() {
     "/api/token",
     userAgentCheckMiddleware,
     referrerCheckMiddleware,
-    apiLimiter.middleware(),
     (req, res) => {
       const token = generateSessionToken();
       sessionTokens.set(token, {
@@ -423,7 +574,6 @@ function createGayServer() {
     "/api/clicks",
     userAgentCheckMiddleware,
     referrerCheckMiddleware,
-    apiLimiter.middleware(),
     (req, res, next) => {
       try {
         const clicks = clickCounter.get();
@@ -442,8 +592,6 @@ function createGayServer() {
     "/api/addclicks",
     userAgentCheckMiddleware,
     referrerCheckMiddleware,
-    postLimiter.middleware(),
-    antiBotMiddleware,
     (req, res, next) => {
       try {
         const clicks = clickCounter.increment();
@@ -463,7 +611,6 @@ function createGayServer() {
     "/api/visits",
     userAgentCheckMiddleware,
     referrerCheckMiddleware,
-    apiLimiter.middleware(),
     (req, res, next) => {
       try {
         const visits = visitorCounter.get();
@@ -482,8 +629,6 @@ function createGayServer() {
     "/api/addvisits",
     userAgentCheckMiddleware,
     referrerCheckMiddleware,
-    postLimiter.middleware(),
-    antiBotMiddleware,
     (req, res, next) => {
       try {
         const visits = visitorCounter.increment();
@@ -511,7 +656,7 @@ function createGayServer() {
     });
   });
 
-  app.get("/", (req, res) => {
+  app.get("/", debugLogger, (req, res) => {
     res.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
     res.sendFile(join(PATHS.PUBLIC, "sites/gay.html"));
   });

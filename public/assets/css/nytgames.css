@@ -377,6 +377,38 @@
   flex-shrink: 0;
 }
 
+/* Spoiler blur */
+.spoiler {
+  filter: blur(6px);
+  cursor: pointer;
+  transition: filter 0.3s ease;
+  user-select: none;
+}
+
+.spoiler.revealed {
+  filter: none;
+  cursor: default;
+  user-select: auto;
+}
+
+.spoiler-wrap {
+  position: relative;
+}
+
+.spoiler-hint {
+  font-size: 0.72rem;
+  color: var(--secondary);
+  text-align: center;
+  margin-bottom: 0.4rem;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.spoiler-hint.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .nyt-grid {
