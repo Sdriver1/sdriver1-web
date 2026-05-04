@@ -340,20 +340,15 @@
           // Use emoji rows when available; fall back to word-only rows
           const rows = wl.grid.length ? wl.grid : (wl.words || []).map(() => "");
           gridEl.innerHTML =
-            `<p class="spoiler-hint" id="wordle-spoiler-hint">Click to reveal</p>` +
-            `<div class="spoiler" id="wordle-spoiler">` +
+            `<p class="spoiler-hint" id="wordle-spoiler-hint">Click words to reveal</p>` +
             rows.map((emojiRow, i) => {
               const word = wl.words?.[i] ?? "";
               return `<div class="wordle-grid-row">
-                  ${word ? `<span class="wordle-guess-word">${word}</span>` : ""}
+                  ${word ? `<span class="wordle-guess-word spoiler" onclick="this.classList.add('revealed')">${word}</span>` : ""}
                   ${emojiRow ? `<span class="wordle-guess-squares">${emojiRow}</span>` : ""}
                 </div>`;
-            }).join("") +
-            `</div>`;
-          document.getElementById("wordle-spoiler").addEventListener("click", function () {
-            this.classList.add("revealed");
-            document.getElementById("wordle-spoiler-hint").classList.add("hidden");
-          });
+            }).join("");
+
         }
       } else {
         const el = document.getElementById("wordle-latest");
