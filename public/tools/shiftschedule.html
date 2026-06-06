@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shift Schedule Maker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tools/shiftschedule.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <div class="header-logo">Shift Schedule Maker</div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle between light and dark theme">
+          <span id="theme-icon"> </span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Live Tracker -->
+      <section class="live-tracker-section">
+        <div class="tracker-card" id="trackerCard">
+          <div class="tracker-clock" id="trackerClock">--:-- --</div>
+          <div class="tracker-status" id="trackerStatus">No shift loaded</div>
+          <div class="tracker-detail" id="trackerDetail">Configure your shift below to get started</div>
+          <div class="tracker-progress-wrap" id="progressWrap" style="display:none">
+            <div class="tracker-progress-bar" id="progressBar"></div>
+          </div>
+          <div class="tracker-next" id="trackerNext"></div>
+        </div>
+      </section>
+
+      <div class="layout-columns">
+        <!-- Setup Panel -->
+        <aside class="setup-panel">
+
+          <!-- Shift Hours -->
+          <div class="setup-block">
+            <div class="setup-block-title">Shift Hours</div>
+            <div class="time-inputs">
+              <div>
+                <label for="shiftStart">Start</label>
+                <input type="time" id="shiftStart" />
+              </div>
+              <div>
+                <label for="shiftEnd">End</label>
+                <input type="time" id="shiftEnd" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Rotation Spots -->
+          <div class="setup-block">
+            <div class="setup-block-title">Rotation Spots</div>
+            <div id="spotsList"></div>
+            <form id="addSpotForm" class="add-spot-form">
+              <div class="add-spot-row">
+                <input type="text" id="spotName" class="spot-name-input" placeholder="Spot name (e.g. Main 1)" required />
+                <div class="spot-dur-group">
+                  <input type="number" id="spotDuration" class="spot-dur-input" placeholder="15" min="1" max="999" required />
+                  <span class="dur-unit">min</span>
+                </div>
+                <button type="submit" class="btn-add">Add</button>
+              </div>
+              <label class="checkbox-label spot-break-toggle">
+                <input type="checkbox" id="spotIsBreak" />
+                <span class="checkbox-custom"></span>
+                Mark as Break
+              </label>
+            </form>
+            <div class="rotation-summary" id="rotationSummary"></div>
+          </div>
+
+          <button class="btn-danger" id="clearSpots" style="display:none">Clear All Spots</button>
+        </aside>
+
+        <!-- Schedule Panel -->
+        <section class="schedule-section">
+          <div class="schedule-section-header">
+            <div class="setup-block-title" style="margin-bottom:0">Schedule</div>
+            <div class="schedule-meta" id="scheduleMeta"></div>
+          </div>
+          <div class="schedule-empty" id="scheduleEmpty">Add spots and set shift hours to generate your schedule.</div>
+          <div id="scheduleOutput"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="../assets/js/tools/shiftschedule.js"></script>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-left">
+        &copy; 2025 Steven Driver. All Rights Reserved.
+      </div>
+      <div class="footer-right">
+        <a href="https://bsky.app/profile/sdriver1.me" target="_blank" title="Bluesky">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/bluesky.svg" alt="Bluesky" class="footer-icon" />
+        </a>
+        <a href="https://discord.com/users/691506668781174824" target="_blank" title="Discord">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord" class="footer-icon" />
+        </a>
+        <a href="mailto:sdriver@sdriver1.me" title="Email">
+          <img id="icon-email" alt="Email" class="footer-icon" />
+        </a>
+        <a href="https://github.com/Sdriver1" target="_blank" title="GitHub">
+          <img id="icon-github" alt="GitHub" class="footer-icon" />
+        </a>
+        <a href="https://www.instagram.com/sdriver_1/" target="_blank" title="Instagram">
+          <img src="../assets/svg/instagram.svg" alt="Instagram" class="footer-icon" />
+        </a>
+        <a href="https://sdriver1.me/linkedin" target="_blank" title="LinkedIn">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" class="footer-icon" />
+        </a>
+        <a href="https://twitch.tv/sdriver1" target="_blank" title="Twitch">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg" alt="Twitch" class="footer-icon" />
+        </a>
+        <a href="https://x.com/sdriver_1" target="_blank" title="Twitter / X">
+          <img id="icon-x" alt="X" class="footer-icon" />
+        </a>
+        <a href="https://www.youtube.com/@sdriver_1" target="_blank" title="YouTube">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube" class="footer-icon" />
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  </body>
+</html>

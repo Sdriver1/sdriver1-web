@@ -17,6 +17,7 @@ const PORTS = {
   NIGHTWING: 6969,
   GAMES: 8087,
   BLOGS: 8088,
+  TOOLS: 8089,
 };
 
 const PATHS = {
@@ -193,64 +194,6 @@ class RateLimiter {
   }
 }
 
-const debugLogger = (req, res, next) => {
-  if (
-    req.path === "/videos/video.mp4" ||
-    req.path.startsWith("/assets")
-  ) {
-    return next();
-  }
-
-  const realIp =
-    req.headers["cf-connecting-ip"] ||
-    req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
-    req.socket.remoteAddress ||
-    "unknown";
-
-  const realIpv6 = req.headers["cf-connecting-ipv6"] || null;
-  const pseudoIpv4 = req.headers["cf-pseudo-ipv4"] || null;
-
-  console.log(`
-=========== [DEBUG VISITOR] ===========
-Real IP: ${realIp}
-IPv6 Header: ${realIpv6}
-Pseudo IPv4: ${pseudoIpv4}
-Country: ${req.headers["cf-ipcountry"] || null}
-Region: ${req.headers["cf-region"] || null} (${req.headers["cf-region-code"] || null})
-City: ${req.headers["cf-ipcity"] || null}
-Timezone: ${req.headers["cf-timezone"] || null}
-Lat/Lon (CF): ${req.headers["cf-iplatitude"] || null}, ${req.headers["cf-iplongitude"] || null}
-Postal Code: ${req.headers["cf-postal-code"] || null}
-Metro Code: ${req.headers["cf-metro-code"] || null}
-CF-Ray: ${req.headers["cf-ray"] || null}
-======================================
-`);
-
-  if (realIp !== "unknown" && realIp !== "::1" && realIp !== "127.0.0.1") {
-    fetch(`http://ip-api.com/json/${realIp}?fields=status,country,regionName,city,zip,lat,lon,isp,org,as,query`)
-      .then((r) => r.json())
-      .then((geo) => {
-        if (geo.status === "success") {
-          console.log(`
-=========== [IP-API GEO: ${realIp}] ===========
-Country: ${geo.country}
-Region: ${geo.regionName}
-City: ${geo.city}
-ZIP: ${geo.zip}
-Lat/Lon: ${geo.lat}, ${geo.lon}
-ISP: ${geo.isp}
-Org: ${geo.org}
-AS: ${geo.as}
-=============================================
-`);
-        }
-      })
-      .catch(() => {});
-  }
-
-  next();
-};
-
 const requestLogger = (req, res, next) => {
   const start = Date.now();
   res.on("finish", () => {
@@ -346,9 +289,6 @@ function createMainServer() {
   };
   app.get("/", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "sites/index.html")),
-  );
-  app.get("/change", pageCache, (req, res) =>
-    res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html")),
   );
   app.get("/nytgames", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "sites/nytgames.html")),
@@ -539,9 +479,7 @@ function createImageServer() {
 function createGayServer() {
   const app = express();
   app.use(express.json());
-
   app.use(corsMiddleware);
-  app.use(requestLogger);
 
   app.use("/assets", createStaticMiddleware());
   app.use(
@@ -656,7 +594,7 @@ function createGayServer() {
     });
   });
 
-  app.get("/", debugLogger, (req, res) => {
+  app.get("/", (req, res) => {
     res.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
     res.sendFile(join(PATHS.PUBLIC, "sites/gay.html"));
   });
@@ -772,6 +710,33 @@ function createBlogsServer() {
   );
 }
 
+// ======================== SERVER 8: TOOLS SITE (tools.sdriver1.me) ========================
+function createToolsServer() {
+  const app = express();
+  app.use(corsMiddleware);
+  app.use(requestLogger);
+  app.use("/assets", createStaticMiddleware());
+
+  app.get("/", (req, res) => {
+    res.set("Cache-Control", "public, max-age=3600");
+    res.sendFile(join(PATHS.PUBLIC, "tools/index.html"));
+  });
+
+  app.get("/shift", (req, res) => {
+    res.set("Cache-Control", "public, max-age=3600");
+    res.sendFile(join(PATHS.PUBLIC, "tools/shiftschedule.html"));
+  });
+  app.get("/change", (req, res) => {
+    res.set("Cache-Control", "public, max-age=3600");
+    res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html"));
+  });
+
+  app.use(errorHandler);
+  app.listen(PORTS.TOOLS, () =>
+    console.log(`Tools server running on port ${PORTS.TOOLS}`),
+  );
+}
+
 // ======================== START ALL SERVERS ========================
 createMainServer();
 createRitServer();
@@ -779,4 +744,5 @@ createImageServer();
 createGayServer();
 createNightwingServer();
 createGamesServer();
+createToolsServer();
 createBlogsServer();
