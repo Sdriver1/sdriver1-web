@@ -1,19 +1,33 @@
 /* === Variables === */
 :root {
   --primary: #4f46e5;
+  --primary-hover: #4338ca;
   --secondary: #6b7280;
   --bg: #f9fafb;
+  --bg-secondary: #eef0f4;
   --header-bg: #ffffff;
   --text: #111827;
+  --text-secondary: #6b7280;
   --card-bg: #ffffff;
+  --border: #e5e7eb;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
 }
 [data-theme="dark"] {
   --primary: #9eb3ff;
+  --primary-hover: #b6c5ff;
   --secondary: #9ca3af;
   --bg: #18191f;
+  --bg-secondary: #1f2129;
   --header-bg: #242731;
   --text: #d1d5db;
+  --text-secondary: #9ca3af;
   --card-bg: #242731;
+  --border: #374151;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.45);
 }
 
 /* === Global Reset === */
@@ -1036,4 +1050,176 @@ footer {
     max-width: 280px;
     text-align: center;
   }
+}
+
+/* === Featured project (Pridebot) === */
+@media (min-width: 768px) {
+  .project-card.featured {
+    grid-column: 1 / -1;
+  }
+}
+.project-card.featured {
+  border-left: 4px solid var(--primary);
+}
+.project-card.featured h3 {
+  font-size: 1.5rem;
+}
+.project-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.project-stat {
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+}
+.project-stat-value {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+.project-stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.project-private {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.project-card code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.05em 0.35em;
+  border-radius: 0.25rem;
+  background: var(--bg-secondary);
+}
+
+/* === Resume & Certifications (two-column) === */
+.resume-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+@media (min-width: 800px) {
+  .resume-layout {
+    grid-template-columns: minmax(260px, 1fr) 1.6fr;
+    align-items: start;
+  }
+}
+.resume-card,
+.cert-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem;
+}
+.resume-card {
+  border-top: 4px solid var(--primary);
+}
+.resume-icon {
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-bottom: 1rem;
+}
+.resume-card h3 {
+  font-size: 1.3rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.resume-card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.resume-btn {
+  display: inline-block;
+  padding: 0.6rem 1.3rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+.resume-btn:hover {
+  transform: translateY(-2px);
+}
+.resume-btn.primary {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+}
+.resume-btn.secondary {
+  border: 1px solid var(--border);
+  color: var(--primary);
+}
+.resume-btn.secondary:hover {
+  border-color: var(--primary);
+}
+.cert-panel-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+.cert-rows + .cert-panel-label {
+  margin-top: 1.5rem;
+}
+.cert-rows {
+  list-style: none;
+}
+.cert-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.cert-rows .cert-row:last-child {
+  border-bottom: none;
+}
+.cert-row-text {
+  display: flex;
+  flex-direction: column;
+}
+.cert-row-title {
+  font-weight: 600;
+  color: var(--primary);
+}
+.cert-row-issuer {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.cert-row-link {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: none;
+}
+.cert-row-link:hover {
+  text-decoration: underline;
 }

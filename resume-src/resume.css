@@ -1,0 +1,98 @@
+@page { size: Letter; margin: 0.5in 0.6in; }
+
+:root {
+  --navy: #1f3864;
+  --gray: #595959;
+  --ink: #000000;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 10.5pt;
+  line-height: 1.28;
+  color: var(--ink);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+header { text-align: center; }
+
+h1 {
+  margin: 0 0 4pt;
+  font-size: 23pt;
+  font-weight: bold;
+  letter-spacing: 1pt;
+  color: var(--navy);
+}
+
+.contact {
+  margin: 0 0 10pt;
+  font-size: 10pt;
+}
+
+.rule {
+  border: 0;
+  border-top: 1.2pt solid var(--navy);
+  margin: 0 0 9pt;
+}
+
+h2 {
+  margin: 9pt 0 0;
+  padding-bottom: 1pt;
+  border-bottom: 1pt solid var(--navy);
+  font-size: 10.5pt;
+  font-weight: bold;
+  letter-spacing: 0.3pt;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.entry {
+  /* 5pt not 6pt: the tech resume runs to the bottom of page 1 and resume.sh
+     refuses to publish a 2-page render. This is the slack that keeps it fitting. */
+  margin-top: 5pt;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12pt;
+}
+
+.entry .role { font-weight: bold; }
+.entry .org { color: var(--gray); }
+.entry .sep { color: var(--gray); font-weight: normal; }
+
+.date {
+  font-style: italic;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.subline {
+  font-style: italic;
+  color: var(--ink);
+  margin: 0;
+}
+
+ul {
+  margin: 2pt 0 0;
+  padding-left: 20pt;
+}
+
+li { margin: 0 0 1.5pt; }
+
+.objective { margin: 0 0 2pt; }
+
+.skills p { margin: 4pt 0 0; }
+.skills strong { font-weight: bold; }
+
+.portfolio p { margin: 4pt 0 0; font-size: 10pt; }
+
+/* Links are clickable in the PDF but keep the printed appearance —
+   no blue, no underline. Chrome only emits /URI annotations for real <a>. */
+a {
+  color: inherit;
+  text-decoration: none;
+}

@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Steven Driver | Games Portal</title>
 
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="icon" href="/assets/svg/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -39,26 +41,10 @@
           role="navigation"
           aria-label="Main navigation"
         >
-          <a
-            href="https://games.sdriver1.me/minesweeper"
-            aria-label="Extracurriculars section"
-            >Minesweeper</a
-          >
-          <a
-            href="https://games.sdriver1.me/sudoku"
-            aria-label="Extracurriculars section"
-            >Sudoku</a
-          >
-          <a
-            href="https://games.sdriver1.me/snake"
-            aria-label="Extracurriculars section"
-            >Snake</a
-          >
-          <a
-            href="https://games.sdriver1.me/2048"
-            aria-label="Extracurriculars section"
-            >2048</a
-          >
+          <a href="https://games.sdriver1.me/minesweeper">Minesweeper</a>
+          <a href="https://games.sdriver1.me/sudoku">Sudoku</a>
+          <a href="https://games.sdriver1.me/snake">Snake</a>
+          <a href="https://games.sdriver1.me/2048">2048</a>
           <button
             class="theme-toggle"
             id="theme-toggle"
@@ -73,21 +59,18 @@
     <main>
       <div class="games-container">
         <h1 class="section-title">🎮 Games Portal</h1>
+        <p class="section-subtitle">
+          Four browser classics, rebuilt to play properly &mdash; keyboard,
+          mouse, and touch.
+        </p>
 
         <div class="games-grid">
-          <!-- Minesweeper Game Card -->
-          <div class="game-card" onclick="window.location.href='/minesweeper'">
+          <a class="game-card" href="/minesweeper">
             <div class="game-icon">
-              <img
-                src="../assets/svg/minesweeper-icon.svg"
-                alt="Minesweeper Icon"
-              />
+              <img src="../assets/svg/minesweeper-icon.svg" alt="" aria-hidden="true" />
             </div>
-            <h3 class="game-title">Minesweeper</h3>
-            <p class="game-description">
-              The classic mine detection game. Click to reveal squares and use
-              logic to avoid the hidden mines!
-            </p>
+            <h2 class="game-title">Minesweeper</h2>
+            <p class="game-description">The classic mine detection game. Reveal squares, flag the mines, and chord your way through with pure logic.</p>
             <div class="game-stats">
               <div class="stat-item">
                 <span class="stat-number">3</span>
@@ -102,44 +85,38 @@
                 <span>Puzzle</span>
               </div>
             </div>
-            <button class="play-button">Play Minesweeper</button>
-          </div>
+            <span class="play-button">Play Minesweeper</span>
+          </a>
 
-            <!-- Snake Game Card -->
-            <div class="game-card" onclick="window.location.href='/snake'">
-              <div class="game-icon">
-                <img src="../assets/svg/snake-icon.svg" alt="Snake Icon" />
-              </div>
-              <h3 class="game-title">Snake</h3>
-              <p class="game-description">
-                Control the snake to eat food, grow longer, and avoid crashing into yourself or the walls!
-              </p>
-              <div class="game-stats">
-                <div class="stat-item">
-                  <span class="stat-number">Classic</span>
-                  <span>Arcade</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-number">Grid</span>
-                  <span>Based</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-number">Skill</span>
-                  <span>Game</span>
-                </div>
-              </div>
-              <button class="play-button">Play Snake</button>
-            </div>
-          <!-- Sudoku Game Card -->
-          <div class="game-card" onclick="window.location.href='/sudoku'">
+          <a class="game-card" href="/snake">
             <div class="game-icon">
-              <img src="../assets/svg/sudoku-icon.svg" alt="Sudoku Icon" />
+              <img src="../assets/svg/snake-icon.svg" alt="" aria-hidden="true" />
             </div>
-            <h3 class="game-title">Sudoku</h3>
-            <p class="game-description">
-              Fill the 9×9 grid with digits so that each column, row, and 3×3
-              section contains numbers 1-9.
-            </p>
+            <h2 class="game-title">Snake</h2>
+            <p class="game-description">Steer the snake to eat apples, grow longer, and avoid crashing into yourself or the walls.</p>
+            <div class="game-stats">
+              <div class="stat-item">
+                <span class="stat-number">Classic</span>
+                <span>Arcade</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">Grid</span>
+                <span>Based</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">Skill</span>
+                <span>Game</span>
+              </div>
+            </div>
+            <span class="play-button">Play Snake</span>
+          </a>
+
+          <a class="game-card" href="/sudoku">
+            <div class="game-icon">
+              <img src="../assets/svg/sudoku-icon.svg" alt="" aria-hidden="true" />
+            </div>
+            <h2 class="game-title">Sudoku</h2>
+            <p class="game-description">Fill the 9×9 grid so every column, row, and 3×3 box contains the numbers 1&ndash;9. Pencil marks included.</p>
             <div class="game-stats">
               <div class="stat-item">
                 <span class="stat-number">4</span>
@@ -154,19 +131,15 @@
                 <span>Puzzle</span>
               </div>
             </div>
-            <button class="play-button">Play Sudoku</button>
-          </div>
+            <span class="play-button">Play Sudoku</span>
+          </a>
 
-          <!-- 2048 Game Card -->
-          <div class="game-card" onclick="window.location.href='/2048'">
+          <a class="game-card" href="/2048">
             <div class="game-icon">
-              <img src="../assets/svg/2048-icon.svg" alt="2048 Icon" />
+              <img src="../assets/svg/2048-icon.svg" alt="" aria-hidden="true" />
             </div>
-            <h3 class="game-title">2048</h3>
-            <p class="game-description">
-              Slide numbered tiles on a grid to combine them and create a tile
-              with the number 2048!
-            </p>
+            <h2 class="game-title">2048</h2>
+            <p class="game-description">Slide numbered tiles to combine them and build your way up to a 2048 tile.</p>
             <div class="game-stats">
               <div class="stat-item">
                 <span class="stat-number">4x4</span>
@@ -181,8 +154,9 @@
                 <span>Game</span>
               </div>
             </div>
-            <button class="play-button">Play 2048</button>
-          </div>
+            <span class="play-button">Play 2048</span>
+          </a>
+
         </div>
       </div>
     </main>

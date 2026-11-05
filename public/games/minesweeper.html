@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minesweeper | Steven Driver Games</title>
 
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="icon" href="/assets/svg/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -54,24 +56,54 @@
         <h1 class="game-title">💣 Minesweeper</h1>
         <p class="game-subtitle"></p>
         <div class="game-controls">
-          <select id="difficulty" class="difficulty-select">
+          <select
+            id="difficulty"
+            class="difficulty-select"
+            aria-label="Select difficulty"
+          >
             <option value="easy">Easy (9x9, 10 mines)</option>
             <option value="medium">Medium (16x16, 40 mines)</option>
             <option value="hard">Hard (30x16, 99 mines)</option>
           </select>
           <button onclick="newGame()" class="new-game-btn">New Game</button>
+          <button
+            id="flag-mode-btn"
+            class="flag-mode-btn"
+            type="button"
+            aria-pressed="false"
+          >
+            🚩 Flag mode
+          </button>
         </div>
 
         <div class="game-info">
           <div>Mines: <span id="mine-count">10</span></div>
-          <div>Time: <span id="timer">0</span>s</div>
-          <div>Best: <span id="best-time">--</span></div>
+          <div>Time: <span id="timer">00:00</span></div>
+          <div>Best: <span id="best-time">--:--</span></div>
+          <div class="touch-only">Tap: <span id="flag-mode-state">Reveal</span></div>
           <div>Status: <span id="game-status">Playing</span></div>
         </div>
 
-        <div id="minesweeper-grid" class="minesweeper-grid"></div>
+        <div class="board-scroll">
+          <div id="minesweeper-grid" class="minesweeper-grid"></div>
+        </div>
 
-        <div id="status-message" class="game-status"></div>
+        <div
+          id="status-message"
+          class="game-status"
+          role="status"
+          aria-live="polite"
+        ></div>
+
+        <div class="instructions">
+          Left click reveals &middot; right click flags &middot; click a
+          revealed number (or middle click) to clear its neighbours once you've
+          flagged that many mines. <kbd>R</kbd> starts a new game.
+          <span class="touch-only-inline">
+            On touch, tap to reveal and long press to flag &mdash; or switch on
+            Flag mode to flag with a single tap.
+          </span>
+        </div>
       </div>
     </main>
 

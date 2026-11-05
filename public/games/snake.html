@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snake | Steven Driver Games</title>
 
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="icon" href="/assets/svg/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -76,8 +78,16 @@
             <option value="hard">Hard (30x24, fast)</option>
           </select>
           <button id="newGameBtn" class="new-game-btn">New Game</button>
+          <button id="pauseBtn" class="pause-btn">Pause</button>
           <div class="settings-container">
-            <button id="settingsBtn" class="settings-btn">Settings</button>
+            <button
+              id="settingsBtn"
+              class="settings-btn"
+              aria-expanded="false"
+              aria-controls="settingsDropdown"
+            >
+              Settings
+            </button>
             <div
               id="settingsDropdown"
               class="settings-dropdown"
@@ -111,6 +121,7 @@
 
         <div class="game-info">
           <div>Score: <span id="score">0</span></div>
+          <div>Best: <span id="best">--</span></div>
           <div>Speed: <span id="speedLabel">Normal</span></div>
           <div>Status: <span id="status">Ready</span></div>
         </div>
@@ -119,7 +130,12 @@
           <canvas id="snakeCanvas" width="400" height="320"></canvas>
         </div>
 
-        <div id="status-message" class="game-status"></div>
+        <div id="status-message" class="game-status" role="status" aria-live="polite"></div>
+
+        <div class="instructions">
+          Arrow keys or WASD to steer &middot; Space to pause &middot; swipe on
+          the board to steer on mobile, tap to pause.
+        </div>
       </div>
     </main>
 
