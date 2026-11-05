@@ -70,7 +70,8 @@
 }
 
 .difficulty-select,
-.new-game-btn {
+.new-game-btn,
+.pause-btn {
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 8px;
@@ -91,8 +92,24 @@
   color: white;
 }
 
-.new-game-btn:hover {
+.pause-btn {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.new-game-btn:hover,
+.pause-btn:hover,
+.settings-btn:hover {
   transform: translateY(-2px);
+}
+
+.new-game-btn:focus-visible,
+.pause-btn:focus-visible,
+.settings-btn:focus-visible,
+.difficulty-select:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .game-info {
@@ -107,14 +124,20 @@
 
 .snake-canvas-wrapper {
   display: inline-block;
+  max-width: 100%;
   background: var(--card-bg);
   padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
 }
 
 canvas {
   display: block;
+  /* Scale down on narrow screens without touching the pixel grid */
+  max-width: 100%;
+  height: auto;
+  touch-action: none;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.02),
@@ -131,11 +154,26 @@ canvas {
   color: var(--primary);
 }
 
+.instructions {
+  margin: 1.25rem auto 0;
+  max-width: 520px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
 @media (max-width: 768px) {
   .game-container {
     padding: 2rem 1rem;
   }
   .game-title {
     font-size: 2rem;
+  }
+  .game-info {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+  .snake-canvas-wrapper {
+    padding: 8px;
   }
 }

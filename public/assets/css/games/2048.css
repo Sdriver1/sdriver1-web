@@ -43,8 +43,26 @@
   color: white;
 }
 
-.new-game-btn:hover {
+.undo-btn {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.undo-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.new-game-btn:hover,
+.undo-btn:not(:disabled):hover {
   transform: translateY(-2px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .score-info {
@@ -59,56 +77,125 @@
 .score-box {
   background: var(--card-bg);
   padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
 }
 
 .game-board {
   background: var(--card-bg);
-  border-radius: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
   margin: 0 auto;
   max-width: 400px;
 }
 
 .grid-container {
+  --gap: 3%;
+  /* Square board that scales with its column instead of fixed 80px cells */
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: var(--gap);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  container-type: inline-size;
+  touch-action: none;
+}
+
+.grid-background {
+  position: absolute;
+  inset: var(--gap);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
-  padding: 8px;
+  grid-template-rows: repeat(4, 1fr);
+  gap: var(--gap);
 }
 
 .grid-cell {
-  width: 80px;
-  height: 80px;
   background: var(--card-bg);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text);
-  transition: all 0.2s ease;
-  border: 1px solid var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  opacity: 0.55;
+}
+
+.tile-layer {
+  position: absolute;
+  inset: var(--gap);
 }
 
 .tile {
+  --cell-size: calc((100% - 3 * var(--gap)) / 4);
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  left: calc(var(--col) * (var(--cell-size) + var(--gap)));
+  top: calc(var(--row) * (var(--cell-size) + var(--gap)));
   background: var(--primary);
   color: white;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
+  font-size: 7.5cqw;
   font-weight: 700;
-  transition: all 0.15s ease-in-out;
+  line-height: 1;
+  /* Slide to the new cell; scale is reserved for the spawn/merge pops */
+  transition: left 0.12s ease-in-out, top 0.12s ease-in-out,
+    background 0.12s ease-in-out;
+  will-change: left, top;
+}
+
+/* Spawn: start small, settle to full size */
+.tile:not(.tile-appear) {
+  transform: scale(0.3);
+  opacity: 0;
+}
+
+.tile-appear {
+  transform: scale(1);
+  opacity: 1;
+  transition: left 0.12s ease-in-out, top 0.12s ease-in-out,
+    transform 0.14s ease-out, opacity 0.14s ease-out;
+}
+
+/* Merge: a quick pop so combining reads at a glance */
+.tile-merged {
+  animation: tilePop 0.16s ease-in-out;
+  z-index: 2;
+}
+
+/* Absorbed tile slides under the survivor and fades */
+.tile-absorbed {
+  z-index: 1;
+  opacity: 0;
+  transition: left 0.12s ease-in-out, top 0.12s ease-in-out,
+    opacity 0.12s ease-in-out 0.04s;
+}
+
+@keyframes tilePop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.16);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tile-appear,
+  .tile-absorbed {
+    transition: none;
+  }
+  .tile-merged {
+    animation: none;
+  }
 }
 
 .tile-2 {
@@ -138,47 +225,103 @@
 .tile-128 {
   background: #edcf72;
   color: #f9f6f2;
-  font-size: 1.3rem;
+  font-size: 6cqw;
 }
 .tile-256 {
+  font-size: 6cqw;
   background: #edcc61;
   color: #f9f6f2;
-  font-size: 1.3rem;
 }
 .tile-512 {
+  font-size: 6cqw;
   background: #edc850;
   color: #f9f6f2;
-  font-size: 1.3rem;
 }
 .tile-1024 {
+  font-size: 5cqw;
   background: #edc53f;
   color: #f9f6f2;
-  font-size: 1.1rem;
 }
 .tile-2048 {
+  font-size: 5cqw;
   background: #edc22e;
   color: #f9f6f2;
-  font-size: 1.1rem;
 }
 
 .game-message {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 600;
   color: var(--primary);
   margin-top: 1rem;
   padding: 1rem;
   background: var(--card-bg);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.game-message.win {
+  color: #2e7d32;
+  border-color: #4caf50;
+}
+
+.game-message.lose {
+  color: #c62828;
+  border-color: #ef5350;
+}
+
+[data-theme="dark"] .game-message.win {
+  color: #81c784;
+}
+
+[data-theme="dark"] .game-message.lose {
+  color: #ef9a9a;
 }
 
 .instructions {
   color: var(--text-secondary);
   font-size: 0.9rem;
-  margin-top: 1rem;
+  margin: 1rem auto 0;
   max-width: 400px;
   line-height: 1.5;
+}
+
+/* Tone the tile palette down so it doesn't glare against the dark theme */
+[data-theme="dark"] .tile-2 {
+  background: #3a3630;
+  color: #e8e3d9;
+}
+[data-theme="dark"] .tile-4 {
+  background: #464034;
+  color: #e8e3d9;
+}
+[data-theme="dark"] .tile-8 {
+  background: #b56a37;
+}
+[data-theme="dark"] .tile-16 {
+  background: #bd5f2c;
+}
+[data-theme="dark"] .tile-32 {
+  background: #c04f2e;
+}
+[data-theme="dark"] .tile-64 {
+  background: #bf3f22;
+}
+[data-theme="dark"] .tile-128 {
+  background: #b39a3f;
+}
+[data-theme="dark"] .tile-256 {
+  background: #b3952f;
+}
+[data-theme="dark"] .tile-512 {
+  background: #b08d26;
+}
+[data-theme="dark"] .tile-1024 {
+  background: #ab8720;
+}
+[data-theme="dark"] .tile-2048 {
+  background: #a67d13;
 }
 
 /* Mobile responsiveness */
@@ -191,27 +334,11 @@
     font-size: 2rem;
   }
 
-  .grid-cell,
-  .tile {
-    width: 60px;
-    height: 60px;
-    font-size: 1.2rem;
-  }
-
-  .tile-128,
-  .tile-256,
-  .tile-512 {
-    font-size: 1rem;
-  }
-
-  .tile-1024,
-  .tile-2048 {
-    font-size: 0.9rem;
+  .game-board {
+    padding: 0.75rem;
   }
 
   .score-info {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
+    gap: 1rem;
   }
 }

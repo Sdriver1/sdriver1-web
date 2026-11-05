@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sudoku | Steven Driver Games</title>
 
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="icon" href="/assets/svg/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -62,7 +64,11 @@
         </p>
 
         <div class="game-controls">
-          <select class="btn difficulty-select" id="difficulty">
+          <select
+            class="btn difficulty-select"
+            id="difficulty"
+            aria-label="Select difficulty"
+          >
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
@@ -75,14 +81,54 @@
         <div class="game-info">
           <span>Difficulty: <span id="current-difficulty">Easy</span></span>
           <span>Time: <span id="timer">00:00</span></span>
+          <span>Best: <span id="best-time">--:--</span></span>
+          <span>Hints: <span id="hint-count">0</span></span>
+          <span>Notes: <span id="note-state">Off</span></span>
         </div>
 
         <div class="sudoku-container">
           <div class="sudoku-grid" id="sudoku-grid"></div>
+          <div class="generating-label">Generating puzzle&hellip;</div>
         </div>
 
-        <div id="completion-message" class="completion-message" style="display: none;">
+        <div class="number-pad" role="group" aria-label="Number entry">
+          <button class="num-btn" data-number="1" type="button">1</button>
+          <button class="num-btn" data-number="2" type="button">2</button>
+          <button class="num-btn" data-number="3" type="button">3</button>
+          <button class="num-btn" data-number="4" type="button">4</button>
+          <button class="num-btn" data-number="5" type="button">5</button>
+          <button class="num-btn" data-number="6" type="button">6</button>
+          <button class="num-btn" data-number="7" type="button">7</button>
+          <button class="num-btn" data-number="8" type="button">8</button>
+          <button class="num-btn" data-number="9" type="button">9</button>
+          <button class="num-btn wide" id="erase-btn" type="button">
+            ⌫ Erase
+          </button>
+          <button
+            class="num-btn wide"
+            id="note-btn"
+            type="button"
+            aria-pressed="false"
+          >
+            ✏️ Notes
+          </button>
+        </div>
+
+        <div
+          id="completion-message"
+          class="completion-message"
+          style="display: none"
+          role="status"
+          aria-live="polite"
+        >
           🎉 Congratulations! You solved the puzzle! 🎉
+        </div>
+
+        <div class="instructions">
+          Click a cell, then type 1&ndash;9 or use the pad &middot; arrow keys to
+          move &middot; <kbd>N</kbd> toggles pencil marks &middot;
+          <kbd>Backspace</kbd> erases &middot; <kbd>H</kbd> for a hint. Hinted
+          solves don't set a best time.
         </div>
       </div>
     </main>

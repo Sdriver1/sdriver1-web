@@ -114,22 +114,34 @@ function updateAge() {
 }
 
 // --- Fetch and Update Stats ---
+// Round down, never up, so the trailing "+" stays truthful
+function floorTo1(n) {
+  return (Math.floor(n * 10) / 10).toFixed(1);
+}
+
 function fetchStats() {
   fetch("https://api.pridebot.xyz/stats")
     .then((res) => res.json())
     .then((data) => {
-      const serverEl = document.getElementById("server-count");
-      const userEl = document.getElementById("user-count");
-      if (serverEl)
-        serverEl.textContent =
-          data.currentGuildCount >= 1000
-            ? (data.currentGuildCount / 1000).toFixed(1) + "k+"
-            : data.currentGuildCount;
-      if (userEl)
-        userEl.textContent =
-          data.totalUserCount >= 1000000
-            ? (data.totalUserCount / 1000000).toFixed(1) + "M+"
-            : data.totalUserCount;
+      const compact = (n) =>
+        typeof n !== "number"
+          ? null
+          : n >= 1000000
+            ? floorTo1(n / 1000000) + "M+"
+            : n >= 1000
+              ? floorTo1(n / 1000) + "k+"
+              : String(n);
+      const fill = (ids, value) => {
+        const text = compact(value);
+        if (text === null) return;
+        ids.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = text;
+        });
+      };
+      fill(["server-count", "pb-servers"], data.currentGuildCount);
+      fill(["user-count", "pb-users"], data.totalUserCount);
+      fill(["pb-uses"], data.totalUsage);
     })
     .catch((err) => console.error("Stats fetch error:", err));
 }

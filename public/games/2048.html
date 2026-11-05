@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2048 | Steven Driver Games</title>
 
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="icon" href="/assets/svg/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -64,6 +66,7 @@
 
         <div class="game-controls">
           <button class="btn new-game-btn" onclick="newGame()">New Game</button>
+          <button class="btn undo-btn" id="undo-btn" disabled>Undo</button>
         </div>
 
         <div class="score-info">
@@ -75,10 +78,17 @@
           <div class="grid-container" id="grid-container"></div>
         </div>
 
-        <div id="game-message" class="game-message" style="display: none"></div>
+        <div
+          id="game-message"
+          class="game-message"
+          style="display: none"
+          role="status"
+          aria-live="polite"
+        ></div>
 
         <div class="instructions">
-          Use arrow keys (or WASD) to move tiles. When two tiles with the same
+          Arrow keys or WASD to move tiles &middot; Z to undo your last move
+          &middot; swipe on the board on mobile. When two tiles with the same
           number touch, they merge into one!
         </div>
       </div>

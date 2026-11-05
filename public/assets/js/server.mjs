@@ -11,13 +11,13 @@ const __dirname = dirname(__filename);
 
 const PORTS = {
   MAIN: 8084,
-  RIT: 8085,
   IMAGES: 8086,
   GAY: 9090,
   NIGHTWING: 6969,
   GAMES: 8087,
   BLOGS: 8088,
   TOOLS: 8089,
+  V2: 8090,
 };
 
 const PATHS = {
@@ -283,8 +283,10 @@ function createMainServer() {
   app.use(requestLogger);
   app.use("/assets", createStaticMiddleware());
 
+  // Short window on purpose: pages and their JS/CSS are versionless, so a long
+  // HTML cache lets a stale page pair with freshly-deployed scripts.
   const pageCache = (req, res, next) => {
-    res.set("Cache-Control", "public, max-age=3600");
+    res.set("Cache-Control", "public, max-age=60");
     next();
   };
   app.get("/", pageCache, (req, res) =>
@@ -305,14 +307,18 @@ function createMainServer() {
   app.get("/twitch", pageCache, (req, res) =>
     res.sendFile(join(PATHS.PUBLIC, "redirects/twitch.html")),
   );
-  app.get("/resume", (req, res) => {
+  app.get("/tech_resume", (req, res) => {
     res.set("Cache-Control", "public, max-age=86400");
-    res.sendFile(join(PATHS.ASSETS, "resume/resume.pdf"));
+    res.sendFile(join(PATHS.ASSETS, "resume/tech_resume.pdf"));
   });
-  app.get("/resumepng", (req, res) => {
+  app.get("/life_resume", (req, res) => {
     res.set("Cache-Control", "public, max-age=86400");
-    res.sendFile(join(PATHS.ASSETS, "resume/resume.png"));
+    res.sendFile(join(PATHS.ASSETS, "resume/life_resume.pdf"));
   });
+  // Legacy single-resume URLs — keep old links working
+  app.get(["/resume", "/resumepng"], (req, res) =>
+    res.redirect(301, "/tech_resume"),
+  );
 
   // ======================== NYT STATS ROUTES ========================
   // Ensure data directory exists on first use
@@ -411,24 +417,6 @@ function createMainServer() {
   app.use(errorHandler);
   app.listen(PORTS.MAIN, () =>
     console.log(`Main server running on port ${PORTS.MAIN}`),
-  );
-}
-
-// ======================== SERVER 2: RIT PORTFOLIO (rit.sdriver1.me) ========================
-function createRitServer() {
-  const app = express();
-  app.use(corsMiddleware);
-  app.use(requestLogger);
-  app.use("/assets", createStaticMiddleware());
-
-  app.get("/", (req, res) => {
-    res.set("Cache-Control", "public, max-age=3600");
-    res.sendFile(join(PATHS.PUBLIC, "rit/index.html"));
-  });
-
-  app.use(errorHandler);
-  app.listen(PORTS.RIT, () =>
-    console.log(`RIT server running on port ${PORTS.RIT}`),
   );
 }
 
@@ -627,7 +615,7 @@ function createNightwingServer() {
   app.use("/assets", createStaticMiddleware());
 
   app.get("/", (req, res) => {
-    res.set("Cache-Control", "public, max-age=3600");
+    res.set("Cache-Control", "public, max-age=60");
     res.sendFile(join(PATHS.PUBLIC, "sites/nightwing7974is.html"));
   });
 
@@ -644,8 +632,10 @@ function createGamesServer() {
   app.use(requestLogger);
   app.use("/assets", createStaticMiddleware());
 
+  // Short window on purpose: pages and their JS/CSS are versionless, so a long
+  // HTML cache lets a stale page pair with freshly-deployed scripts.
   const pageCache = (req, res, next) => {
-    res.set("Cache-Control", "public, max-age=3600");
+    res.set("Cache-Control", "public, max-age=60");
     next();
   };
 
@@ -679,7 +669,7 @@ function createBlogsServer() {
   app.use("/assets", createStaticMiddleware());
 
   app.get("/", (req, res) => {
-    res.set("Cache-Control", "public, max-age=3600");
+    res.set("Cache-Control", "public, max-age=60");
     res.sendFile(join(PATHS.PUBLIC, "blogs/index.html"));
   });
 
@@ -694,7 +684,7 @@ function createBlogsServer() {
     const blogPath = join(PATHS.PUBLIC, "blogs", `${name}.html`);
 
     if (fs.existsSync(blogPath)) {
-      res.set("Cache-Control", "public, max-age=3600");
+      res.set("Cache-Control", "public, max-age=60");
       res.sendFile(blogPath);
     } else {
       res.status(404).json({
@@ -718,17 +708,17 @@ function createToolsServer() {
   app.use("/assets", createStaticMiddleware());
 
   app.get("/", (req, res) => {
-    res.set("Cache-Control", "public, max-age=3600");
+    res.set("Cache-Control", "public, max-age=60");
     res.sendFile(join(PATHS.PUBLIC, "tools/index.html"));
   });
 
   app.get("/shift", (req, res) => {
-    res.set("Cache-Control", "public, max-age=3600");
+    res.set("Cache-Control", "public, max-age=60");
     res.sendFile(join(PATHS.PUBLIC, "tools/shiftschedule.html"));
   });
   app.get("/change", (req, res) => {
-    res.set("Cache-Control", "public, max-age=3600");
-    res.sendFile(join(PATHS.PUBLIC, "sites/changehelp.html"));
+    res.set("Cache-Control", "public, max-age=60");
+    res.sendFile(join(PATHS.PUBLIC, "tools/changehelp.html"));
   });
 
   app.use(errorHandler);
@@ -737,12 +727,11 @@ function createToolsServer() {
   );
 }
 
+
 // ======================== START ALL SERVERS ========================
 createMainServer();
-createRitServer();
 createImageServer();
 createGayServer();
 createNightwingServer();
 createGamesServer();
 createToolsServer();
-createBlogsServer();
